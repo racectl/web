@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DevController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('home');
+})->name('home');
+
+Route::get('/dev', [DevController::class, 'index'])->name('dev');
