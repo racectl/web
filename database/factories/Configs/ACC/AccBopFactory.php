@@ -1,0 +1,37 @@
+<?php
+
+namespace Database\Factories\Configs\ACC;
+
+use App\Models\AccConfig;
+use App\Models\Car;
+use App\Models\Configs\ACC\AccBop;
+use App\Models\Track;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+class AccBopFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = AccBop::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        return [
+            'acc_config_id' => AccConfig::factory(),
+            'car_model' => $this->carId()
+        ];
+    }
+
+    protected function carId()
+    {
+        return Car::select('id')->get()->random()->id;
+    }
+}

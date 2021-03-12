@@ -1,0 +1,14 @@
+{
+    "serverName": "Server Name",
+    "carGroup": "FreeForAll",
+    "trackMedalsRequirement": 0,
+    "safetyRatingRequirement": -1,
+    "racecraftRatingRequirement": -1,
+    "dumpLeaderboards": 1,
+    "isRaceLocked": 1,
+    "randomizeTrackWhenEmpty": 0,
+    "allowAutoDQ": 0,
+    "shortFormationLap": 0,
+    "dumpEntryList": 0,
+    "formationLapType": 3
+}

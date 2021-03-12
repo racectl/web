@@ -1,0 +1,48 @@
+{
+    "entries": [
+        {
+            "drivers": [
+                {
+                    "firstName": "First",
+                    "lastName": "Driver",
+                    "shortName": "DRI",
+                    "driverCategory": 1,
+                    "playerID": "S765611xxxxxxxxxx1"
+                }
+            ],
+            "raceNumber": 88,
+            "forcedCarModel": -1,
+            "overrideDriverInfo": 1,
+            "defaultGridPosition": -1,
+            "ballastKg": 0,
+            "restrictor": 0,
+            "isServerAdmin": 0
+        },
+        {
+            "drivers": [
+                {
+                    "firstName": "First",
+                    "lastName": "Driver",
+                    "shortName": "DRI",
+                    "driverCategory": 2,
+                    "playerID": "S765611xxxxxxxxxx3"
+                },
+                {
+                    "firstName": "Another",
+                    "lastName": "Person",
+                    "shortName": "PER",
+                    "driverCategory": 3,
+                    "playerID": "S765611xxxxxxxxxx4"
+                }
+            ],
+            "raceNumber": 114,
+            "forcedCarModel": -1,
+            "overrideDriverInfo": 0,
+            "defaultGridPosition": -1,
+            "ballastKg": 0,
+            "restrictor": 0,
+            "isServerAdmin": 0
+        }
+    ],
+    "forceEntryList": 1
+}

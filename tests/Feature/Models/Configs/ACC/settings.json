@@ -1,0 +1,19 @@
+{
+    "serverName": "Kunos Test Server #03",
+    "adminPassword": " adminPw123",
+    "carGroup": "GT4",
+    "trackMedalsRequirement": 3,
+    "safetyRatingRequirement": 49,
+    "racecraftRatingRequirement": -1,
+    "password": "accessPw123",
+    "spectatorPassword": "spectPw432",
+    "maxCarSlots": 30,
+    "dumpLeaderboards": 0,
+    "isRaceLocked": 1,
+    "randomizeTrackWhenEmpty": 0,
+    "centralEntryListPath": "",
+    "allowAutoDQ": 1,
+    "shortFormationLap": 0,
+    "dumpEntryList": 0,
+    "formationLapType": 3
+}
