@@ -26,7 +26,7 @@ class CreateAccEventAction
 
         $community->events()->save($event);
 
-        app(Pipeline::class)
+        return app(Pipeline::class)
             ->send($event)
             ->through(static::$pipes)
             ->thenReturn();

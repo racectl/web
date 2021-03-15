@@ -4,7 +4,7 @@ namespace Tests\Feature\ActionPipelines;
 
 use App\Actions\CreateAccEvent\CreateAccEventAction;
 use App\Models\Community;
-use App\Models\Configs\ACC\AccEventRules;
+use App\Models\RaceEvent;
 use Tests\TestCase;
 
 class CreateAccEventActionTest extends TestCase
@@ -18,8 +18,9 @@ class CreateAccEventActionTest extends TestCase
         /** @var Community $community */
         $community = Community::first();
 
-        CreateAccEventAction::execute($community, 'Event Name');
+        $actionReturn = CreateAccEventAction::execute($community, 'Event Name');
 
+        $this->assertInstanceOf(RaceEvent::class, $actionReturn);
         $this->assertDatabaseCount('race_events', 1);
         $this->assertDatabaseCount('acc_configs', 1);
         $this->assertDatabaseCount('acc_assist_rules', 1);
