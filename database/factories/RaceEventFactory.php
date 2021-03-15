@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Community;
 use App\Models\RaceEvent;
 use App\Models\Track;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -24,7 +25,8 @@ class RaceEventFactory extends Factory
     {
         return [
             'force_entry_list' => 1,
-            'track' => $this->trackConfigId()
+            'track' => $this->trackConfigId(),
+            'community_id' => Community::factory()
         ];
     }
 

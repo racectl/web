@@ -1,11 +1,10 @@
 <?php
 
-use App\Models\Community;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRaceEventsTable extends Migration
+class CreateCommunitiesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,11 +13,9 @@ class CreateRaceEventsTable extends Migration
      */
     public function up()
     {
-        Schema::create('race_events', function (Blueprint $table) {
+        Schema::create('communities', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Community::class);
-            $table->string('track');
-            $table->boolean('force_entry_list')->default(1);
+            $table->string('name');
             $table->timestamps();
         });
     }
@@ -30,6 +27,6 @@ class CreateRaceEventsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('race_events');
+        Schema::dropIfExists('communities');
     }
 }

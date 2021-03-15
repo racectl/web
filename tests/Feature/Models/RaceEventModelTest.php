@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Models;
 
+use App\Models\Community;
 use App\Models\RaceEvent;
 use App\Models\RaceEventEntry;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
@@ -27,5 +28,15 @@ class RaceEventModelTest extends TestCase
 
         $this->assertCount(2, $event->entries);
         $this->assertInstanceOf(EloquentCollection::class, $event->entries);
+    }
+
+    /** @test */
+    public function it_belongs_to_a_community()
+    {
+        RaceEvent::factory()->create();
+
+        $event = RaceEvent::first();
+
+        $this->assertInstanceOf(Community::class, $event->community);
     }
 }

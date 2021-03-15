@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property EloquentCollection entries
@@ -17,8 +19,13 @@ class RaceEvent extends BaseModel
         ];
     }
 
-    public function entries()
+    public function entries(): HasMany
     {
         return $this->hasMany(RaceEventEntry::class);
+    }
+
+    public function community(): BelongsTo
+    {
+        return $this->belongsTo(Community::class);
     }
 }
