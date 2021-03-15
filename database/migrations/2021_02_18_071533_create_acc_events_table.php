@@ -18,7 +18,6 @@ class CreateAccEventsTable extends Migration
             $table->id();
             $table->foreignIdFor(AccConfig::class)->nullable();
 
-            $table->string('track');
             $table->integer('pre_race_waiting_time_seconds')->default(60);
             $table->integer('session_over_time_seconds')->default(120);
             $table->tinyInteger('ambient_temp')->default(26);

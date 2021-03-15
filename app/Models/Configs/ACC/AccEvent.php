@@ -3,8 +3,10 @@
 namespace App\Models\Configs\ACC;
 
 use App\CustomCollections\AccEventSessionsCollection;
+use App\Models\AccConfig;
 use App\Models\BaseModel;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
 
@@ -23,6 +25,7 @@ use Illuminate\Support\Str;
  * @property integer|boolean            simracerWeatherConditions
  * @property integer|boolean            isFixedConditionQualification
  * @property AccEventSessionsCollection accEventSessions
+ * @property AccConfig                  accConfig
  */
 class AccEvent extends BaseModel
 {
@@ -31,7 +34,6 @@ class AccEvent extends BaseModel
     public static function rules(): array
     {
         return [
-            'track'                         => 'required|exists:App\Models\Track,game_config_id',
             'preRaceWaitingTimeSeconds'     => 'nullable|integer',
             'sessionOverTimeSeconds'        => 'nullable|integer',
             'ambientTemp'                   => 'nullable|integer', //TODO: Needs Between
@@ -47,6 +49,11 @@ class AccEvent extends BaseModel
         ];
     }
 
+    public function accConfig(): BelongsTo
+    {
+        return $this->belongsTo(AccConfig::class);
+    }
+
     public function accEventSessions(): HasMany
     {
         return $this->hasMany(AccEventSession::class);
@@ -59,6 +66,8 @@ class AccEvent extends BaseModel
         $collection = collect($this->attributes);
         $collection->put(
             'sessions', $this->getSessionsForJson()
+        )->prepend(
+            $this->accConfig->raceEvent->track, 'track'
         );
 
         return $collection

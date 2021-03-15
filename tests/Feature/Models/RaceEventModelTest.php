@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Models;
 
+use App\Models\AccConfig;
 use App\Models\Community;
 use App\Models\RaceEvent;
 use App\Models\RaceEventEntry;
@@ -38,5 +39,14 @@ class RaceEventModelTest extends TestCase
         $event = RaceEvent::first();
 
         $this->assertInstanceOf(Community::class, $event->community);
+    }
+
+    /** @test */
+    public function it_has_one_acc_config()
+    {
+        $event = RaceEvent::factory()->hasAccConfig()->create();
+        $event->refresh();
+
+        $this->assertInstanceOf(AccConfig::class, $event->accConfig);
     }
 }

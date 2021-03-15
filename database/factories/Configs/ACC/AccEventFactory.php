@@ -24,14 +24,7 @@ class AccEventFactory extends Factory
     public function definition()
     {
         return [
-            'acc_config_id' => AccConfig::factory(),
-            'track' => $this->getRandomTrack(),
+            'acc_config_id' => AccConfig::factory()
         ];
-    }
-
-    protected function getRandomTrack()
-    {
-        $tracks = Track::all();
-        return $tracks->random()->game_config_id;
     }
 }

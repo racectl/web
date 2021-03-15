@@ -17,6 +17,7 @@ class CreateRaceEventsTable extends Migration
         Schema::create('race_events', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Community::class);
+            $table->string('name');
             $table->string('track');
             $table->boolean('force_entry_list')->default(1);
             $table->timestamps();

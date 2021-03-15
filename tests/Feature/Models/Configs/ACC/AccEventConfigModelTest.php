@@ -4,6 +4,7 @@
 namespace Models\Configs\ACC;
 
 
+use App\Models\AccConfig;
 use App\Models\Configs\ACC\AccEvent;
 use App\Models\Configs\ACC\AccEventSession;
 use App\Models\Track;
@@ -14,20 +15,12 @@ use Tests\TestCase;
 class AccEventConfigModelTest extends TestCase
 {
     /** @test */
-    public function the_track_property_can_assign_if_the_track_exists_in_tracks_table()
+    public function it_belongs_to_an_acc_config()
     {
-        $event        = new AccEvent;
-        $event->track = 'spa';
+        /** @var AccEvent $event */
+        $event = AccEvent::factory()->create()->refresh();
 
-        $this->assertEquals('spa', $event->track);
-    }
-
-    /** @test */
-    public function it_fails_to_assign_track_if_it_doesnt_exist()
-    {
-        $this->expectException(ValidationException::class);
-        $event        = new AccEvent;
-        $event->track = "Non Existent Track.";
+        $this->assertInstanceOf(AccConfig::class, $event->accConfig);
     }
 
     /** @test */
@@ -37,9 +30,7 @@ class AccEventConfigModelTest extends TestCase
         $event = AccEvent::factory()
             ->has(
                 AccEventSession::factory()->count(3)
-            )->create([
-                'track' => 'spa'
-            ]);
+            )->create();
 
         $this->assertInstanceOf(Collection::class, $event->accEventSessions);
         $this->assertCount(3, $event->accEventSessions);
@@ -49,13 +40,12 @@ class AccEventConfigModelTest extends TestCase
     /** @test */
     public function it_generates_json_for_a_file()
     {
-        $trackId = Track::first()->gameConfigId;
-
         /** @var AccEvent $event */
-        $event = AccEvent::create([
-            'track'     => $trackId,
+        $event = AccEvent::factory([
             'meta_data' => "String of Meta Data."
-        ])->refresh();
+        ])->create()->refresh();
+
+        $event->accConfig->raceEvent->track = 'monza';
 
         $sessions = collect();
 
