@@ -8,6 +8,6 @@ class DevController extends Controller
 {
     public function index()
     {
-        dd('hit');
+        return view('dev');
     }
 }

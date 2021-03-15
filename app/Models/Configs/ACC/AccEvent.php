@@ -34,10 +34,10 @@ class AccEvent extends BaseModel
             'track'                         => 'required|exists:App\Models\Track,game_config_id',
             'preRaceWaitingTimeSeconds'     => 'nullable|integer',
             'sessionOverTimeSeconds'        => 'nullable|integer',
-            'ambientTemp'                   => 'nullable|integer',
+            'ambientTemp'                   => 'nullable|integer', //TODO: Needs Between
             'cloudLevel'                    => 'nullable|between:0,100',
             'rain'                          => 'nullable|between:0,100',
-            'weatherRandomness'             => 'nullable|integer',
+            'weatherRandomness'             => 'nullable|integer|between:0,7',
             'configVersion'                 => 'nullable|integer',
             'postQualySeconds'              => 'nullable|integer',
             'postRaceSeconds'               => 'nullable|integer',

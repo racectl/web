@@ -1,0 +1,77 @@
+<x-layout title="Dev Page">
+    <div class="layout-px-spacing">
+        <div class="row layout-top-spacing">
+
+            <x-widget heading="Event" width="6">
+
+                <x-row>
+                    <x-form.text labeled="Event Name" wireTo="eventName" />
+                </x-row>
+
+                <x-form.track-dropdown />
+
+            </x-widget>
+
+            <x-widget heading="Passwords" width="3">
+                <x-form.text labeled="Admin Password" wireTo="adminPassword"/>
+                <x-form.text labeled="Event Password" wireTo="password"/>
+                <x-form.text labeled="Spectator Password" wireTo="spectatorPassword"/>
+            </x-widget>
+
+            <x-widget heading="Something" width="3">
+                <x-form.checkbox name="allowAutoDQ" labeled="Allow Auto DQ"/>
+                <x-form.checkbox name="shortFormationLap" />
+            </x-widget>
+
+            <x-widget heading="Assist Rules" width="3">
+                <x-form.checkbox name="disableAutosteer" />
+                <x-form.checkbox name="disableAutoLights" />
+                <x-form.checkbox name="disableAutoWiper" />
+                <x-form.checkbox name="disableAutoEngineStart" />
+                <x-form.checkbox name="disableAutoPitLimiter" />
+                <x-form.checkbox name="disableAutoGear" />
+                <x-form.checkbox name="disableAutoClutch" />
+                <x-form.checkbox name="disableIdealLine" />
+                <hr>
+                <div class="form-group mb-0">
+                    <label>Max Stability Control (0-100)</label>
+                    <input wire:model.lazy="stabilityControlLevelMax" type="text" class="form-control form-control-sm" />
+                </div>
+            </x-widget>
+
+            <x-widget heading="Weather" width="2">
+                <x-form.text wireTo="ambientTemp" labeled="Ambient Temp" />
+                <x-form.text wireTo="cloudLevel" labeled="Cloud % (0-100)" />
+                <x-form.text wireTo="rain" labeled="Rain % (0-100)" />
+                <x-form.text wireTo="weatherRandomness" labeled="Randomness (0-7)" />
+            </x-widget>
+
+            <x-widget heading="Other Options" width="3">
+                <x-form.text wireTo="maxDriverCount" />
+                <x-form.text wireTo="preRaceWaitingTimeSeconds" />
+                <x-form.text wireTo="sessionOverTimeSeconds" />
+                <x-form.text wireTo="postQualySeconds" />
+                <x-form.text wireTo="postRaceSeconds" />
+                <x-form.checkbox name="simracerWeatherConditions" />
+                <x-form.checkbox name="isFixedConditionQualification" />
+            </x-widget>
+
+            <x-widget heading="Pit Conditions" width="4">
+                <x-form.checkbox name="isRefuellingAllowedInRace" />
+                <x-form.checkbox name="isRefuellingTimeFixed" />
+                <x-form.checkbox name="isMandatoryPitstopRefuellingRequired" />
+                <x-form.checkbox name="isMandatoryPitstopTyreChangeRequired" />
+                <x-form.checkbox name="isMandatoryPitstopSwapDriverRequired" />
+                <hr>
+                <x-row>
+                    <x-form.text wireTo="mandatoryPitstopCount" width="6"/>
+                    <x-form.text wireTo="pitWindowLengthSec" width="6"/>
+                    <x-form.text wireTo="driverStintTimeSec" width="6"/>
+                    <x-form.text wireTo="maxTotalDrivingTime" width="6"/>
+                    <x-form.text wireTo="tyreSetCount" labeled="Tyre Set Count (1-50)" width="6"/>
+                </x-row>
+            </x-widget>
+
+        </div>
+    </div>
+</x-layout>

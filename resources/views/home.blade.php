@@ -1,15 +1,11 @@
-@extends('layout.layout')
+<x-layout title="Home">
 
-@section('title', 'Home')
+    <div class="row">
+        <div class="col-sm-12">
 
-@section('content')
+            Home Page.
 
-<div class="row">
-    <div class="col-sm-12">
-
-        Home Page.
-
+        </div>
     </div>
-</div>
 
-@endsection
+</x-layout>

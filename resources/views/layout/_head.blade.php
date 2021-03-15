@@ -11,8 +11,6 @@
 <link href="{{ asset('css/bootstrap/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('css/plugins.css') }}" rel="stylesheet" type="text/css" />
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
-<script src="{{ asset('plugins/sweetalerts/promise-polyfill.js') }}"></script>
 <link href="{{ asset('plugins/sweetalerts/sweetalert2.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('plugins/sweetalerts/sweetalert.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('css/components/custom-sweetalert.css') }}" rel="stylesheet" type="text/css" />
@@ -20,8 +18,13 @@
 <link href="{{ asset('css/authentication/form-1.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('css/forms/theme-checkbox-radio.css') }}" rel="stylesheet" type="text/css" >
 <link href="{{ asset('css/forms/switches.css') }}" rel="stylesheet" type="text/css" >
+<link href="{{ asset('css/dashboard/dash_1.css') }}" rel="stylesheet" type="text/css">
 @stack('styles')
 @livewireStyles
+
+
+<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+<script src="{{ asset('plugins/sweetalerts/promise-polyfill.js') }}"></script>
 <!-- END GLOBAL MANDATORY STYLES -->
 
 <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM STYLES -->
