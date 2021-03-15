@@ -2,21 +2,30 @@
 
 namespace Tests\Feature\ActionPipelines;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
+use App\Actions\CreateAccEvent\CreateAccEventAction;
+use App\Models\Community;
+use App\Models\Configs\ACC\AccEventRules;
 use Tests\TestCase;
 
 class CreateAccEventActionTest extends TestCase
 {
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
-    public function test_example()
+    /** @test */
+    public function it_creates_an_event_with_all_acc_config_entries()
     {
-        $response = $this->get('/');
+        $this->assertTrue(true);
+        Community::factory()->create();
 
-        $response->assertStatus(200);
+        /** @var Community $community */
+        $community = Community::first();
+
+        CreateAccEventAction::execute($community, 'Event Name');
+
+        $this->assertDatabaseCount('race_events', 1);
+        $this->assertDatabaseCount('acc_configs', 1);
+        $this->assertDatabaseCount('acc_assist_rules', 1);
+        $this->assertDatabaseCount('acc_events', 1);
+        $this->assertDatabaseCount('acc_event_sessions', 1);
+        $this->assertDatabaseCount('acc_event_rules', 1);
+        $this->assertDatabaseCount('acc_settings', 1);
     }
 }
