@@ -21,6 +21,8 @@ class MenuBuilder
         $menu = new MenuSection('Administration', 'terminal');
         $menu->addEntry(
             new MenuEntry('Dev', 'dev')
+        )->addEntry(
+            new MenuEntry('Community Management', 'rcadmin.communityManagement')
         );
 
         $this->menuSections->push($menu);
