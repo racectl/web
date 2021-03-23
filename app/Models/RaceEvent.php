@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property string             name
  * @property string             track
  * @property AccConfig          accConfig
+ * @property Community          community
  */
 class RaceEvent extends BaseModel
 {

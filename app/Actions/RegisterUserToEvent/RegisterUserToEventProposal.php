@@ -4,6 +4,7 @@
 namespace App\Actions\RegisterUserToEvent;
 
 
+use App\Models\Community;
 use App\Models\RaceEvent;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -11,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 class RegisterUserToEventProposal
 {
     public User      $user;
+    public Community $community;
     public RaceEvent $event;
     public int       $carModelId;
 
@@ -20,5 +22,12 @@ class RegisterUserToEventProposal
         $this->user       = $user ?? Auth::user();
         $this->event      = $event;
         $this->carModelId = $carModelId;
+
+        $this->community = $event->community;
+    }
+
+    public function communityContainsUser(): bool
+    {
+        return $this->community->members->contains($this->user);
     }
 }

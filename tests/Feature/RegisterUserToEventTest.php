@@ -5,8 +5,8 @@ namespace Tests\Feature;
 use App\Actions\CreateAccEvent\CreateAccEventAction;
 use App\Actions\RegisterUserToEvent\RegisterUserToEventAction;
 use App\Actions\RegisterUserToEvent\RegisterUserToEventProposal;
+use App\Exceptions\UserNotCommunityMemberException;
 use App\Models\Community;
-use App\Models\RaceEventEntry;
 use Tests\TestCase;
 
 class RegisterUserToEventTest extends TestCase
@@ -16,7 +16,7 @@ class RegisterUserToEventTest extends TestCase
     {
         $user = $this->logFirstUserIn();
         $community = Community::first();
-        $community->
+        $community->members()->attach($user);
         $event = CreateAccEventAction::execute($community, 'Testing Event');
 
         $proposal = new RegisterUserToEventProposal($event, 11);
@@ -29,6 +29,13 @@ class RegisterUserToEventTest extends TestCase
     /** @test */
     public function user_must_be_a_member_of_the_community()
     {
+        $this->expectException(UserNotCommunityMemberException::class);
 
+        $this->logFirstUserIn();
+        $community = Community::first();
+        $event = CreateAccEventAction::execute($community, 'Testing Event');
+
+        $proposal = new RegisterUserToEventProposal($event, 11);
+        RegisterUserToEventAction::execute($proposal);
     }
 }

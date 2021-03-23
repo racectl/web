@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 class RegisterUserToEventAction
 {
     protected static array $pipes = [
+        PipeCheckCommunityMemberStatus::class,
         PipeCreateEventEntryAndRegisterUserToEvent::class
     ];
 
