@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
@@ -19,5 +20,10 @@ class Community extends BaseModel
     public function events(): HasMany
     {
         return $this->hasMany(RaceEvent::class);
+    }
+
+    public function members(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'community_members');
     }
 }
