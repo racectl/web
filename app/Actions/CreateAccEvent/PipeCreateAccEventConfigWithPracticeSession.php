@@ -9,7 +9,7 @@ use App\Models\Configs\ACC\AccEvent;
 use App\Models\Configs\ACC\AccEventSession;
 use App\Models\RaceEvent;
 
-class CreateAccEventConfigWithPracticeSessionPipe
+class PipeCreateAccEventConfigWithPracticeSession
 {
     public function handle(RaceEvent $event, $next)
     {

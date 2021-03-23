@@ -2,14 +2,13 @@
 
 namespace Tests\Feature;
 
+use App\Models\User;
 use Tests\TestCase;
 
 class NwsrSeederTest extends TestCase
 {
     /**
-     * A basic feature test example.
-     *
-     * @return void
+     * Fails on full suite.
      */
     public function test_example()
     {

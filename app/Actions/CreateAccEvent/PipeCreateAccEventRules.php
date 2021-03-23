@@ -5,17 +5,13 @@ namespace App\Actions\CreateAccEvent;
 
 
 use App\Models\Configs\ACC\AccEventRules;
-use App\Models\Configs\ACC\AccSettings;
 use App\Models\RaceEvent;
 
-class CreateAccSettingsPipe
+class PipeCreateAccEventRules
 {
     public function handle(RaceEvent $event, $next)
     {
-        $settings = new AccSettings;
-        $settings->serverName = $event->name;
-
-        $event->accConfig->settings()->save($settings);
+        $event->accConfig->eventRules()->save(new AccEventRules);
 
         return $next($event);
     }

@@ -11,14 +11,14 @@ use Illuminate\Pipeline\Pipeline;
 class CreateAccEventAction
 {
     protected static array $pipes = [
-        CreateAccConfigPipe::class,
-        CreateAccAssistRulesPipe::class,
-        CreateAccEventConfigWithPracticeSessionPipe::class,
-        CreateAccEventRulesPipe::class,
-        CreateAccSettingsPipe::class,
+        PipeCreateAccConfig::class,
+        PipeCreateAccAssistRules::class,
+        PipeCreateAccEventConfigWithPracticeSession::class,
+        PipeCreateAccEventRules::class,
+        PipeCreateAccSettings::class,
     ];
 
-    public static function execute(Community $community, string $eventName)
+    public static function execute(Community $community, string $eventName): RaceEvent
     {
         $event = new RaceEvent;
         $event->name = $eventName;

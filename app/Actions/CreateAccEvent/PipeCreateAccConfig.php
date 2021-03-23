@@ -7,7 +7,7 @@ namespace App\Actions\CreateAccEvent;
 use App\Models\AccConfig;
 use App\Models\RaceEvent;
 
-class CreateAccConfigPipe
+class PipeCreateAccConfig
 {
     public function handle(RaceEvent $event, $next)
     {

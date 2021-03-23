@@ -7,7 +7,7 @@ namespace App\Actions\CreateAccEvent;
 use App\Models\Configs\ACC\AccAssistRules;
 use App\Models\RaceEvent;
 
-class CreateAccAssistRulesPipe
+class PipeCreateAccAssistRules
 {
     public function handle(RaceEvent $event, $next)
     {

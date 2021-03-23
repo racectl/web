@@ -2,12 +2,10 @@
 
 namespace Tests\Feature\Livewire;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Livewire\Livewire;
 use Tests\TestCase;
 
-class CommunityManagement extends TestCase
+class RCAdminCommunityManagementTest extends TestCase
 {
     /** @test */
     public function it_has_a_route()

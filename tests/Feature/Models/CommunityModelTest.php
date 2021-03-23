@@ -12,9 +12,7 @@ class CommunityModelTest extends TestCase
     /** @test */
     public function it_has_many_events()
     {
-        Community::factory()->hasEvents(3)->create();
-
-        $community = Community::first();
+        $community = Community::factory()->hasEvents(3)->create()->refresh();
 
         $this->assertCount(3, $community->events);
     }
