@@ -3,7 +3,7 @@
 namespace Tests\Feature\ActionPipelines;
 
 use App\Actions\CreateAccEvent\CreateAccEventAction;
-use App\Actions\RegisterForEvent\RegisterForEventAction;
+use App\Actions\RegisterUserToEvent\RegisterUserToEventAction;
 use App\Models\Community;
 use App\Models\RaceEvent;
 use Tests\TestCase;

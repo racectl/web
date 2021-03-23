@@ -37,4 +37,6 @@ class RaceEvent extends BaseModel
     {
         return $this->hasOne(AccConfig::class);
     }
+
+
 }
