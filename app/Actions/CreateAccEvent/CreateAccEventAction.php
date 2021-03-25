@@ -16,6 +16,7 @@ class CreateAccEventAction
         PipeCreateAccEventConfigWithPracticeSession::class,
         PipeCreateAccEventRules::class,
         PipeCreateAccSettings::class,
+        PipeAssignAvailableCars::class
     ];
 
     public static function execute(Community $community, string $eventName): RaceEvent

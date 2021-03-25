@@ -30,4 +30,22 @@ class CarModelTest extends TestCase
 
         $this->assertEquals($expected, $cars->first()->toArray());
     }
+
+    /** @test */
+    public function it_has_an_acc_gt3_scope()
+    {
+        $expected = Car::where(['type' => 'GT3', 'sim' => 'acc'])->get();
+        $actual = Car::accGt3s()->get();
+
+        $this->assertEquals($expected, $actual);
+    }
+
+    /** @test */
+    public function it_has_an_acc_gt4_scope()
+    {
+        $expected = Car::where(['type' => 'GT4', 'sim' => 'acc'])->get();
+        $actual = Car::accGt4s()->get();
+
+        $this->assertEquals($expected, $actual);
+    }
 }
