@@ -22,8 +22,8 @@ class RegisterUserToEventTest extends TestCase
         $proposal = new RegisterUserToEventProposal($event, 11);
         RegisterUserToEventAction::execute($proposal);
 
-        $this->assertDatabaseCount('race_event_entries', 1);
-        $this->assertDatabaseCount('race_event_entry_user', 1);
+        $this->assertCount(1, $event->entries);
+        $this->assertCount(1, $event->entries->first()->users);
     }
 
     /** @test */
