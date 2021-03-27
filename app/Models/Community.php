@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 /**
  * @property string             name
  * @property EloquentCollection members
+ * @property EloquentCollection events
  */
 class Community extends BaseModel
 {

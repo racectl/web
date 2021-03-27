@@ -10,18 +10,22 @@ trait RuleBasedInputs
 {
     public $input;
 
-    public function initializeBetterInputs() //runs every request
+    public function initializeBetterInputs()
     {
-
+        if (method_exists($this, 'dynamicRules')) {
+            foreach ($this->dynamicRules() as $key => $value) {
+                $this->rules[$key] = $value;
+            }
+        }
     }
 
-    public function mountBetterInputs()
+    public function mountRuleBasedInputs()
     {
         $this->fillInputsFromRules();
-        $this->setDefualts();
+        $this->setDefaults();
     }
 
-    protected function setDefualts()
+    protected function setDefaults()
     {
         if (method_exists($this, 'inputDefaults')) {
             $this->inputDefaults();

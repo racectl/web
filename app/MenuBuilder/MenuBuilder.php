@@ -2,6 +2,7 @@
 
 namespace App\MenuBuilder;
 
+use App\Models\Community;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
@@ -16,7 +17,13 @@ class MenuBuilder
     {
         $this->request = $request;
         $this->menuSections = collect();
+        $this->superAdmin();
+        $this->communityAdmin();
+        $this->user();
+    }
 
+    protected function superAdmin()
+    {
         $menu = new MenuSection('Administration', 'terminal');
         $menu->addEntry(
             new MenuEntry('Dev', 'dev')
@@ -25,6 +32,26 @@ class MenuBuilder
         );
 
         $this->menuSections->push($menu);
+    }
+
+    protected function communityAdmin()
+    {
+        $menu = new MenuSection('Community Admin', 'terminal');
+        $community = Community::first();
+        $menu->addEntry(
+            new MenuEntry(
+                'Event Management',
+                'communityAdmin.EventManagement',
+                ['community' => $community]
+            )
+        );
+
+        $this->menuSections->push($menu);
+    }
+
+    protected function user()
+    {
+
     }
 
     public function getSections()

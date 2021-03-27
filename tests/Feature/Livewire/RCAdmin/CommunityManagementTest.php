@@ -1,18 +1,18 @@
 <?php
 
-namespace Tests\Feature\Livewire;
+namespace Tests\Feature\Livewire\RCAdmin;
 
 use Livewire\Livewire;
 use Tests\TestCase;
 
-class RCAdminCommunityManagementTest extends TestCase
+class CommunityManagementTest extends TestCase
 {
     /** @test */
     public function it_has_a_route()
     {
         $response = $this->get('/rcadmin/community');
         $response
-            ->assertok()
+            ->assertOk()
             ->assertSee('Community Management')
             ->assertSee('New World Sim Racing');
     }

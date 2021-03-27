@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DevController;
+use App\Http\Livewire\CommunityAdmin\EventManagement;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\RCAdmin\CommunityManagement;
 
@@ -20,4 +21,7 @@ Route::get('/', function () {
 })->name('home');
 
 Route::get('/dev', [DevController::class, 'index'])->name('dev');
-Route::get('/rcadmin/community', CommunityManagement::class)->name('rcadmin.communityManagement');
+Route::get('/rcadmin/community', CommunityManagement::class)
+    ->name('rcadmin.communityManagement');
+Route::get('{community}/admin/event-management', EventManagement::class)
+    ->name('communityAdmin.EventManagement');
