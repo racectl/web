@@ -35,6 +35,7 @@ class EventManagementTest extends TestCase
             ->assertHasNoErrors();
 
         $this->assertCount(1, $community->refresh()->events);
+        $this->assertcount(0, $community->events->first()->availableCars);
     }
 
     /** @test */
@@ -48,5 +49,18 @@ class EventManagementTest extends TestCase
             ->set('input.newEventName', '')
             ->call('createNewEvent')
             ->assertHasErrors(['newEventName' => 'required']);
+    }
+
+    /** @test */
+    public function a_car_preset_must_be_valid()
+    {
+        /** @var Community $community */
+        $community = Community::factory()->create()->refresh();
+
+        Livewire::test(EventManagement::class, ['community' => $community])
+            ->set('input.availableCarsPreset', 'nonsense')
+            ->set('input.newEventName', 'Test')
+            ->call('createNewEvent')
+            ->assertHasErrors(['availableCarsPreset']);
     }
 }
