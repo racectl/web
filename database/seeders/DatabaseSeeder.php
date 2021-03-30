@@ -16,7 +16,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             CarSeeder::class,
             TrackSeeder::class,
-            NwsrSeeder::class
+            NwsrSeeder::class,
+            AccWeatherPresetSeeder::class
         ]);
     }
 }

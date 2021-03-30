@@ -32,33 +32,4 @@ class CreateAccEventActionTest extends TestCase
         $this->assertDatabaseCount('acc_settings', 1);
     }
 
-    /** @test */
-    public function it_can_create_with_a_default_gt3_car_list()
-    {
-        $community = Community::factory()->create()->refresh();
-        /** @var AccEventSelectedPresets $presets */
-        $presets                = App::make(AccEventSelectedPresets::class);
-        $presets->availableCars = 'accGt3s';
-        $expectedCount          = Car::whereType('GT3')->whereSim('acc')->count();
-
-        $event = CreateAccEventAction::execute($community, 'Event Name');
-
-        $this->assertCount($expectedCount, $event->availableCars);
-        $this->assertCount($expectedCount, $event->availableCars->where('type', 'GT3'));
-    }
-
-    /** @test */
-    public function it_can_create_with_a_default_gt4_car_list()
-    {
-        $community = Community::factory()->create()->refresh();
-        /** @var AccEventSelectedPresets $presets */
-        $presets                = App::make(AccEventSelectedPresets::class);
-        $presets->availableCars = 'accGt4s';
-        $expectedCount          = Car::whereType('GT4')->whereSim('acc')->count();
-
-        $event = CreateAccEventAction::execute($community, 'Event Name');
-
-        $this->assertCount($expectedCount, $event->availableCars);
-        $this->assertCount($expectedCount, $event->availableCars->where('type', 'GT4'));
-    }
 }

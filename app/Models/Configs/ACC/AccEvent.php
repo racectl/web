@@ -36,7 +36,7 @@ class AccEvent extends BaseModel
         return [
             'preRaceWaitingTimeSeconds'     => 'nullable|integer',
             'sessionOverTimeSeconds'        => 'nullable|integer',
-            'ambientTemp'                   => 'nullable|integer', //TODO: Needs Between
+            'ambientTemp'                   => 'nullable|integer|between:10,35',
             'cloudLevel'                    => 'nullable|between:0,100',
             'rain'                          => 'nullable|between:0,100',
             'weatherRandomness'             => 'nullable|integer|between:0,7',

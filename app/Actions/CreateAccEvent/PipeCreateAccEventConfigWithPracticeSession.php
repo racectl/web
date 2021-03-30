@@ -4,6 +4,7 @@
 namespace App\Actions\CreateAccEvent;
 
 
+use App\Models\Config\ACC\AccWeatherPreset;
 use App\Models\Configs\ACC\AccAssistRules;
 use App\Models\Configs\ACC\AccEvent;
 use App\Models\Configs\ACC\AccEventSession;
@@ -11,10 +12,29 @@ use App\Models\RaceEvent;
 
 class PipeCreateAccEventConfigWithPracticeSession
 {
+    protected AccEventSelectedPresets $presets;
+
+    public function __construct(AccEventSelectedPresets $presets)
+    {
+        $this->presets = $presets;
+    }
+
     public function handle(RaceEvent $event, $next)
     {
-        /** @var AccEvent $configEvent */
-        $configEvent = $event->accConfig->event()->save(new AccEvent);
+        $accEvent = new AccEvent;
+
+        if (!empty($this->presets->weather)) {
+            $weatherPreset = $this->presets->weather;
+
+            $accEvent->ambientTemp = $weatherPreset->ambientTemp;
+            $accEvent->cloudLevel = $weatherPreset->cloudLevel;
+            $accEvent->rain = $weatherPreset->rain;
+            $accEvent->weatherRandomness = $weatherPreset->weatherRandomness;
+            $accEvent->simracerWeatherConditions = $weatherPreset->simracerWeatherConditions;
+            $accEvent->isFixedConditionQualification = $weatherPreset->isFixedConditionQualification;
+        }
+
+        $event->accConfig->event()->save($accEvent);
 
         $session = AccEventSession::make([
             'hour_of_day' => 14,
@@ -24,7 +44,7 @@ class PipeCreateAccEventConfigWithPracticeSession
             'session_duration_minutes' => 10
         ]);
 
-        $saved = $configEvent->accEventSessions()->save($session);
+        $accEvent->accEventSessions()->save($session);
 
         return $next($event);
     }
