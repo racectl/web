@@ -17,7 +17,7 @@ class AccAvailableCarsTest extends TestCase
         /** @var RaceEvent $event */
         $event = RaceEvent::factory()->create()->refresh();
 
-        $response  = $this->get($event->community->slug . '/admin/event-management/' . $event->id . '/available-cars');
+        $response  = $this->get($event->adminAvailableCarsLink());
 
         $response->assertOk();
     }
