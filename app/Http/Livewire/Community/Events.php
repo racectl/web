@@ -4,11 +4,11 @@ namespace App\Http\Livewire\Community;
 
 use App\Actions\RegisterUserToEvent\RegisterUserToEventAction;
 use App\Actions\RegisterUserToEvent\RegisterUserToEventProposal;
+use App\Http\Livewire\BetterComponent;
 use App\Models\Community;
 use App\Models\RaceEvent;
-use Livewire\Component;
 
-class Events extends Component
+class Events extends BetterComponent
 {
     /** @var Community */
     public $community;
