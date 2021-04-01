@@ -37,4 +37,9 @@ class Community extends BaseModel
     {
         return route('communityAdmin.EventManagement', $this);
     }
+
+    public function showEventsLink(): string
+    {
+        return route('community.events', $this);
+    }
 }

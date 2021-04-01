@@ -18,6 +18,7 @@ class CreateRaceEventsTable extends Migration
             $table->id();
             $table->foreignIdFor(Community::class);
             $table->string('name');
+            $table->string('sim');
             $table->string('track');
             $table->boolean('force_entry_list')->default(1);
             $table->timestamps();

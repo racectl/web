@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 /**
  * @property int                id
  * @property string             name
+ * @property string             sim
  * @property string             track
  * @property AccConfig          accConfig
  * @property Community          community
@@ -51,7 +52,12 @@ class RaceEvent extends BaseModel
     {
         return route('communityAdmin.EventManagement.availableCars', [
             'community' => $this->community,
-            'event' => $this
+            'event'     => $this
         ]);
+    }
+
+    public function startDate(): string
+    {
+        return 'Some Date and Time';
     }
 }

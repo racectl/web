@@ -3,6 +3,7 @@
 use App\Http\Controllers\DevController;
 use App\Http\Livewire\CommunityAdmin\EventManagement;
 use App\Models\Community;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\RCAdmin\CommunityManagement;
 
@@ -17,6 +18,14 @@ use App\Http\Livewire\RCAdmin\CommunityManagement;
 |
 */
 
+
+Route::get('/dev', [DevController::class, 'index'])->name('dev');
+
+Route::get('/testing', function () {
+    \Illuminate\Support\Facades\Auth::login(User::first());
+    return redirect()->back();
+});
+
 Route::get('/', function () {
     return view('home');
 })->name('home');
@@ -24,9 +33,8 @@ Route::get('/', function () {
 Route::get('{community:slug}', function (Community $community) {
     return redirect()->route('community.events', $community);
 })->name('community');
-Route::get('{community:slug}/events', function (Community $community) {
-    return "Community Event Page";
-})->name('community.events');
+Route::get('{community:slug}/events', \App\Http\Livewire\Community\Events::class)
+    ->name('community.events');
 
 Route::get('/rcadmin/community', CommunityManagement::class)
     ->name('rcadmin.communityManagement');
@@ -37,4 +45,3 @@ Route::get('{community:slug}/admin/event-management/{event}/available-cars',
     EventManagement\AccAvailableCars::class)
     ->name('communityAdmin.EventManagement.availableCars');
 
-Route::get('/dev', [DevController::class, 'index'])->name('dev');

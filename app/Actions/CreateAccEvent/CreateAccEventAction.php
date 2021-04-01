@@ -23,6 +23,7 @@ class CreateAccEventAction
     {
         $event = new RaceEvent;
         $event->name = $eventName;
+        $event->sim = 'ACC';
         $event->track = 'barcelona';
 
         $community->events()->save($event);
