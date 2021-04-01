@@ -4,6 +4,7 @@ namespace App\Http\Livewire\RCAdmin;
 
 use App\Http\Livewire\RuleBasedInputs;
 use App\Models\Community;
+use Illuminate\Support\Str;
 use Livewire\Component;
 
 class CommunityManagement extends Component
@@ -20,6 +21,7 @@ class CommunityManagement extends Component
 
         $community = new Community;
         $community->name = $this->input('newCommunityName');
+        $community->slug = Str::slug($this->input('newCommunityName'));
         $community->save();
     }
 

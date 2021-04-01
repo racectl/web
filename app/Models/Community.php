@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property int                id
+ * @property string             slug
  * @property string             name
  * @property EloquentCollection members
  * @property EloquentCollection events

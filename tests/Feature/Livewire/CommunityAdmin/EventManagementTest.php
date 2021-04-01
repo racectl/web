@@ -26,7 +26,7 @@ class EventManagementTest extends TestCase
         $this->withoutExceptionHandling();
         /** @var Community $community */
         $community = Community::factory()->create()->refresh();
-        $response  = $this->get($community->id . '/admin/event-management');
+        $response  = $this->get($community->slug . '/admin/event-management');
         $response
             ->assertOk()
             ->assertSee($community->name);

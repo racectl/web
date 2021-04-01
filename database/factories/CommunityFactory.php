@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Community;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 class CommunityFactory extends Factory
 {
@@ -21,8 +22,10 @@ class CommunityFactory extends Factory
      */
     public function definition()
     {
+        $name = $this->faker->sentence(3);
         return [
-            'name' => $this->faker->word()
+            'name' => $name,
+            'slug' => Str::slug($name)
         ];
     }
 }

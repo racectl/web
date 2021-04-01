@@ -24,7 +24,8 @@ class NwsrSeeder extends Seeder
         ]);
 
         Community::create([
-            'name' => 'New World Sim Racing'
+            'name' => 'New World Sim Racing',
+            'slug' => 'new-world-sim-racing'
         ]);
     }
 }
