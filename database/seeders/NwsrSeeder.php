@@ -15,7 +15,7 @@ class NwsrSeeder extends Seeder
      */
     public function run()
     {
-        User::create([
+        $user = User::create([
             'first_name' => 'Dale',
             'last_name' => 'Carter',
             'discord_id' => '1',
@@ -23,9 +23,11 @@ class NwsrSeeder extends Seeder
             'email' => 'xthedalex@gmail.com'
         ]);
 
-        Community::create([
+        $community = Community::create([
             'name' => 'New World Sim Racing',
             'slug' => 'new-world-sim-racing'
         ]);
+
+        $community->members()->attach($user);
     }
 }

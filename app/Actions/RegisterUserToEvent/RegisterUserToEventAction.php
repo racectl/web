@@ -12,6 +12,7 @@ class RegisterUserToEventAction
 {
     protected array $pipes = [
         PipeCheckCommunityMemberStatus::class,
+        PipeCheckIfUserIsRegisteredAlready::class,
         PipeCreateEventEntryAndRegisterUserToEvent::class
     ];
 
