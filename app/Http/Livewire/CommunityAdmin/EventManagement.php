@@ -16,9 +16,9 @@ class EventManagement extends Component
     public $community;
 
     protected $rules = [
-        'newEventName' => 'required|max:256',
+        'newEventName'        => 'required|max:256',
         'availableCarsPreset' => 'nullable|in:accGt3s,accGt4s',
-        'weatherPreset' => 'exists:acc_weather_presets,id'
+        'weatherPreset'       => 'exists:acc_weather_presets,id'
     ];
 
     public function mount(Community $community): void
@@ -31,11 +31,10 @@ class EventManagement extends Component
         $this->setInputDefault('weatherPreset', 1);
     }
 
-    public function createNewEvent(CreateAccEventAction $createAccEventAction): void
+    public function createNewEvent(CreateAccEventAction $createAccEventAction, AccEventSelectedPresets $presets): void
     {
         $this->validate();
 
-        $presets = App::make(AccEventSelectedPresets::class);
         $presets->availableCars = $this->input('availableCarsPreset');
         $presets->setWeatherFromId($this->input('weatherPreset'));
 
