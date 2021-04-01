@@ -23,7 +23,8 @@ class RegisterUserToEventTest extends TestCase
         $event = $createAction->execute($community, 'Testing Event');
 
         $proposal = new RegisterUserToEventProposal($event, 11);
-        RegisterUserToEventAction::execute($proposal);
+        $registrationAction = new RegisterUserToEventAction;
+        $registrationAction->execute($proposal);
 
         $this->assertCount(1, $event->entries);
         $this->assertCount(1, $event->entries->first()->users);
@@ -41,6 +42,7 @@ class RegisterUserToEventTest extends TestCase
         $event = $createAction->execute($community, 'Testing Event');
 
         $proposal = new RegisterUserToEventProposal($event, 11);
-        RegisterUserToEventAction::execute($proposal);
+        $registrationAction = new RegisterUserToEventAction;
+        $registrationAction->execute($proposal);
     }
 }

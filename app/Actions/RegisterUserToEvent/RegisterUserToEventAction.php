@@ -10,16 +10,16 @@ use Illuminate\Support\Facades\Auth;
 
 class RegisterUserToEventAction
 {
-    protected static array $pipes = [
+    protected array $pipes = [
         PipeCheckCommunityMemberStatus::class,
         PipeCreateEventEntryAndRegisterUserToEvent::class
     ];
 
-    public static function execute(RegisterUserToEventProposal $proposal)
+    public function execute(RegisterUserToEventProposal $proposal)
     {
         return app(Pipeline::class)
             ->send($proposal)
-            ->through(static::$pipes)
+            ->through($this->pipes)
             ->thenReturn();
     }
 }
