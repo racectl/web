@@ -3,11 +3,18 @@
         <form wire:submit.prevent="createNewEvent">
             <x-form.text labeled="New Event Name" wireTo="newEventName" />
 
-            <label>Car Presets {{ $input['availableCarsPreset'] }}</label>
+            <label>Car Preset {{ $input['availableCarsPreset'] }}</label>
             <select wire:model="input.availableCarsPreset" class="form-control">
                 <option value="">None</option>
                 <option value="accGt3s">All GT3s</option>
                 <option value="accGt4s">All GT4s</option>
+            </select>
+
+            <label>Weather Preset {{ $input['weatherPreset'] }}</label>
+            <select wire:model="input.weatherPreset" class="form-control">
+                @foreach(\App\Models\Config\ACC\AccWeatherPreset::all() as $weather)
+                    <option value="{{ $weather->id }}">{{ $weather->name }}</option>
+                @endforeach
             </select>
 
             <button type="submit" class="btn btn-block btn-outline-primary">Create</button>

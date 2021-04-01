@@ -2,14 +2,24 @@
 
 namespace Tests\Feature\Livewire\CommunityAdmin;
 
+use App\Actions\CreateAccEvent\AccEventSelectedPresets;
 use App\Actions\CreateAccEvent\CreateAccEventAction;
 use App\Http\Livewire\CommunityAdmin\EventManagement;
 use App\Models\Community;
+use App\Models\Config\ACC\AccWeatherPreset;
 use Livewire\Livewire;
 use Tests\TestCase;
 
 class EventManagementTest extends TestCase
 {
+    protected $eventSpy;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->eventSpy = $this->spy(CreateAccEventAction::class);
+    }
+
     /** @test */
     public function it_has_a_route()
     {
@@ -28,8 +38,6 @@ class EventManagementTest extends TestCase
         /** @var Community $community */
         $community = Community::factory()->create()->refresh();
 
-        $spy = $this->spy(CreateAccEventAction::class);
-
         Livewire::test(EventManagement::class, ['community' => $community])
             ->assertSet('community', $community)
             ->set('input.newEventName', 'Test Event')
@@ -37,7 +45,7 @@ class EventManagementTest extends TestCase
             ->call('createNewEvent')
             ->assertHasNoErrors();
 
-        $spy->shouldHaveReceived('execute')->with(Community::class, 'Test Event');
+        $this->eventSpy->shouldHaveReceived('execute')->with(Community::class, 'Test Event');
     }
 
     /** @test */
@@ -64,5 +72,50 @@ class EventManagementTest extends TestCase
             ->set('input.newEventName', 'Test')
             ->call('createNewEvent')
             ->assertHasErrors(['availableCarsPreset']);
+    }
+
+    /** @test */
+    public function it_creates_an_event_with_a_car_preset()
+    {
+        /** @var Community $community */
+        $community = Community::factory()->create()->refresh();
+
+        Livewire::test(EventManagement::class, ['community' => $community])
+            ->set('input.newEventName', 'Test Event')
+            ->set('input.availableCarsPreset', 'accGt3s')
+            ->call('createNewEvent')
+            ->assertHasNoErrors();
+
+        $presets = app(AccEventSelectedPresets::class);
+        $this->assertEquals('accGt3s', $presets->availableCars);
+    }
+
+    /** @test */
+    public function it_creates_an_event_with_a_weather_preset()
+    {
+        /** @var Community $community */
+        $community = Community::factory()->create()->refresh();
+
+        Livewire::test(EventManagement::class, ['community' => $community])
+            ->set('input.newEventName', 'Test Event')
+            ->set('input.weatherPreset', 1)
+            ->call('createNewEvent')
+            ->assertHasNoErrors();
+
+        $presets = app(AccEventSelectedPresets::class);
+        $this->assertInstanceOf(AccWeatherPreset::class, $presets->weather);
+    }
+
+    /** @test */
+    public function a_weather_preset_must_be_valid()
+    {
+        /** @var Community $community */
+        $community = Community::factory()->create()->refresh();
+
+        Livewire::test(EventManagement::class, ['community' => $community])
+            ->set('input.weatherPreset', 0)
+            ->set('input.newEventName', 'Test')
+            ->call('createNewEvent')
+            ->assertHasErrors(['weatherPreset']);
     }
 }
