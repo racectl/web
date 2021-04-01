@@ -7,6 +7,7 @@ use App\Actions\RegisterUserToEvent\RegisterUserToEventAction;
 use App\Actions\RegisterUserToEvent\RegisterUserToEventProposal;
 use App\Exceptions\UserNotCommunityMemberException;
 use App\Models\Community;
+use Illuminate\Support\Facades\App;
 use Tests\TestCase;
 
 class RegisterUserToEventTest extends TestCase
@@ -17,7 +18,9 @@ class RegisterUserToEventTest extends TestCase
         $user = $this->logFirstUserIn();
         $community = Community::first();
         $community->members()->attach($user);
-        $event = CreateAccEventAction::execute($community, 'Testing Event');
+
+        $createAction = App::make(CreateAccEventAction::class);
+        $event = $createAction->execute($community, 'Testing Event');
 
         $proposal = new RegisterUserToEventProposal($event, 11);
         RegisterUserToEventAction::execute($proposal);
@@ -33,7 +36,9 @@ class RegisterUserToEventTest extends TestCase
 
         $this->logFirstUserIn();
         $community = Community::first();
-        $event = CreateAccEventAction::execute($community, 'Testing Event');
+
+        $createAction = App::make(CreateAccEventAction::class);
+        $event = $createAction->execute($community, 'Testing Event');
 
         $proposal = new RegisterUserToEventProposal($event, 11);
         RegisterUserToEventAction::execute($proposal);

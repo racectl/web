@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Livewire\CommunityAdmin;
 
+use App\Actions\CreateAccEvent\CreateAccEventAction;
 use App\Http\Livewire\CommunityAdmin\EventManagement;
 use App\Models\Community;
 use Livewire\Livewire;
@@ -27,6 +28,8 @@ class EventManagementTest extends TestCase
         /** @var Community $community */
         $community = Community::factory()->create()->refresh();
 
+        $spy = $this->spy(CreateAccEventAction::class);
+
         Livewire::test(EventManagement::class, ['community' => $community])
             ->assertSet('community', $community)
             ->set('input.newEventName', 'Test Event')
@@ -34,8 +37,7 @@ class EventManagementTest extends TestCase
             ->call('createNewEvent')
             ->assertHasNoErrors();
 
-        $this->assertCount(1, $community->refresh()->events);
-        $this->assertcount(0, $community->events->first()->availableCars);
+        $spy->shouldHaveReceived('execute')->with(Community::class, 'Test Event');
     }
 
     /** @test */

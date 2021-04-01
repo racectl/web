@@ -10,7 +10,7 @@ use Illuminate\Pipeline\Pipeline;
 
 class CreateAccEventAction
 {
-    protected static array $pipes = [
+    protected array $pipes = [
         PipeCreateAccConfig::class,
         PipeCreateAccAssistRules::class,
         PipeCreateAccEventConfigWithPracticeSession::class,
@@ -19,7 +19,7 @@ class CreateAccEventAction
         PipeAssignAvailableCars::class
     ];
 
-    public static function execute(Community $community, string $eventName): RaceEvent
+    public function execute(Community $community, string $eventName): RaceEvent
     {
         $event = new RaceEvent;
         $event->name = $eventName;
@@ -29,7 +29,7 @@ class CreateAccEventAction
 
         return app(Pipeline::class)
             ->send($event)
-            ->through(static::$pipes)
+            ->through($this->pipes)
             ->thenReturn();
     }
 }

@@ -20,7 +20,8 @@ class CreateAccEventActionTest extends TestCase
         /** @var Community $community */
         $community = Community::first();
 
-        $actionReturn = CreateAccEventAction::execute($community, 'Event Name');
+        $createAction = App::make(CreateAccEventAction::class);
+        $actionReturn = $createAction->execute($community, 'Event Name');
 
         $this->assertInstanceOf(RaceEvent::class, $actionReturn);
         $this->assertDatabaseCount('race_events', 1);

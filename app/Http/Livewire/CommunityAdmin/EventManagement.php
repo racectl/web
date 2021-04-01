@@ -25,14 +25,14 @@ class EventManagement extends Component
         $this->community = $community;
     }
 
-    public function createNewEvent(): void
+    public function createNewEvent(CreateAccEventAction $createAccEventAction): void
     {
         $this->validate();
 
         $presets = App::make(AccEventSelectedPresets::class);
         $presets->availableCars = $this->input('availableCarsPreset');
 
-        CreateAccEventAction::execute($this->community, $this->input('newEventName'));
+        $createAccEventAction->execute($this->community, $this->input('newEventName'));
         $this->community->refresh();
     }
 
