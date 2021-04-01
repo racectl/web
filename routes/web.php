@@ -25,3 +25,6 @@ Route::get('/rcadmin/community', CommunityManagement::class)
     ->name('rcadmin.communityManagement');
 Route::get('{community}/admin/event-management', EventManagement::class)
     ->name('communityAdmin.EventManagement');
+Route::get('{community}/admin/event-management/{event}/available-cars',
+    EventManagement\AccAvailableCars::class)
+    ->name('communityAdmin.EventManagement.availableCars');

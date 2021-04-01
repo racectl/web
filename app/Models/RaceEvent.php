@@ -9,11 +9,12 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
- * @property EloquentCollection entries
+ * @property int                id
  * @property string             name
  * @property string             track
  * @property AccConfig          accConfig
  * @property Community          community
+ * @property EloquentCollection entries
  * @property EloquentCollection availableCars
  */
 class RaceEvent extends BaseModel
@@ -22,7 +23,7 @@ class RaceEvent extends BaseModel
     {
         return [
             'track' => 'required|exists:App\Models\Track,game_config_id',
-            'name' => 'required'
+            'name'  => 'required'
         ];
     }
 
@@ -46,4 +47,11 @@ class RaceEvent extends BaseModel
         return $this->belongsToMany(Car::class);
     }
 
+    public function adminAvailableCarsLink()
+    {
+        return route('communityAdmin.EventManagement.availableCars', [
+            'community' => $this->community,
+            'event' => $this
+        ]);
+    }
 }

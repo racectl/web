@@ -18,4 +18,9 @@ class Car extends BaseModel
     {
         return $query->whereType('GT4')->whereSim('acc');
     }
+
+    public function scopeAcc($query)
+    {
+        return $query->whereSim('acc');
+    }
 }

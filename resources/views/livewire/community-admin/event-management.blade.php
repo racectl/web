@@ -26,6 +26,7 @@
                 <tr>
                     <th>Name</th>
                     <th>Car Count</th>
+                    <th>Options</th>
                 </tr>
             </thead>
             <tbody>
@@ -33,6 +34,9 @@
                     <tr>
                         <td>{{ $event->name }}</td>
                         <td>{{ $event->availableCars->count() }}</td>
+                        <td>
+                            <a href="{{ $event->adminAvailableCarsLink() }}" class="btn btn-primary">Cars</a>
+                        </td>
                     </tr>
             @endforeach
             </tbody>

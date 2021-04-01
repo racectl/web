@@ -41,6 +41,11 @@ trait RuleBasedInputs
 
     protected function setInputDefault($key, $value)
     {
+        $this->setInput($key, $value);
+    }
+
+    protected function setInput($key, $value)
+    {
         $this->input[$key] = $value;
     }
 
