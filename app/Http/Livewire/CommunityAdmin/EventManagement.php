@@ -6,7 +6,6 @@ use App\Actions\CreateAccEvent\AccEventSelectedPresets;
 use App\Actions\CreateAccEvent\CreateAccEventAction;
 use App\Http\Livewire\RuleBasedInputs;
 use App\Models\Community;
-use Illuminate\Support\Facades\App;
 use Livewire\Component;
 
 class EventManagement extends Component
@@ -31,7 +30,10 @@ class EventManagement extends Component
         $this->setInputDefault('weatherPreset', 1);
     }
 
-    public function createNewEvent(CreateAccEventAction $createAccEventAction, AccEventSelectedPresets $presets): void
+    public function createNewEvent(
+        CreateAccEventAction $createAccEventAction,
+        AccEventSelectedPresets $presets
+    ): void
     {
         $this->validate();
 
