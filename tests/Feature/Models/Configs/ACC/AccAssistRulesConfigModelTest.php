@@ -22,7 +22,7 @@ class AccAssistRulesConfigModelTest extends TestCase
     public function it_generates_json_needed_for_file()
     {
         AccAssistRules::factory()->defaults()->create();
-        $rules = AccAssistRules::first();
+        $rules = AccAssistRules::firstWhere('preset_for_community', null);
         $expected = file_get_contents(__DIR__ . '/ExpectedAssistRules.json');
 
         $this->assertEquals($expected, $rules->jsonForFile());

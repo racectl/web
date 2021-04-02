@@ -27,7 +27,9 @@ class AccAssistRules extends BaseModel implements Jsonable
 
     public $jsonableExcludes = [
         'id',
-        'acc_config_id'
+        'acc_config_id',
+        'preset_for_community',
+        'preset_name'
     ];
 
     public static function rules(): array

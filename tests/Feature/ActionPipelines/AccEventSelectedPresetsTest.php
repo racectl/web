@@ -7,6 +7,7 @@ use App\Actions\CreateAccEvent\CreateAccEventAction;
 use App\Models\Car;
 use App\Models\Community;
 use App\Models\Config\ACC\AccWeatherPreset;
+use App\Models\Configs\ACC\AccAssistRules;
 use Illuminate\Support\Facades\App;
 use Tests\TestCase;
 
@@ -45,9 +46,7 @@ class AccEventSelectedPresetsTest extends TestCase
         $this->assertCount($expectedCount, $event->availableCars->where('type', 'GT4'));
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_can_create_with_a_weather_preset()
     {
         $weather = AccWeatherPreset::first();
@@ -65,6 +64,26 @@ class AccEventSelectedPresetsTest extends TestCase
 
         foreach ($checks as $check) {
             $this->assertEquals($weather->$check, $eventConfig->$check);
+        }
+    }
+
+    /** @test */
+    public function it_can_create_with_an_assist_rules_preset()
+    {
+        $community = Community::factory()->create()->refresh();
+        /** @var AccEventSelectedPresets $presets */
+        $presets = App::make(AccEventSelectedPresets::class);
+        $presets->setAssistRulesFromId(1);
+        $preset = AccAssistRules::find(1);
+
+        $createAction = App::make(CreateAccEventAction::class);
+        $event        = $createAction->execute($community, 'Event Name');
+        $actual  = $event->accConfig->assistRules;
+
+        $checks = ['stabilityControlLevelMax', 'disableAutosteer', 'disableAutoLights', 'disableAutoWiper', 'disableAutoEngineStart', 'disableAutoPitLimiter', 'disableAutoGear', 'disableAutoClutch', 'disableIdealLine'];
+
+        foreach ($checks as $check) {
+            $this->assertEquals($preset->$check, $actual->$check);
         }
     }
 }
