@@ -5,7 +5,9 @@
             <x-widget heading="Event" width="6">
 
                 <x-row>
-                    <x-form.text labeled="Event Name" wireTo="eventName" />
+                    <div class="col-xl-12 col-lg-12">
+                        <x-form.text labeled="Event Name" wireTo="eventName" />
+                    </div>
                 </x-row>
 
                 <x-form.track-dropdown />
@@ -44,6 +46,8 @@
                 <x-form.text wireTo="cloudLevel" labeled="Cloud % (0-100)" />
                 <x-form.text wireTo="rain" labeled="Rain % (0-100)" />
                 <x-form.text wireTo="weatherRandomness" labeled="Randomness (0-7)" />
+                <x-form.checkbox name="simracerWeatherConditions" />
+                <x-form.checkbox name="isFixedConditionQualification" />
             </x-widget>
 
             <x-widget heading="Other Options" width="3">
@@ -52,8 +56,6 @@
                 <x-form.text wireTo="sessionOverTimeSeconds" />
                 <x-form.text wireTo="postQualySeconds" />
                 <x-form.text wireTo="postRaceSeconds" />
-                <x-form.checkbox name="simracerWeatherConditions" />
-                <x-form.checkbox name="isFixedConditionQualification" />
             </x-widget>
 
             <x-widget heading="Pit Conditions" width="4">
@@ -64,11 +66,21 @@
                 <x-form.checkbox name="isMandatoryPitstopSwapDriverRequired" />
                 <hr>
                 <x-row>
-                    <x-form.text wireTo="mandatoryPitstopCount" width="6"/>
-                    <x-form.text wireTo="pitWindowLengthSec" width="6"/>
-                    <x-form.text wireTo="driverStintTimeSec" width="6"/>
-                    <x-form.text wireTo="maxTotalDrivingTime" width="6"/>
-                    <x-form.text wireTo="tyreSetCount" labeled="Tyre Set Count (1-50)" width="6"/>
+                    <div class="col-xl-6 col-lg-12">
+                        <x-form.text wireTo="mandatoryPitstopCount" />
+                    </div>
+                    <div class="col-xl-6 col-lg-12">
+                        <x-form.text wireTo="pitWindowLengthSec" />
+                    </div>
+                    <div class="col-xl-6 col-lg-12">
+                        <x-form.text wireTo="driverStintTimeSec" />
+                    </div>
+                    <div class="col-xl-6 col-lg-12">
+                        <x-form.text wireTo="maxTotalDrivingTime" />
+                    </div>
+                    <div class="col-xl-6 col-lg-12">
+                        <x-form.text wireTo="tyreSetCount" labeled="Tyre Set Count (1-50)" />
+                    </div>
                 </x-row>
             </x-widget>
 
