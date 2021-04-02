@@ -18,15 +18,6 @@ class AccAssistRulesConfigModelTest extends TestCase
     }
 
     /** @test */
-    public function it_can_be_created_by_a_factory()
-    {
-        $factory = AccAssistRules::factory()->create();
-        $db  = AccAssistRules::first();
-
-        $this->assertEquals($factory->getAttributes(), $db->getAttributes());
-    }
-
-    /** @test */
     public function it_generates_json_needed_for_file()
     {
         AccAssistRules::factory()->defaults()->create();

@@ -8,6 +8,7 @@ use App\Actions\RegisterUserToEvent\RegisterUserToEventProposal;
 use App\Exceptions\UserAlreadyRegisteredToEventException;
 use App\Exceptions\UserNotCommunityMemberException;
 use App\Models\Community;
+use App\Models\User;
 use Illuminate\Support\Facades\App;
 use Tests\TestCase;
 
@@ -16,8 +17,11 @@ class RegisterUserToEventTest extends TestCase
     /** @test */
     public function it_registers_a_logged_in_user()
     {
+        $this->withoutExceptionHandling();
+
         $user = $this->logFirstUserIn();
-        $community = Community::first();
+        /** @var Community $community */
+        $community = Community::factory()->create()->refresh();
         $community->members()->attach($user);
 
         $createAction = App::make(CreateAccEventAction::class);
@@ -27,7 +31,7 @@ class RegisterUserToEventTest extends TestCase
         $registrationAction = new RegisterUserToEventAction;
         $registrationAction->execute($proposal);
 
-        $this->assertCount(1, $event->entries);
+        $this->assertCount(1, $event->refresh()->entries);
         $this->assertCount(1, $event->entries->first()->users);
     }
 
@@ -36,8 +40,9 @@ class RegisterUserToEventTest extends TestCase
     {
         $this->expectException(UserNotCommunityMemberException::class);
 
-        $this->logFirstUserIn();
-        $community = Community::first();
+        $community = Community::factory()->create()->refresh();
+        $user = User::factory()->create();
+        $this->actingAs($user);
 
         $createAction = App::make(CreateAccEventAction::class);
         $event = $createAction->execute($community, 'Testing Event');

@@ -23,19 +23,18 @@ class CommunityModelTest extends TestCase
     {
         $community = Community::factory()->hasMembers(3)->create()->refresh();
 
-        $this->assertDatabaseCount('community_members', 3);
         $this->assertCount(3, $community->members);
     }
 
     /** @test */
     public function it_adds_a_user_to_members()
     {
-        $user = User::first();
-        $community = Community::first();
+        $user = User::factory()->create();
+        /** @var Community $community */
+        $community = Community::factory()->create();
 
         $community->members()->attach($user);
 
-        $this->assertDatabaseCount('community_members', 1);
         $this->assertCount(1, $community->members);
     }
 }
