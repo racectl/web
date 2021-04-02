@@ -17,7 +17,8 @@ class DatabaseSeeder extends Seeder
             CarSeeder::class,
             TrackSeeder::class,
             NwsrSeeder::class,
-            AccWeatherPresetSeeder::class
+            AccWeatherPresetSeeder::class,
+            AccAssistRulesDefaultSeeder::class
         ]);
     }
 }

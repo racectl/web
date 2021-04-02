@@ -5,6 +5,7 @@ namespace App\Models\Configs\ACC;
 use App\Actions\GenerateJsonForFile;
 use App\Contracts\Jsonable;
 use App\Models\BaseModel;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Str;
 
 /**
@@ -17,6 +18,8 @@ use Illuminate\Support\Str;
  * @property boolean disableAutoGear
  * @property boolean disableAutoClutch
  * @property boolean disableIdealLine
+ * @property int     presetForCommunity
+ * @property string  presetName
  */
 class AccAssistRules extends BaseModel implements Jsonable
 {
@@ -40,6 +43,18 @@ class AccAssistRules extends BaseModel implements Jsonable
             'disableAutoClutch'        => 'required|boolean',
             'disableIdealLine'         => 'required|boolean',
         ];
+    }
+
+    public static function presets($communityId = null): \Illuminate\Support\Collection
+    {
+        /** @var Builder $builder */
+        $builder = self::wherePresetForCommunity(0);
+
+        $builder = $communityId
+            ? $builder->orWhere('preset_for_community', $communityId)
+            : $builder;
+
+        return $builder->get();
     }
 
     public function jsonForFile()

@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\AccConfig;
+use App\Models\Community;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -16,7 +17,10 @@ class CreateAccAssistRulesTable extends Migration
     {
         Schema::create('acc_assist_rules', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(AccConfig::class)->nullable();
+            $table->foreignIdFor(AccConfig::class)->nullable()->nullable();
+
+            $table->foreignIdFor(Community::class, 'preset_for_community')->nullable();
+            $table->string('preset_name')->nullable();
 
             $table->tinyInteger('stability_control_level_max')->default(25);
             $table->boolean('disable_autosteer')->default(0);
