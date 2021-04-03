@@ -24,7 +24,7 @@ Route::get('/dev', [DevController::class, 'index'])->name('dev');
 Route::get('/dev/login', function () {
     \Illuminate\Support\Facades\Auth::login(User::first());
     return redirect()->back();
-});
+})->name('dev.login');
 
 Route::get('/', function () {
     return view('home');

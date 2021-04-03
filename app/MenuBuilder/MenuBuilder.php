@@ -17,9 +17,22 @@ class MenuBuilder
     {
         $this->request = $request;
         $this->menuSections = collect();
+
+        if (Auth::guest()) {
+            $this->guests();
+        }
+
         $this->superAdmin();
         $this->communityAdmin();
         $this->user();
+    }
+
+    protected function guests()
+    {
+        $this->menuSections->push(
+            new MenuSectionNoSubs('Testing Login', 'log-in', 'dev.login')
+        );
+
     }
 
     protected function superAdmin()
@@ -51,7 +64,17 @@ class MenuBuilder
 
     protected function user()
     {
+        $menu = new MenuSection('Users', 'terminal');
+        $community = Community::first();
+        $menu->addEntry(
+            new MenuEntry(
+                'Community Event Page',
+                'community.events',
+                ['community' => $community]
+            )
+        );
 
+        $this->menuSections->push($menu);
     }
 
     public function getSections()
