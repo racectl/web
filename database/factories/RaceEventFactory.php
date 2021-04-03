@@ -27,7 +27,7 @@ class RaceEventFactory extends Factory
             'force_entry_list' => 1,
             'track'            => $this->trackConfigId(),
             'sim'              => 'ACC',
-            'name'             => $this->faker->word,
+            'name'             => $this->faker->sentence,
             'community_id'     => Community::factory()
         ];
     }

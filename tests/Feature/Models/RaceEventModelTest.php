@@ -49,4 +49,34 @@ class RaceEventModelTest extends TestCase
 
         $this->assertInstanceOf(AccConfig::class, $event->accConfig);
     }
+
+    /** @test */
+    public function it_generates_a_link_to_admin_availalbe_cars_management()
+    {
+        /** @var RaceEvent $event */
+        $event = RaceEvent::factory()->create();
+
+        $expected = route(
+            'communityAdmin.EventManagement.availableCars',
+            [
+                'community' => $event->community,
+                'event' => $event
+            ]
+        );
+
+        $this->assertEquals($expected, $event->adminAvailableCarsLink());
+    }
+
+    /** @test */
+    public function it_generates_a_show_link()
+    {
+        /** @var RaceEvent $event */
+        $event    = RaceEvent::factory()->create();
+        $expected = route('community.event.show', [
+            'community' => $event->community,
+            'event' => $event
+        ]);
+
+        $this->assertEquals($expected, $event->showLink());
+    }
 }

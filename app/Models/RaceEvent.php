@@ -48,11 +48,19 @@ class RaceEvent extends BaseModel
         return $this->belongsToMany(Car::class);
     }
 
-    public function adminAvailableCarsLink()
+    public function adminAvailableCarsLink(): string
     {
         return route('communityAdmin.EventManagement.availableCars', [
             'community' => $this->community,
             'event'     => $this
+        ]);
+    }
+
+    public function showLink(): string
+    {
+        return route('community.event.show', [
+            'community' => $this->community,
+            'event' => $this
         ]);
     }
 

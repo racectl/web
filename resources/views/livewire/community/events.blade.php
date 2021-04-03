@@ -15,7 +15,11 @@
                 @foreach($community->events as $event)
                     <tr>
                         <td>{{ $event->sim }}</td>
-                        <td>{{ $event->name }}</td>
+                        <td>
+                            <a href="{{ $event->showLink() }}" class="text-primary">
+                                {{ $event->name }}
+                            </a>
+                        </td>
                         <td>{{ $event->availableCars->count() }}</td>
                         <td>{{ $event->entries->count() }}</td>
                         <td>{{ $event->startDate() }}</td>

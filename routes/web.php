@@ -35,6 +35,8 @@ Route::get('{community:slug}', function (Community $community) {
 })->name('community');
 Route::get('{community:slug}/events', \App\Http\Livewire\Community\Events::class)
     ->name('community.events');
+Route::get('{community:slug}/event/{event}', \App\Http\Livewire\Community\Event\EventShow::class)
+    ->name('community.event.show');
 
 Route::get('/rcadmin/community', CommunityManagement::class)
     ->name('rcadmin.communityManagement');
