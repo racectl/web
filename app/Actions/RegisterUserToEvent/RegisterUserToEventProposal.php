@@ -16,6 +16,9 @@ class RegisterUserToEventProposal
     public Community $community;
     public RaceEvent $event;
     public int       $carModelId;
+    public bool      $createNewTeam;
+    public string    $teamName;
+    public string    $joinTeamCode;
 
     public function __construct(RaceEvent $event, int $carModelId, User $user = null)
     {
@@ -23,7 +26,7 @@ class RegisterUserToEventProposal
         $this->user       = $user ?? Auth::user();
         $this->event      = $event;
         $this->carModelId = $carModelId;
-        $this->community = $event->community;
+        $this->community  = $event->community;
         App::bind(self::class, function () {
             return $this;
         });

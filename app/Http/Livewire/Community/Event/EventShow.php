@@ -7,7 +7,6 @@ use App\Actions\RegisterUserToEvent\RegisterUserToEventProposal;
 use App\Http\Livewire\RuleBasedInputs;
 use App\Models\Community;
 use App\Models\RaceEvent;
-use App\Models\RaceEventEntry;
 use Livewire\Component;
 
 class EventShow extends Component
@@ -18,27 +17,52 @@ class EventShow extends Component
     public RaceEvent $event;
 
     public $rules = [
-        'selectedCar' => 'exists:car,id',
-        'teamJoinCode' => 'string|max:255'
+        'selectedCar'      => 'required|exists:cars,id',
+        'teamJoinCode'     => 'required|string|max:255',
+        'joinExistingTeam' => 'required|boolean',
+        'teamName'         => 'required|string'
     ];
-
-    public function __construct($id = null)
-    {
-        $this->rules['teamName'] = RaceEventEntry::rules()['teamName'];
-        parent::__construct($id);
-    }
 
     public function inputDefaults()
     {
         $this->setInputDefault('selectedCar', $this->event->availableCars->first()->id);
+        $this->setInputDefault('joinExistingTeam', 0);
     }
 
     public function registerUser(RegisterUserToEventAction $registerAction)
     {
+        $this->validateOnly('selectedCar');
+
         $proposal = new RegisterUserToEventProposal(
             $this->event,
             $this->input('selectedCar'),
         );
+
+        $registerAction->execute($proposal);
+    }
+
+    public function registerNewTeam(RegisterUserToEventAction $registerAction)
+    {
+        $this->validateOnly('teamName');
+        $this->validateOnly('selectedCar');
+
+        $proposal                = new RegisterUserToEventProposal(
+            $this->event,
+            $this->input('selectedCar')
+        );
+        $proposal->createNewTeam = true;
+        $proposal->teamName      = $this->input('teamName');
+        $registerAction->execute($proposal);
+    }
+
+    public function joinTeam(RegisterUserToEventAction $registerAction)
+    {
+        $this->validateOnly('teamJoinCode');
+        $proposal               = new RegisterUserToEventProposal(
+            $this->event,
+            $this->input('selectedCar')
+        );
+        $proposal->joinTeamCode = $this->input('teamJoinCode');
         $registerAction->execute($proposal);
     }
 
