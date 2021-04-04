@@ -12,11 +12,7 @@ trait RuleBasedInputs
 
     public function initializeBetterInputs()
     {
-        if (method_exists($this, 'dynamicRules')) {
-            foreach ($this->dynamicRules() as $key => $value) {
-                $this->rules[$key] = $value;
-            }
-        }
+
     }
 
     public function mountRuleBasedInputs()

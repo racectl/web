@@ -18,6 +18,7 @@ class CreateRaceEventEntriesTable extends Migration
             $table->id();
             $table->foreignIdFor(RaceEvent::class);
 
+            $table->string('team_name')->nullable();
             $table->integer('race_number')->default(-1);
             $table->integer('forced_car_model')->default(-1);
             $table->tinyInteger('default_grid_position')->default(-1);

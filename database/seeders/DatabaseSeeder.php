@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\App;
 
 class DatabaseSeeder extends Seeder
 {
@@ -20,5 +21,9 @@ class DatabaseSeeder extends Seeder
             AccWeatherPresetSeeder::class,
             AccAssistRulesDefaultSeeder::class
         ]);
+
+        if (App::environment('local')) {
+            $this->call(LocalSeeder::class);
+        }
     }
 }

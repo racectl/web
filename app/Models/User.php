@@ -57,4 +57,9 @@ class User extends Authenticatable
     {
         return 'S' . $this->steam_id;
     }
+
+    public function getDisplayNameAttribute()
+    {
+        return $this->first_name . ' ' . $this->last_name;
+    }
 }

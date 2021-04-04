@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 
 /**
+ * @property string             teamName
  * @property integer            raceNumber
  * @property integer            forcedCarModel
  * @property integer            defaultGridPosition
@@ -18,6 +19,7 @@ class RaceEventEntry extends BaseModel
     public static function rules(): array
     {
         return [
+            'teamName'            => 'nullable|string|max:255',
             'raceNumber'          => 'nullable|integer|between:1,998',
             'forcedCarModel'      => 'nullable|integer|exists:App\Models\Car,id',
             'defaultGridPosition' => 'nullable|integer',
@@ -35,29 +37,29 @@ class RaceEventEntry extends BaseModel
             $entryArray = [];
 
             foreach ($entry->users as $user) {
-                $driver = [];
-                $driver["firstName"] = $user->first_name;
-                $driver["lastName"] = $user->last_name;
-                $driver["shortName"] = $user->shortName();
+                $driver                   = [];
+                $driver["firstName"]      = $user->first_name;
+                $driver["lastName"]       = $user->last_name;
+                $driver["shortName"]      = $user->shortName();
                 $driver["driverCategory"] = $user->id;
-                $driver["playerID"] = $user->playerId();
-                $entryArray['drivers'][] = $driver;
+                $driver["playerID"]       = $user->playerId();
+                $entryArray['drivers'][]  = $driver;
             }
 
-            $entryArray["raceNumber"] = $entry->raceNumber;
-            $entryArray["forcedCarModel"] = $entry->forcedCarModel;
-            $entryArray["overrideDriverInfo"] = $entry->overrideDriverInfo;
+            $entryArray["raceNumber"]          = $entry->raceNumber;
+            $entryArray["forcedCarModel"]      = $entry->forcedCarModel;
+            $entryArray["overrideDriverInfo"]  = $entry->overrideDriverInfo;
             $entryArray["defaultGridPosition"] = $entry->defaultGridPosition;
-            $entryArray["ballastKg"] = $entry->ballastKg;
-            $entryArray["restrictor"] = $entry->restrictor;
-            $entryArray["isServerAdmin"] = $entry->isServerAdmin;
+            $entryArray["ballastKg"]           = $entry->ballastKg;
+            $entryArray["restrictor"]          = $entry->restrictor;
+            $entryArray["isServerAdmin"]       = $entry->isServerAdmin;
 
             $array['entries'][] = $entryArray;
         }
 
         $array['forceEntryList'] = $event->forceEntryList;
         return collect($array)
-            ->toJson(JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)
+                ->toJson(JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)
             . "\n";
     }
 
