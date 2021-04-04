@@ -79,4 +79,10 @@ class RaceEventModelTest extends TestCase
 
         $this->assertEquals($expected, $event->showLink());
     }
+
+    /** @test */
+    public function it_has_registration_types()
+    {
+        //Need to think about how what's involved between single driver registrations and teams.
+    }
 }

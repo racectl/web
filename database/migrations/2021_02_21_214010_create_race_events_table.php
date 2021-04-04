@@ -20,6 +20,7 @@ class CreateRaceEventsTable extends Migration
             $table->string('name');
             $table->string('sim');
             $table->string('track');
+            $table->boolean('team_event')->default(false);
             $table->boolean('force_entry_list')->default(1);
             $table->timestamps();
         });

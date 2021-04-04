@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property string             name
  * @property string             sim
  * @property string             track
+ * @property int|boolean        teamEvent
  * @property AccConfig          accConfig
  * @property Community          community
  * @property EloquentCollection entries
@@ -23,8 +24,10 @@ class RaceEvent extends BaseModel
     public static function rules(): array
     {
         return [
+            'name'  => 'required',
+            'sim' => 'required|string|max:3',
             'track' => 'required|exists:App\Models\Track,game_config_id',
-            'name'  => 'required'
+            'teamEvent' => 'nullable|boolean'
         ];
     }
 
@@ -60,7 +63,7 @@ class RaceEvent extends BaseModel
     {
         return route('community.event.show', [
             'community' => $this->community,
-            'event' => $this
+            'event'     => $this
         ]);
     }
 
