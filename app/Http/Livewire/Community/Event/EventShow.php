@@ -39,6 +39,7 @@ class EventShow extends Component
         );
 
         $registerAction->execute($proposal);
+        $this->event->load('entries');
     }
 
     public function registerNewTeam(RegisterUserToEventAction $registerAction)

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\CustomCollections\RaceEventEntriesCollection;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 
 /**
@@ -61,6 +62,11 @@ class RaceEventEntry extends BaseModel
         return collect($array)
                 ->toJson(JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)
             . "\n";
+    }
+
+    public function newCollection(array $models = [])
+    {
+        return new RaceEventEntriesCollection($models);
     }
 
     public function users()

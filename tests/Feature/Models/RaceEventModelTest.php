@@ -6,6 +6,7 @@ use App\Models\AccConfig;
 use App\Models\Community;
 use App\Models\RaceEvent;
 use App\Models\RaceEventEntry;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Tests\TestCase;
 
@@ -51,7 +52,7 @@ class RaceEventModelTest extends TestCase
     }
 
     /** @test */
-    public function it_generates_a_link_to_admin_availalbe_cars_management()
+    public function it_generates_a_link_to_admin_available_cars_management()
     {
         /** @var RaceEvent $event */
         $event = RaceEvent::factory()->create();
@@ -81,8 +82,38 @@ class RaceEventModelTest extends TestCase
     }
 
     /** @test */
-    public function it_has_registration_types()
+    public function it_knows_if_a_user_is_registered_to_the_event()
     {
-        //Need to think about how what's involved between single driver registrations and teams.
+        /** @var RaceEvent $event */
+        $event = Raceevent::factory()->has(
+            RaceEventEntry::factory()->hasUsers(), 'entries'
+        )->create();
+        $user = $event->entries->first()->driver();
+
+        $this->assertTrue($event->userIsRegistered($user));
+    }
+
+    /** @test */
+    public function it_knows_if_the_authed_user_is_registered_to_the_event()
+    {
+        /** @var RaceEvent $event */
+        $event = Raceevent::factory()->has(
+            RaceEventEntry::factory()->hasUsers(), 'entries'
+        )->create();
+        $this->actingAs($event->entries->first()->driver());
+
+        $this->assertTrue($event->userIsRegistered());
+    }
+
+    /** @test */
+    public function it_knows_a_user_is_not_registered()
+    {
+        /** @var RaceEvent $event */
+        $event = Raceevent::factory()->has(
+            RaceEventEntry::factory()->hasUsers(), 'entries'
+        )->create();
+        $user = User::factory()->create();
+
+        $this->assertFalse($event->userIsRegistered($user));
     }
 }

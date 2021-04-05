@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * @property int                id
@@ -57,6 +58,13 @@ class RaceEvent extends BaseModel
             'community' => $this->community,
             'event'     => $this
         ]);
+    }
+
+    public function userIsRegistered(User $user = null)
+    {
+        $user = $user ?? Auth::user();
+
+        return $this->entries->users()->contains('id', $user->id);
     }
 
     public function showLink(): string
