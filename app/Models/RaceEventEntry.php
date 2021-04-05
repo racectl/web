@@ -4,9 +4,11 @@ namespace App\Models;
 
 use App\CustomCollections\RaceEventEntriesCollection;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
+use Illuminate\Support\Str;
 
 /**
  * @property string             teamName
+ * @property string             teamJoinCode
  * @property integer            raceNumber
  * @property integer            forcedCarModel
  * @property integer            defaultGridPosition
@@ -21,6 +23,7 @@ class RaceEventEntry extends BaseModel
     {
         return [
             'teamName'            => 'nullable|string|max:255',
+            'teamJoinCode'        => 'nullable|string|max:8|min:8',
             'raceNumber'          => 'nullable|integer|between:1,998',
             'forcedCarModel'      => 'nullable|integer|exists:App\Models\Car,id',
             'defaultGridPosition' => 'nullable|integer',
@@ -89,5 +92,11 @@ class RaceEventEntry extends BaseModel
     public function getIsServerAdminAttribute()
     {
         return 0;
+    }
+
+    public function generateTeamJoinCode()
+    {
+        $this->teamJoinCode = Str::before(Str::uuid(), '-');
+        return $this;
     }
 }

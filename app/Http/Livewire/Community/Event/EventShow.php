@@ -49,11 +49,12 @@ class EventShow extends Component
         $this->validateOnly('teamName');
         $this->validateOnly('selectedCar');
 
-        $proposal                = new RegisterNewTeamAndUserToEventProposal(
+        $proposal = new RegisterNewTeamAndUserToEventProposal(
             $this->event,
-            $this->input('selectedCar')
+            $this->input('selectedCar'),
+            $this->input('teamName')
         );
-        $proposal->teamName      = $this->input('teamName');
+
         $registerAction->execute($proposal);
     }
 

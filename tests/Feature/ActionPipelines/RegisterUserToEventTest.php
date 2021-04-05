@@ -3,6 +3,7 @@
 namespace Tests\Feature\ActionPipelines;
 
 use App\Actions\CreateAccEvent\CreateAccEventAction;
+use App\Actions\RegisterUserToEvent\Proposals\RegisterNewTeamAndUserToEventProposal;
 use App\Actions\RegisterUserToEvent\RegisterUserToEventAction;
 use App\Actions\RegisterUserToEvent\Proposals\RegisterUserToEventProposal;
 use App\Exceptions\UserAlreadyRegisteredToEventException;
@@ -72,5 +73,34 @@ class RegisterUserToEventTest extends TestCase
         $registrationAction->execute($proposal);
         $event->refresh();
         $registrationAction->execute($proposal);
+    }
+
+    /** @test */
+    public function it_creates_a_team_and_registers_the_user()
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+        /** @var Community $community */
+        $community = Community::factory()->create();
+        $community->members()->attach($user);
+
+        $createAction = App::make(CreateAccEventAction::class);
+        $event = $createAction->execute($community, 'Testing Event');
+
+        $proposal = new RegisterNewTeamAndUserToEventProposal(
+            $event,
+            11,
+            'Team Name'
+        );
+
+        $registrationAction = new RegisterUserToEventAction;
+        $registrationAction->execute($proposal);
+
+        $this->assertCount(1, $event->load('entries')->entries);
+        $entry = $event->entries->first();
+        $this->assertEquals('Team Name', $entry->teamName);
+        $this->assertCount(1, $entry->users);
+        $this->assertTrue($entry->users->first()->is($user));
+        $this->assertNotNull($entry->teamJoinCode);
     }
 }

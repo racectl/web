@@ -8,6 +8,7 @@ use App\Models\RaceEvent;
 use App\Models\RaceEventEntry;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
+use Illuminate\Support\Str;
 
 class RaceEventEntryModelTest extends \Tests\TestCase
 {
@@ -60,9 +61,20 @@ class RaceEventEntryModelTest extends \Tests\TestCase
         $event->team();
     }
 
+    /** @test */
+    public function it_generates_a_team_join_code()
+    {
+        /** @var RaceEventEntry $entry */
+        $entry = RaceEventEntry::factory()->hasUsers()->create();
+        $entry->generateTeamJoinCode();
+
+        $this->assertIsString($entry->teamJoinCode);
+        $this->assertEquals(8, Str::length($entry->teamJoinCode));
+    }
+
     /**
      * @test
-     * Driver Category is currently not done correctly.
+     * TODO: Driver Category is currently not done correctly.
      */
     public function it_generates_a_entry_list_json_file_statically()
     {
