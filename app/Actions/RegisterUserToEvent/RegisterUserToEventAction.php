@@ -4,6 +4,7 @@
 namespace App\Actions\RegisterUserToEvent;
 
 
+use App\Actions\RegisterUserToEvent\Proposals\RegisterUserToEventProposal;
 use App\Models\RaceEvent;
 use Illuminate\Pipeline\Pipeline;
 use Illuminate\Support\Facades\Auth;

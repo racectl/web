@@ -1,10 +1,10 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\ActionPipelines;
 
 use App\Actions\CreateAccEvent\CreateAccEventAction;
 use App\Actions\RegisterUserToEvent\RegisterUserToEventAction;
-use App\Actions\RegisterUserToEvent\RegisterUserToEventProposal;
+use App\Actions\RegisterUserToEvent\Proposals\RegisterUserToEventProposal;
 use App\Exceptions\UserAlreadyRegisteredToEventException;
 use App\Exceptions\UserNotCommunityMemberException;
 use App\Models\Community;

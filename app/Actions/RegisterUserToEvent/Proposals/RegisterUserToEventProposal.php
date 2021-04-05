@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Actions\RegisterUserToEvent;
+namespace App\Actions\RegisterUserToEvent\Proposals;
 
 
 use App\Models\Community;

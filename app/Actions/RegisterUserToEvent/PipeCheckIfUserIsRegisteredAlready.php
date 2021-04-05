@@ -4,6 +4,7 @@
 namespace App\Actions\RegisterUserToEvent;
 
 
+use App\Actions\RegisterUserToEvent\Proposals\RegisterUserToEventProposal;
 use App\Exceptions\UserAlreadyRegisteredToEventException;
 
 class PipeCheckIfUserIsRegisteredAlready

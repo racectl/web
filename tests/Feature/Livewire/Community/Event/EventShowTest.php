@@ -2,8 +2,8 @@
 
 namespace Tests\Feature\Livewire\Community\Event;
 
+use App\Actions\RegisterUserToEvent\Proposals\RegisterUserToEventProposal;
 use App\Actions\RegisterUserToEvent\RegisterUserToEventAction;
-use App\Actions\RegisterUserToEvent\RegisterUserToEventProposal;
 use App\Http\Livewire\Community\Event\EventShow;
 use App\Models\Car;
 use App\Models\RaceEvent;

@@ -3,7 +3,7 @@
 namespace App\Http\Livewire\Community\Event;
 
 use App\Actions\RegisterUserToEvent\RegisterUserToEventAction;
-use App\Actions\RegisterUserToEvent\RegisterUserToEventProposal;
+use App\Actions\RegisterUserToEvent\Proposals\RegisterUserToEventProposal;
 use App\Http\Livewire\RuleBasedInputs;
 use App\Models\Community;
 use App\Models\RaceEvent;
