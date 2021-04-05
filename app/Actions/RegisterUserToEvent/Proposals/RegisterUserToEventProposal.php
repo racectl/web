@@ -16,9 +16,6 @@ class RegisterUserToEventProposal
     public Community $community;
     public RaceEvent $event;
     public int       $carModelId;
-    public bool      $createNewTeam;
-    public string    $teamName;
-    public string    $joinTeamCode;
 
     public function __construct(RaceEvent $event, int $carModelId, User $user = null)
     {

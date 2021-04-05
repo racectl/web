@@ -19,9 +19,10 @@ class RegisterUserToEventTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $user = $this->logFirstUserIn();
         /** @var Community $community */
         $community = Community::factory()->create()->refresh();
+        $user = User::factory()->create();
+        $this->actingAs($user);
         $community->members()->attach($user);
 
         $createAction = App::make(CreateAccEventAction::class);
@@ -57,8 +58,9 @@ class RegisterUserToEventTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $user = $this->logFirstUserIn();
-        $community = Community::first();
+        $community = Community::factory()->create();
+        $user = User::factory()->create();
+        $this->actingAs($user);
         $community->members()->attach($user);
 
         $createAction = app(CreateAccEventAction::class);

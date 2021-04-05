@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire\Community\Event;
 
+use App\Actions\RegisterUserToEvent\Proposals\RegisterNewTeamAndUserToEventProposal;
+use App\Actions\RegisterUserToEvent\Proposals\RegisterUserToExistingTeamProposal;
 use App\Actions\RegisterUserToEvent\RegisterUserToEventAction;
 use App\Actions\RegisterUserToEvent\Proposals\RegisterUserToEventProposal;
 use App\Http\Livewire\RuleBasedInputs;
@@ -47,11 +49,10 @@ class EventShow extends Component
         $this->validateOnly('teamName');
         $this->validateOnly('selectedCar');
 
-        $proposal                = new RegisterUserToEventProposal(
+        $proposal                = new RegisterNewTeamAndUserToEventProposal(
             $this->event,
             $this->input('selectedCar')
         );
-        $proposal->createNewTeam = true;
         $proposal->teamName      = $this->input('teamName');
         $registerAction->execute($proposal);
     }
@@ -59,7 +60,7 @@ class EventShow extends Component
     public function joinTeam(RegisterUserToEventAction $registerAction)
     {
         $this->validateOnly('teamJoinCode');
-        $proposal               = new RegisterUserToEventProposal(
+        $proposal               = new RegisterUserToExistingTeamProposal(
             $this->event,
             $this->input('selectedCar')
         );

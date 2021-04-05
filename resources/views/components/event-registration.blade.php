@@ -27,6 +27,3 @@
         <button class="btn btn-primary btn-block">Register For Event</button>
     </x-widget>
 @endif
-
-
-<x-input-dump />
