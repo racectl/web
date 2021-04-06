@@ -96,13 +96,11 @@ class RaceEventEntry extends BaseModel
 
     public function driver()
     {
-        throw_unless($this->users->count() == 1, \Exception::class);
         return $this->users->first();
     }
 
     public function team()
     {
-        throw_unless($this->users->count() > 1, \Exception::class);
         return $this->users;
     }
 

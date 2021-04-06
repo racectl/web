@@ -92,7 +92,6 @@ class EventShowTest extends TestCase
         $spy->shouldHaveReceived()->execute(RegisterUserToEventProposal::class);
         $proposal = app(RegisterUserToEventProposal::class);
         $this->assertTrue($proposal->user->is($user));
-        $this->assertEquals($car->id, $proposal->carModelId);
         $this->assertTrue($proposal->community->is($event->community));
         $this->assertTrue($proposal->event->is($event));
         $this->assertEquals('loremipsum', $proposal->joinTeamCode);

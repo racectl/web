@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 use App\Models\Car;
 use App\Models\RaceEvent;
+use App\Models\RaceEventEntry;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class LocalSeeder extends Seeder
@@ -34,5 +36,12 @@ class LocalSeeder extends Seeder
         foreach (Car::accGt3s()->get() as $car) {
             $eventTwo->availableCars()->attach($car);
         }
+
+        //Create team for event two with one driver.
+        $user = User::factory()->create();
+        $entry = new RaceEventEntry;
+        $entry->generateTeamJoinCode();
+        $eventTwo->entries()->save($entry);
+        $entry->users()->attach($user);
     }
 }

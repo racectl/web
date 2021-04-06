@@ -56,17 +56,19 @@ class EventShow extends Component
         );
 
         $registerAction->execute($proposal);
+        $this->event->load('entries');
     }
 
     public function joinTeam(RegisterUserToEventAction $registerAction)
     {
         $this->validateOnly('teamJoinCode');
-        $proposal               = new RegisterUserToExistingTeamProposal(
+        $proposal = new RegisterUserToExistingTeamProposal(
             $this->event,
-            $this->input('selectedCar')
+            $this->input('teamJoinCode')
         );
-        $proposal->joinTeamCode = $this->input('teamJoinCode');
+
         $registerAction->execute($proposal);
+        $this->event->load('entries');
     }
 
     public function render()

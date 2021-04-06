@@ -67,6 +67,14 @@ class RaceEvent extends BaseModel
         return $this->entries->users()->contains('id', $user->id);
     }
 
+    public function entryForUser(User $user = null)
+    {
+        $user = $user ?? Auth::user();
+        return $this->entries->filter(function ($value) use ($user) {
+            return $value->users->contains('id', $user->id);
+        })->first();
+    }
+
     public function showLink(): string
     {
         return route('community.event.show', [

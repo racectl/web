@@ -20,6 +20,7 @@
             </select>
             <hr>
             @if($this->input['joinExistingTeam'])
+                <form wire:submit.prevent="joinTeam">
                 <x-form.text wireTo="teamJoinCode" labeled="Team Registration Code" />
             @else
                 <form wire:submit.prevent="registerNewTeam">
@@ -31,7 +32,7 @@
         </x-widget>
     @else
         <x-widget heading="Team Options">
-
+            Team Join Code: {{ $this->event->entryForUser()->teamJoinCode }}
         </x-widget>
     @endif
 

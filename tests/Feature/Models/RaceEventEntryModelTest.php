@@ -31,15 +31,15 @@ class RaceEventEntryModelTest extends \Tests\TestCase
         $this->assertInstanceOf(User::class, $event->driver());
     }
 
-    /** @test */
-    public function it_throws_exception_on_driver_method_if_there_is_more_than_one_user()
-    {
-        /** @var RaceEventEntry $event */
-        $event = RaceEventEntry::factory()->hasUsers(2)->create()->refresh();
-
-        $this->expectException(\Exception::class);
-        $event->driver();
-    }
+//    /** @test */
+//    public function it_throws_exception_on_driver_method_if_there_is_more_than_one_user()
+//    {
+//        /** @var RaceEventEntry $event */
+//        $event = RaceEventEntry::factory()->hasUsers(2)->create()->refresh();
+//
+//        $this->expectException(\Exception::class);
+//        $event->driver();
+//    }
 
     /** @test */
     public function it_has_a_team()
@@ -51,15 +51,15 @@ class RaceEventEntryModelTest extends \Tests\TestCase
         $this->assertCount(2, $event->team());
     }
 
-    /** @test */
-    public function it_throws_exception_on_team_method_if_there_is_only_one_user()
-    {
-        /** @var RaceEventEntry $event */
-        $event = RaceEventEntry::factory()->hasUsers(1)->create()->refresh();
-
-        $this->expectException(\Exception::class);
-        $event->team();
-    }
+//    /** @test */
+//    public function it_throws_exception_on_team_method_if_there_is_only_one_user()
+//    {
+//        /** @var RaceEventEntry $event */
+//        $event = RaceEventEntry::factory()->hasUsers(1)->create()->refresh();
+//
+//        $this->expectException(\Exception::class);
+//        $event->team();
+//    }
 
     /** @test */
     public function it_generates_a_team_join_code()

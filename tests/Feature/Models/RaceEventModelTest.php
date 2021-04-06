@@ -116,4 +116,22 @@ class RaceEventModelTest extends TestCase
 
         $this->assertFalse($event->userIsRegistered($user));
     }
+
+    /** @test */
+    public function it_gets_the_entry_for_a_user()
+    {
+        /** @var RaceEvent $event */
+        $event = RaceEvent::factory()->hasEntries()->create();
+        /** @var RaceEventEntry $entry */
+        $entry = $event->entries->first();
+        $user  = User::factory()->create();
+        $entry->users()->attach($user);
+
+        $found = $event->entryForUser($user);
+        $this->assertTrue($found->is($entry));
+
+        $this->actingAs($user);
+        $found = $event->entryForUser();
+        $this->assertTrue($found->is($entry));
+    }
 }

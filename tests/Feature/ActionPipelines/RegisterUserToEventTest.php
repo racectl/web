@@ -4,11 +4,13 @@ namespace Tests\Feature\ActionPipelines;
 
 use App\Actions\RegisterUserToEvent\Proposals\RegisterNewTeamAndUserToEventProposal;
 use App\Actions\RegisterUserToEvent\Proposals\RegisterUserToEventProposal;
+use App\Actions\RegisterUserToEvent\Proposals\RegisterUserToExistingTeamProposal;
 use App\Actions\RegisterUserToEvent\RegisterUserToEventAction;
 use App\Exceptions\UserAlreadyRegisteredToEventException;
 use App\Exceptions\UserNotCommunityMemberException;
 use App\Models\Community;
 use App\Models\RaceEvent;
+use App\Models\RaceEventEntry;
 use App\Models\User;
 use Tests\TestCase;
 
@@ -92,5 +94,34 @@ class RegisterUserToEventTest extends TestCase
         $this->assertCount(1, $entry->users);
         $this->assertTrue($entry->users->first()->is($user));
         $this->assertNotNull($entry->teamJoinCode);
+    }
+
+
+    /** @test */
+    public function it_adds_a_user_to_a_team()
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+        /** @var RaceEvent $event */
+        $event = RaceEvent::factory()->create();
+        $event->community->members()->attach($user);
+        $existingUser = User::factory()->create();
+        /** @var RaceEventEntry $entry */
+        $entry = RaceEventEntry::factory()->make();
+        $entry->generateTeamJoinCode();
+        $event->entries()->save($entry);
+        $entry->users()->attach($existingUser);
+
+
+        $proposal = new RegisterUserToExistingTeamProposal(
+            $event,
+            $entry->teamJoinCode
+        );
+        $registrationAction = new RegisterUserToEventAction;
+        $registrationAction->execute($proposal);
+
+
+        $this->assertCount(2, $entry->load('users')->users);
+        $this->assertTrue($entry->users->contains($user));
     }
 }
