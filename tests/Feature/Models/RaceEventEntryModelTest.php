@@ -72,6 +72,18 @@ class RaceEventEntryModelTest extends \Tests\TestCase
         $this->assertEquals(8, Str::length($entry->teamJoinCode));
     }
 
+    /** @test */
+    public function it_has_a_scope_for_event_and_user_ids()
+    {
+        /** @var RaceEventEntry $entry */
+        $entry = RaceEventEntry::factory()->hasUsers()->create();
+        $user  = $entry->users->first();
+        $event = $entry->event;
+
+        $found = RaceEventEntry::forUserAndEvent($user->id, $event->id)->first();
+        $this->assertTrue($found->is($entry));
+    }
+
     /**
      * @test
      * TODO: Driver Category is currently not done correctly.

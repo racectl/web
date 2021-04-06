@@ -4,6 +4,8 @@ namespace App\Models;
 
 use App\CustomCollections\RaceEventEntriesCollection;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Str;
 
 /**
@@ -16,6 +18,7 @@ use Illuminate\Support\Str;
  * @property integer            restrictor
  * @property integer|boolean    overrideDriverInfo
  * @property EloquentCollection users
+ * @property RaceEvent          event
  */
 class RaceEventEntry extends BaseModel
 {
@@ -67,14 +70,28 @@ class RaceEventEntry extends BaseModel
             . "\n";
     }
 
-    public function newCollection(array $models = [])
+    public function newCollection(array $models = []): RaceEventEntriesCollection
     {
         return new RaceEventEntriesCollection($models);
     }
 
-    public function users()
+    public function event(): BelongsTo
+    {
+        return $this->belongsTo(RaceEvent::class, 'race_event_id');
+    }
+
+    public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class);
+    }
+
+    public function scopeForUserAndEvent($query, $userId, $eventId)
+    {
+        return $query
+            ->whereRaceEventId($eventId)
+            ->whereHas('users', function ($query) use ($userId) {
+                return $query->where('user_id', $userId);
+            });
     }
 
     public function driver()
