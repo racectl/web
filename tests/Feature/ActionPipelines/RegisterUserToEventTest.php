@@ -2,15 +2,14 @@
 
 namespace Tests\Feature\ActionPipelines;
 
-use App\Actions\CreateAccEvent\CreateAccEventAction;
 use App\Actions\RegisterUserToEvent\Proposals\RegisterNewTeamAndUserToEventProposal;
-use App\Actions\RegisterUserToEvent\RegisterUserToEventAction;
 use App\Actions\RegisterUserToEvent\Proposals\RegisterUserToEventProposal;
+use App\Actions\RegisterUserToEvent\RegisterUserToEventAction;
 use App\Exceptions\UserAlreadyRegisteredToEventException;
 use App\Exceptions\UserNotCommunityMemberException;
 use App\Models\Community;
+use App\Models\RaceEvent;
 use App\Models\User;
-use Illuminate\Support\Facades\App;
 use Tests\TestCase;
 
 class RegisterUserToEventTest extends TestCase
@@ -20,14 +19,11 @@ class RegisterUserToEventTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        /** @var Community $community */
-        $community = Community::factory()->create()->refresh();
-        $user = User::factory()->create();
+        /** @var RaceEvent $event */
+        $event = RaceEvent::factory()->create();
+        $user  = User::factory()->create();
         $this->actingAs($user);
-        $community->members()->attach($user);
-
-        $createAction = App::make(CreateAccEventAction::class);
-        $event = $createAction->execute($community, 'Testing Event');
+        $event->community->members()->attach($user);
 
         $proposal = new RegisterUserToEventProposal($event, 11);
         $registrationAction = new RegisterUserToEventAction;
@@ -42,12 +38,10 @@ class RegisterUserToEventTest extends TestCase
     {
         $this->expectException(UserNotCommunityMemberException::class);
 
-        $community = Community::factory()->create()->refresh();
-        $user = User::factory()->create();
+        /** @var RaceEvent $event */
+        $event     = RaceEvent::factory()->create();
+        $user      = User::factory()->create();
         $this->actingAs($user);
-
-        $createAction = App::make(CreateAccEventAction::class);
-        $event = $createAction->execute($community, 'Testing Event');
 
         $proposal = new RegisterUserToEventProposal($event, 11);
         $registrationAction = new RegisterUserToEventAction;
@@ -62,10 +56,9 @@ class RegisterUserToEventTest extends TestCase
         $community = Community::factory()->create();
         $user = User::factory()->create();
         $this->actingAs($user);
-        $community->members()->attach($user);
-
-        $createAction = app(CreateAccEventAction::class);
-        $event = $createAction->execute($community, 'Testing Event');
+        /** @var RaceEvent $event */
+        $event = RaceEvent::factory()->create();
+        $event->community->members()->attach($user);
 
         $this->expectException(UserAlreadyRegisteredToEventException::class);
         $proposal = new RegisterUserToEventProposal($event, 11);
@@ -80,12 +73,9 @@ class RegisterUserToEventTest extends TestCase
     {
         $user = User::factory()->create();
         $this->actingAs($user);
-        /** @var Community $community */
-        $community = Community::factory()->create();
-        $community->members()->attach($user);
-
-        $createAction = App::make(CreateAccEventAction::class);
-        $event = $createAction->execute($community, 'Testing Event');
+        /** @var RaceEvent $event */
+        $event = RaceEvent::factory()->create();
+        $event->community->members()->attach($user);
 
         $proposal = new RegisterNewTeamAndUserToEventProposal(
             $event,
