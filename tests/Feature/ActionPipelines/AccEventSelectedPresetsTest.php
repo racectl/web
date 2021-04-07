@@ -4,6 +4,7 @@ namespace Tests\Feature\ActionPipelines;
 
 use App\Actions\CreateAccEvent\AccEventSelectedPresets;
 use App\Actions\CreateAccEvent\CreateAccEventAction;
+use App\Exceptions\InvalidCarPresetException;
 use App\Models\Car;
 use App\Models\Community;
 use App\Models\Config\ACC\AccWeatherPreset;
@@ -75,6 +76,20 @@ class AccEventSelectedPresetsTest extends TestCase
         $event        = $createAction->execute($community, 'Event Name');
 
         $this->assertCount($expectedCount, $event->availableCars);
+    }
+
+    /** @test */
+    public function car_preset_must_be_valid()
+    {
+        $this->expectException(InvalidCarPresetException::class);
+
+        $community = Community::factory()->create()->refresh();
+        /** @var AccEventSelectedPresets $presets */
+        $presets                = App::make(AccEventSelectedPresets::class);
+        $presets->availableCars = 'nonsense';
+
+        $createAction = App::make(CreateAccEventAction::class);
+        $event        = $createAction->execute($community, 'Event Name');
     }
 
     /** @test */
