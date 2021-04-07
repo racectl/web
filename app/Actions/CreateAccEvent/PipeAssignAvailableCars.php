@@ -9,7 +9,7 @@ use App\Models\RaceEvent;
 
 class PipeAssignAvailableCars
 {
-    private AccEventSelectedPresets $presets; //DI from IoC
+    protected AccEventSelectedPresets $presets; //DI from IoC
 
     public function __construct(AccEventSelectedPresets $presets)
     {
@@ -26,8 +26,20 @@ class PipeAssignAvailableCars
             }
         }
 
+        if ($this->presets->availableCars == 'accGt3sAndGt4s') {
+            foreach (Car::accGt3sAndGt4s()->get() as $car) {
+                $event->availableCars()->attach($car);
+            }
+        }
+
         if ($this->presets->availableCars == 'accGt4s') {
             foreach (Car::accGt4s()->get() as $car) {
+                $event->availableCars()->attach($car);
+            }
+        }
+
+        if ($this->presets->availableCars == 'accAll') {
+            foreach (Car::acc()->get() as $car) {
                 $event->availableCars()->attach($car);
             }
         }

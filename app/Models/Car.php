@@ -22,6 +22,11 @@ class Car extends BaseModel
         return $query->whereType('GT4')->whereSim('acc');
     }
 
+    public function scopeAccGt3sAndGt4s($query)
+    {
+        return $query->where('type', 'GT3')->orWhere('type', 'GT4');
+    }
+
     public function scopeAcc($query)
     {
         return $query->whereSim('acc');

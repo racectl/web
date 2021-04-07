@@ -6,8 +6,10 @@
             <label>Car Preset {{ $input['availableCarsPreset'] }}</label>
             <select wire:model="input.availableCarsPreset" class="form-control">
                 <option value="">None</option>
-                <option value="accGt3s">All GT3s</option>
-                <option value="accGt4s">All GT4s</option>
+                <option value="accGt3s">GT3s</option>
+                <option value="accGt4s">GT4s</option>
+                <option value="accGt3sAndGt4s">GT3s and GT4s</option>
+                <option value="accAll">All Cars</option>
             </select>
 
             <label>Weather Preset {{ $input['weatherPreset'] }}</label>

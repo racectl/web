@@ -13,9 +13,8 @@ use Tests\TestCase;
 
 class AccEventSelectedPresetsTest extends TestCase
 {
-
     /** @test */
-    public function it_can_create_with_a_default_gt3_car_list()
+    public function it_can_create_with_a_gt3_preset()
     {
         $community = Community::factory()->create()->refresh();
         /** @var AccEventSelectedPresets $presets */
@@ -31,7 +30,7 @@ class AccEventSelectedPresetsTest extends TestCase
     }
 
     /** @test */
-    public function it_can_create_with_a_default_gt4_car_list()
+    public function it_can_create_with_a_gt4_preset()
     {
         $community = Community::factory()->create()->refresh();
         /** @var AccEventSelectedPresets $presets */
@@ -44,6 +43,38 @@ class AccEventSelectedPresetsTest extends TestCase
 
         $this->assertCount($expectedCount, $event->availableCars);
         $this->assertCount($expectedCount, $event->availableCars->where('type', 'GT4'));
+    }
+
+    /** @test */
+    public function it_can_create_with_a_gt3_and_gt4s_preset()
+    {
+        $community = Community::factory()->create()->refresh();
+        /** @var AccEventSelectedPresets $presets */
+        $presets                = App::make(AccEventSelectedPresets::class);
+        $presets->availableCars = 'accGt3sAndGt4s';
+        $expectedCount          = Car::where('type', 'GT3')
+            ->orWhere('type', 'GT4')
+            ->count();
+
+        $createAction = App::make(CreateAccEventAction::class);
+        $event        = $createAction->execute($community, 'Event Name');
+
+        $this->assertCount($expectedCount, $event->availableCars);
+    }
+
+    /** @test */
+    public function it_can_create_with_a_all_cars_preset()
+    {
+        $community = Community::factory()->create()->refresh();
+        /** @var AccEventSelectedPresets $presets */
+        $presets                = App::make(AccEventSelectedPresets::class);
+        $presets->availableCars = 'accAll';
+        $expectedCount          = Car::where('sim', 'acc')->count();
+
+        $createAction = App::make(CreateAccEventAction::class);
+        $event        = $createAction->execute($community, 'Event Name');
+
+        $this->assertCount($expectedCount, $event->availableCars);
     }
 
     /** @test */
