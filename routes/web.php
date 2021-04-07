@@ -21,8 +21,8 @@ use App\Http\Livewire\RCAdmin\CommunityManagement;
 
 Route::get('/dev', [DevController::class, 'index'])->name('dev');
 
-Route::get('/dev/login', function () {
-    \Illuminate\Support\Facades\Auth::login(User::first());
+Route::get('/dev/login/{user}', function (User $user = null) {
+    \Illuminate\Support\Facades\Auth::login($user);
     return redirect()->back();
 })->name('dev.login');
 

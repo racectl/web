@@ -3,8 +3,10 @@
 namespace App\MenuBuilder;
 
 use App\Models\Community;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 
 class MenuBuilder
@@ -25,13 +27,27 @@ class MenuBuilder
         $this->superAdmin();
         $this->communityAdmin();
         $this->user();
+
+        if (App::environment('local')) {
+            $this->testingLogins();
+        }
+    }
+
+    protected function testingLogins()
+    {
+        $menu = new MenuSection('Testing Logins', 'terminal');
+
+        foreach (User::all() as $user) {
+            $menu->addEntry(
+                new MenuEntry($user->displayName, 'dev.login', $user)
+            );
+        }
+
+        $this->menuSections->push($menu);
     }
 
     protected function guests()
     {
-        $this->menuSections->push(
-            new MenuSectionNoSubs('Testing Login', 'log-in', 'dev.login')
-        );
 
     }
 

@@ -3,8 +3,11 @@
     <div class="row">
         <div class="col-sm-12">
 
-            Home Page.
-
+            @auth
+            {{ Auth::user()->displayName }}
+            @else
+                Not Logged In.
+            @endauth
         </div>
     </div>
 

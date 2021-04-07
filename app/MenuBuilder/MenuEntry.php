@@ -7,12 +7,12 @@ class MenuEntry
     public $title, $link, $active;
     protected $route;
 
-    public function __construct($title, $routeName, $routeParam = null)
+    public function __construct($title, $routeName, $routeParams = [])
     {
         $this->route = app('Illuminate\Http\Request')->route();
         $this->title = $title;
-        $this->link = route($routeName, $routeParam);
-        $this->active = $this->determineActive($routeName, $routeParam);
+        $this->link = route($routeName, $routeParams);
+        $this->active = $this->determineActive($routeName, $routeParams);
     }
 
     protected function determineActive($routeName, $routeParam)

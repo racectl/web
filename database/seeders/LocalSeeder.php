@@ -43,5 +43,8 @@ class LocalSeeder extends Seeder
         $entry->generateTeamJoinCode();
         $eventTwo->entries()->save($entry);
         $entry->users()->attach($user);
+
+        //Two More Users
+        User::factory()->count(2)->create();
     }
 }

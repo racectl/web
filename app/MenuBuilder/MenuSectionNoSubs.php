@@ -13,11 +13,11 @@ class MenuSectionNoSubs
 
     public $includeFile = 'layout.menu._section-no-subs';
 
-    public function __construct($title, $icon, $routeName)
+    public function __construct($title, $icon, $routeName, array $routeParams = [])
     {
         $this->title = $title;
         $this->icon = $icon;
-        $this->link = route($routeName);
+        $this->link = route($routeName, $routeParams);
         $this->active = $this->isActive($routeName);
         $this->targetString = Str::kebab($title);
     }
