@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Exceptions\AlertableException;
 use Exception;
+use Illuminate\Validation\ValidationException;
 use Livewire\Component;
 
 class BetterComponent extends Component
@@ -33,9 +34,11 @@ class BetterComponent extends Component
         try {
             parent::callMethod($method, $params);
         } catch (AlertableException $exception) {
-            $message = $exception->getMessage();
-            $this->warning('Error', $message);
+            $this->warning('Error', $exception->getMessage());
         }
+//        catch (ValidationException $exception) {
+//            $this->warning('Error', $exception->getMessage());
+//        }
 //        catch (Exception $exception) {
 //            $this->warning('Error', 'Looks like we had a T1 incident.');
 //        }
