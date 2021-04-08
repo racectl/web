@@ -19,12 +19,12 @@ class CreateAccEventAction
         PipeAssignAvailableCars::class
     ];
 
-    public function execute(Community $community, string $eventName): RaceEvent
+    public function execute(Community $community, string $eventName, string $track): RaceEvent
     {
         $event = new RaceEvent;
         $event->name = $eventName;
         $event->sim = 'ACC';
-        $event->track = 'barcelona';
+        $event->track = $track;
 
         $community->events()->save($event);
 

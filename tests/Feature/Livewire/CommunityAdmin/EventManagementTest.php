@@ -46,12 +46,13 @@ class EventManagementTest extends TestCase
             ->call('createNewEvent')
             ->assertHasNoErrors();
 
-        $this->eventSpy->shouldHaveReceived('execute')->with(Community::class, 'Test Event');
+        $this->eventSpy->shouldHaveReceived('execute')->with(Community::class, 'Test Event', 'barcelona');
     }
 
     /** @test */
     public function a_event_name_is_required()
     {
+        $this->withoutExceptionHandling();
         /** @var Community $community */
         $community = Community::factory()->create()->refresh();
 

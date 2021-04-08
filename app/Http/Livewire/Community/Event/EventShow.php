@@ -10,6 +10,7 @@ use App\Http\Livewire\BetterComponent;
 use App\Http\Livewire\RuleBasedInputs;
 use App\Models\Community;
 use App\Models\RaceEvent;
+use Livewire\Component;
 
 class EventShow extends BetterComponent
 {

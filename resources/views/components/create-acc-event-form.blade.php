@@ -36,7 +36,7 @@
             <div class="form-group col-xl-4">
                 <label>Assist Rules Preset</label>
                 <select wire:model="input.assistRulesPreset" class="form-control">
-                    @foreach(\App\Models\Configs\ACC\AccAssistRules::presets() as $preset)
+                    @foreach(\App\Models\Configs\ACC\AccAssistRules::presets($this->community->id) as $preset)
                         <option value="{{ $preset->id }}">{{ $preset->presetName }}</option>
                     @endforeach
                 </select>

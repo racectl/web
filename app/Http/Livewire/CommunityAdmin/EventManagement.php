@@ -45,7 +45,7 @@ class EventManagement extends BetterComponent
         $presets->setWeatherFromId($this->input('weatherPreset'));
         $presets->setAssistRulesFromId($this->input('assistRulesPreset'));
 
-        $createAccEventAction->execute($this->community, $this->input('newEventName'));
+        $createAccEventAction->execute($this->community, $this->input('newEventName'),'barcelona');
         $this->community->refresh();
     }
 

@@ -2,11 +2,10 @@
 
 namespace Tests\Feature\ActionPipelines;
 
-use App\Actions\CreateAccEvent\AccEventSelectedPresets;
 use App\Actions\CreateAccEvent\CreateAccEventAction;
-use App\Models\Car;
 use App\Models\Community;
 use App\Models\RaceEvent;
+use App\Models\Track;
 use Illuminate\Support\Facades\App;
 use Tests\TestCase;
 
@@ -20,10 +19,13 @@ class CreateAccEventActionTest extends TestCase
         /** @var Community $community */
         $community = Community::first();
 
-        $createAction = App::make(CreateAccEventAction::class);
-        $actionReturn = $createAction->execute($community, 'Event Name');
+        $track = Track::acc()->get()->random();
 
-        $this->assertInstanceOf(RaceEvent::class, $actionReturn);
+        $createAction = app(CreateAccEventAction::class);
+        $event = $createAction->execute($community, 'Event Name', $track->gameConfigId);
+
+        $this->assertInstanceOf(RaceEvent::class, $event);
+        $this->assertEquals($track->gameConfigId, $event->track);
         $this->assertDatabaseCount('race_events', 1);
         $this->assertDatabaseCount('acc_configs', 1);
         $this->assertDatabaseCount('acc_assist_rules', 4); //TODO: Fix these.

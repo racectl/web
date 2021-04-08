@@ -9,6 +9,7 @@ use App\Models\Car;
 use App\Models\Community;
 use App\Models\Config\ACC\AccWeatherPreset;
 use App\Models\Configs\ACC\AccAssistRules;
+use App\Models\Track;
 use Illuminate\Support\Facades\App;
 use Tests\TestCase;
 
@@ -24,7 +25,7 @@ class AccEventSelectedPresetsTest extends TestCase
         $expectedCount          = Car::whereType('GT3')->whereSim('acc')->count();
 
         $createAction = App::make(CreateAccEventAction::class);
-        $event        = $createAction->execute($community, 'Event Name');
+        $event        = $createAction->execute($community, 'Event Name', 'barcelona');
 
         $this->assertCount($expectedCount, $event->availableCars);
         $this->assertCount($expectedCount, $event->availableCars->where('type', 'GT3'));
@@ -40,7 +41,7 @@ class AccEventSelectedPresetsTest extends TestCase
         $expectedCount          = Car::whereType('GT4')->whereSim('acc')->count();
 
         $createAction = App::make(CreateAccEventAction::class);
-        $event        = $createAction->execute($community, 'Event Name');
+        $event        = $createAction->execute($community, 'Event Name', 'barcelona');
 
         $this->assertCount($expectedCount, $event->availableCars);
         $this->assertCount($expectedCount, $event->availableCars->where('type', 'GT4'));
@@ -53,12 +54,12 @@ class AccEventSelectedPresetsTest extends TestCase
         /** @var AccEventSelectedPresets $presets */
         $presets                = App::make(AccEventSelectedPresets::class);
         $presets->availableCars = 'accGt3sAndGt4s';
-        $expectedCount          = Car::where('type', 'GT3')
+        $expectedCount          = Car::where('type', 'GT3', 'barcelona')
             ->orWhere('type', 'GT4')
             ->count();
 
         $createAction = App::make(CreateAccEventAction::class);
-        $event        = $createAction->execute($community, 'Event Name');
+        $event        = $createAction->execute($community, 'Event Name', 'barcelona');
 
         $this->assertCount($expectedCount, $event->availableCars);
     }
@@ -73,7 +74,7 @@ class AccEventSelectedPresetsTest extends TestCase
         $expectedCount          = Car::where('sim', 'acc')->count();
 
         $createAction = App::make(CreateAccEventAction::class);
-        $event        = $createAction->execute($community, 'Event Name');
+        $event        = $createAction->execute($community, 'Event Name', 'barcelona');
 
         $this->assertCount($expectedCount, $event->availableCars);
     }
@@ -89,7 +90,7 @@ class AccEventSelectedPresetsTest extends TestCase
         $presets->availableCars = 'nonsense';
 
         $createAction = App::make(CreateAccEventAction::class);
-        $event        = $createAction->execute($community, 'Event Name');
+        $event        = $createAction->execute($community, 'Event Name', 'barcelona');
     }
 
     /** @test */
@@ -103,7 +104,7 @@ class AccEventSelectedPresetsTest extends TestCase
         $presets->setWeatherFromId(1);
 
         $createAction = App::make(CreateAccEventAction::class);
-        $event        = $createAction->execute($community, 'Event Name');
+        $event        = $createAction->execute($community, 'Event Name', 'barcelona');
         $eventConfig  = $event->accConfig->event;
 
         $checks = ['cloudLevel', 'rain', 'ambientTemp', 'weatherRandomness', 'simracerWeatherConditions', 'isFixedConditionQualification'];
@@ -123,7 +124,7 @@ class AccEventSelectedPresetsTest extends TestCase
         $preset = AccAssistRules::find(1);
 
         $createAction = App::make(CreateAccEventAction::class);
-        $event        = $createAction->execute($community, 'Event Name');
+        $event        = $createAction->execute($community, 'Event Name', 'barcelona');
         $actual  = $event->accConfig->assistRules;
 
         $checks = ['stabilityControlLevelMax', 'disableAutosteer', 'disableAutoLights', 'disableAutoWiper', 'disableAutoEngineStart', 'disableAutoPitLimiter', 'disableAutoGear', 'disableAutoClutch', 'disableIdealLine'];

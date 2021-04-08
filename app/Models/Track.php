@@ -23,4 +23,9 @@ class Track extends BaseModel
             'maxServerSlots' => 'required',
         ];
     }
+
+    public function scopeAcc($query)
+    {
+        return $query->whereSim('acc');
+    }
 }
