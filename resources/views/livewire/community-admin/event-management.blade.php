@@ -2,9 +2,13 @@
     @if($showCreate)
         <x-create-acc-event-form />
     @else
-        <button class="btn btn-success btn-block" wire:click="$set('showCreate', true)">
-            Create New Event
-        </button>
+        <x-row>
+            <div class="col-sm-4 offset-4 mb-2">
+                <button class="btn btn-success btn-block" wire:click="$set('showCreate', true)">
+                    Create New Event
+                </button>
+            </div>
+        </x-row>
     @endif
     <x-widget heading="Events">
         <table id="datatable" class="table table-striped table-bordered">

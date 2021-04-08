@@ -1,7 +1,16 @@
 <x-widget heading="Create New Event">
 
     <form wire:submit.prevent="createNewEvent">
-        <x-form.text labeled="New Event Name" wireTo="newEventName" />
+        <x-row>
+            <x-form.text class="col-xl-6" labeled="New Event Name" wireTo="newEventName" />
+
+            <div class="form-group col-xl-6">
+                <label>Track</label>
+                <select wire:model="input.selectedTrack" class="form-control">
+                    <option value="">Tracks Go Here</option>
+                </select>
+            </div>
+        </x-row>
 
         <x-row>
             <div class="form-group col-xl-4">
