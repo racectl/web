@@ -3,15 +3,15 @@
 namespace App\Http\Livewire\Community\Event;
 
 use App\Actions\RegisterUserToEvent\Proposals\RegisterNewTeamAndUserToEventProposal;
+use App\Actions\RegisterUserToEvent\Proposals\RegisterUserToEventProposal;
 use App\Actions\RegisterUserToEvent\Proposals\RegisterUserToExistingTeamProposal;
 use App\Actions\RegisterUserToEvent\RegisterUserToEventAction;
-use App\Actions\RegisterUserToEvent\Proposals\RegisterUserToEventProposal;
+use App\Http\Livewire\BetterComponent;
 use App\Http\Livewire\RuleBasedInputs;
 use App\Models\Community;
 use App\Models\RaceEvent;
-use Livewire\Component;
 
-class EventShow extends Component
+class EventShow extends BetterComponent
 {
     use RuleBasedInputs;
 

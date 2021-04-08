@@ -7,6 +7,7 @@ use App\Actions\CreateAccEvent\CreateAccEventAction;
 use App\Http\Livewire\CommunityAdmin\EventManagement;
 use App\Models\Community;
 use App\Models\Config\ACC\AccWeatherPreset;
+use App\Models\Configs\ACC\AccAssistRules;
 use Livewire\Livewire;
 use Tests\TestCase;
 
@@ -117,5 +118,21 @@ class EventManagementTest extends TestCase
             ->set('input.newEventName', 'Test')
             ->call('createNewEvent')
             ->assertHasErrors(['weatherPreset']);
+    }
+
+    /** @test */
+    public function it_creates_an_event_with_an_assist_rules_preset()
+    {
+        /** @var Community $community */
+        $community = Community::factory()->create();
+
+        Livewire::test(EventManagement::class, ['community' => $community])
+            ->set('input.newEventName', 'Test Event')
+            ->set('input.assistRulesPreset', 1)
+            ->call('createNewEvent')
+            ->assertHasNoErrors();
+
+        $presets = app(AccEventSelectedPresets::class);
+        $this->assertInstanceOf(AccAssistRules::class, $presets->assistRules);
     }
 }

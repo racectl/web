@@ -1,27 +1,11 @@
 <div>
-    <x-widget heading="Create New Event">
-        <form wire:submit.prevent="createNewEvent">
-            <x-form.text labeled="New Event Name" wireTo="newEventName" />
-
-            <label>Car Preset {{ $input['availableCarsPreset'] }}</label>
-            <select wire:model="input.availableCarsPreset" class="form-control">
-                <option value="">None</option>
-                <option value="accGt3s">GT3s</option>
-                <option value="accGt4s">GT4s</option>
-                <option value="accGt3sAndGt4s">GT3s and GT4s</option>
-                <option value="accAll">All Cars</option>
-            </select>
-
-            <label>Weather Preset {{ $input['weatherPreset'] }}</label>
-            <select wire:model="input.weatherPreset" class="form-control">
-                @foreach(\App\Models\Config\ACC\AccWeatherPreset::all() as $weather)
-                    <option value="{{ $weather->id }}">{{ $weather->name }}</option>
-                @endforeach
-            </select>
-
-            <button type="submit" class="btn btn-block btn-outline-primary">Create</button>
-        </form>
-    </x-widget>
+    @if($showCreate)
+        <x-create-acc-event-form />
+    @else
+        <button class="btn btn-success btn-block" wire:click="$set('showCreate', true)">
+            Create New Event
+        </button>
+    @endif
     <x-widget heading="Events">
         <table id="datatable" class="table table-striped table-bordered">
             <thead>
