@@ -1,5 +1,4 @@
 <div>
-    @dump($errors)
     @if($showCreate)
         <x-create-acc-event-form />
     @else
