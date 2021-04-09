@@ -14,13 +14,14 @@ class EventManagement extends BetterComponent
 
     public $community;
 
-    public $showCreate = false;
+    public $showCreate = true;
 
     protected $rules = [
         'newEventName'        => 'required|max:256',
         'availableCarsPreset' => 'nullable|in:accGt3s,accGt4s',
-        'weatherPreset'       => 'exists:acc_weather_presets,id',
-        'assistRulesPreset'   => 'exists:acc_assist_rules,id'
+        'weatherPreset'       => 'nullable|exists:acc_weather_presets,id',
+        'assistRulesPreset'   => 'nullable|exists:acc_assist_rules,id',
+        'track'               => 'required|exists:tracks,game_config_id'
     ];
 
     public function mount(Community $community): void
@@ -45,7 +46,12 @@ class EventManagement extends BetterComponent
         $presets->setWeatherFromId($this->input('weatherPreset'));
         $presets->setAssistRulesFromId($this->input('assistRulesPreset'));
 
-        $createAccEventAction->execute($this->community, $this->input('newEventName'),'barcelona');
+        $createAccEventAction->execute(
+            $this->community,
+            $this->input('newEventName'),
+            $this->input('track')
+        );
+
         $this->community->refresh();
     }
 

@@ -13,22 +13,24 @@
     <x-widget heading="Events">
         <table id="datatable" class="table table-striped table-bordered">
             <thead>
-                <tr>
+                <tr class="text-center">
                     <th>Name</th>
+                    <th>Track</th>
                     <th>Car Count</th>
                     <th>Options</th>
                 </tr>
             </thead>
             <tbody>
-            @foreach($community->events as $event)
+                @foreach($community->events as $event)
                     <tr>
                         <td>{{ $event->name }}</td>
+                        <td>{{ $event->track }}</td>
                         <td>{{ $event->availableCars->count() }}</td>
                         <td>
                             <a href="{{ $event->adminAvailableCarsLink() }}" class="btn btn-primary">Cars</a>
                         </td>
                     </tr>
-            @endforeach
+                @endforeach
             </tbody>
         </table>
     </x-widget>

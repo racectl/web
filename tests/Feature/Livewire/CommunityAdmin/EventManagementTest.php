@@ -8,6 +8,7 @@ use App\Http\Livewire\CommunityAdmin\EventManagement;
 use App\Models\Community;
 use App\Models\Config\ACC\AccWeatherPreset;
 use App\Models\Configs\ACC\AccAssistRules;
+use App\Models\Track;
 use Livewire\Livewire;
 use Tests\TestCase;
 
@@ -39,14 +40,17 @@ class EventManagementTest extends TestCase
         /** @var Community $community */
         $community = Community::factory()->create()->refresh();
 
+        $track = Track::acc()->get()->random()->gameConfigId;
+
         Livewire::test(EventManagement::class, ['community' => $community])
             ->assertSet('community', $community)
+            ->set('input.track', $track)
             ->set('input.newEventName', 'Test Event')
             ->set('input.availableCarsPreset', '')
             ->call('createNewEvent')
             ->assertHasNoErrors();
 
-        $this->eventSpy->shouldHaveReceived('execute')->with(Community::class, 'Test Event', 'barcelona');
+        $this->eventSpy->shouldHaveReceived('execute')->with(Community::class, 'Test Event', $track);
     }
 
     /** @test */
@@ -85,6 +89,7 @@ class EventManagementTest extends TestCase
         Livewire::test(EventManagement::class, ['community' => $community])
             ->set('input.newEventName', 'Test Event')
             ->set('input.availableCarsPreset', 'accGt3s')
+            ->set('input.track', 'barcelona')
             ->call('createNewEvent')
             ->assertHasNoErrors();
 
@@ -101,6 +106,7 @@ class EventManagementTest extends TestCase
         Livewire::test(EventManagement::class, ['community' => $community])
             ->set('input.newEventName', 'Test Event')
             ->set('input.weatherPreset', 1)
+            ->set('input.track', 'barcelona')
             ->call('createNewEvent')
             ->assertHasNoErrors();
 
@@ -130,6 +136,7 @@ class EventManagementTest extends TestCase
         Livewire::test(EventManagement::class, ['community' => $community])
             ->set('input.newEventName', 'Test Event')
             ->set('input.assistRulesPreset', 1)
+            ->set('input.track', 'barcelona')
             ->call('createNewEvent')
             ->assertHasNoErrors();
 

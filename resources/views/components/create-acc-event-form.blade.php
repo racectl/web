@@ -6,8 +6,10 @@
 
             <div class="form-group col-xl-6">
                 <label for="track">Track</label>
-                <select id="track" wire:model="input.selectedTrack" class="form-control">
-                    <option value="">Tracks Go Here</option>
+                <select id="track" wire:model="input.track" class="form-control">
+                    @foreach(\App\Models\Track::acc()->orderBy('name')->get() as $track)
+                        <option value="{{ $track->gameConfigId }}">{{ $track->name }}</option>
+                    @endforeach
                 </select>
             </div>
         </x-row>
