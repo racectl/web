@@ -27,7 +27,7 @@ class UserFactory extends Factory
             'last_name'         => $this->faker->lastName,
             'email'             => $this->faker->unique()->safeEmail,
             'steam_id'          => '765611xxxxxxxx' . $this->faker->numberBetween(100,999),
-            'discord_id'        => '3240601xxxxxxxx'. $this->faker->numberBetween(100,999),
+            'discord_id'        => '3240601xxxxxxx'. $this->faker->numberBetween(1000,9999),
             'remember_token'    => Str::random(10),
         ];
     }
