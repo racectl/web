@@ -3,7 +3,7 @@
 namespace Tests\Feature\Livewire\Community;
 
 use App\Actions\RegisterUserToEvent\RegisterUserToEventAction;
-use App\Actions\RegisterUserToEvent\RegisterUserToEventProposal;
+use App\Actions\RegisterUserToEvent\Proposals\RegisterUserToEventProposal;
 use App\Models\Community;
 use Livewire\Livewire;
 use Tests\TestCase;
