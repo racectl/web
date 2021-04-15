@@ -75,14 +75,6 @@ class RaceEvent extends BaseModel
         })->first();
     }
 
-    public function showLink(): string
-    {
-        return route('community.event.show', [
-            'community' => $this->community,
-            'event'     => $this
-        ]);
-    }
-
     public function startDate(): string
     {
         return 'Some Date and Time';
