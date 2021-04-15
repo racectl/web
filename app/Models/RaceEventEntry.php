@@ -49,7 +49,7 @@ class RaceEventEntry extends BaseModel
                 $driver["lastName"]       = $user->last_name;
                 $driver["shortName"]      = $user->shortName();
                 $driver["driverCategory"] = $user->id;
-                $driver["playerID"]       = $user->playerId();
+                $driver["playerID"]       = $user->accPlayerId();
                 $entryArray['drivers'][]  = $driver;
             }
 

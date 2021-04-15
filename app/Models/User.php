@@ -53,7 +53,7 @@ class User extends Authenticatable
         return Str::of($this->last_name)->limit(3, '')->upper();
     }
 
-    public function playerId()
+    public function accPlayerId()
     {
         return 'S' . $this->steam_id;
     }
