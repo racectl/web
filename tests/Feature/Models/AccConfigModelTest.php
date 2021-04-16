@@ -45,8 +45,6 @@ class AccConfigModelTest extends \Tests\TestCase
         $this->assertInstanceOf(AccSettings::class, $config->settings);
         $this->assertInstanceOf(EloquentCollection::class, $config->globalBops);
         $this->assertCount(3, $config->event->accEventSessions);
-        //entrylist
-        //bop
     }
 
     /** @test */

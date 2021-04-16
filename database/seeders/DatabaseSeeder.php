@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
             AccAssistRulesDefaultSeeder::class
         ]);
 
-        if (App::environment('local')) {
+        if (App::environment(['local', 'testing'])) {
             $this->call(LocalSeeder::class);
         }
     }

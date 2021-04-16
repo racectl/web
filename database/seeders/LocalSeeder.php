@@ -2,7 +2,14 @@
 
 namespace Database\Seeders;
 
+use App\Models\AccConfig;
 use App\Models\Car;
+use App\Models\Configs\ACC\AccAssistRules;
+use App\Models\Configs\ACC\AccBop;
+use App\Models\Configs\ACC\AccEvent;
+use App\Models\Configs\ACC\AccEventRules;
+use App\Models\Configs\ACC\AccEventSession;
+use App\Models\Configs\ACC\AccSettings;
 use App\Models\RaceEvent;
 use App\Models\RaceEventEntry;
 use App\Models\User;
@@ -18,21 +25,25 @@ class LocalSeeder extends Seeder
     public function run()
     {
         /** @var RaceEvent $event */
-        $event = RaceEvent::factory()->create([
-            'team_event' => 0,
-            'community_id' => 1,
-            'name' => 'Individual Drivers'
-        ]);
+        $event = RaceEvent::factory()
+            ->has($this->fullFactory())
+            ->create([
+                'team_event' => 0,
+                'community_id' => 1,
+                'name' => 'Individual Drivers'
+            ]);
         foreach (Car::accGt3s()->get() as $car) {
             $event->availableCars()->attach($car);
         }
 
         /** @var RaceEvent $eventTwo */
-        $eventTwo = RaceEvent::factory()->create([
-            'team_event' => 1,
-            'community_id' => 1,
-            'name' => 'Driver Teams'
-        ]);
+        $eventTwo = RaceEvent::factory()
+            ->has($this->fullFactory())
+            ->create([
+                'team_event' => 1,
+                'community_id' => 1,
+                'name' => 'Driver Teams'
+            ]);
         foreach (Car::accGt3s()->get() as $car) {
             $eventTwo->availableCars()->attach($car);
         }
@@ -46,5 +57,20 @@ class LocalSeeder extends Seeder
 
         //Two More Users
         User::factory()->count(2)->create();
+    }
+
+    protected function fullFactory()
+    {
+        return AccConfig::factory()
+            ->has(AccAssistRules::factory(), 'assistRules')
+            ->has(
+                AccEvent::factory()->has(
+                    AccEventSession::factory()->count(3), 'accEventSessions'
+                ),
+                'event'
+            )
+            ->has(AccEventRules::factory(), 'eventRules')
+            ->has(AccSettings::factory(), 'settings')
+            ->has(AccBop::factory(), 'globalBops');
     }
 }
