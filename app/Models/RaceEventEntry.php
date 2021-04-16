@@ -19,6 +19,7 @@ use Illuminate\Support\Str;
  * @property integer|boolean    overrideDriverInfo
  * @property EloquentCollection users
  * @property RaceEvent          event
+ * @property Car                car
  */
 class RaceEventEntry extends BaseModel
 {
@@ -83,6 +84,11 @@ class RaceEventEntry extends BaseModel
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class);
+    }
+
+    public function car(): BelongsTo
+    {
+        return $this->belongsTo(Car::class, 'forced_car_model');
     }
 
     public function scopeForUserAndEvent($query, $userId, $eventId)

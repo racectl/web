@@ -54,7 +54,10 @@ class LocalSeeder extends Seeder
         //Create team for event two with one driver.
         $user = User::factory()->create();
         $community->members()->attach($user);
-        $entry = new RaceEventEntry;
+        $entry = RaceEventEntry::make([
+            'team_name' => 'Testing Team Name',
+            'forced_car_model' => 5
+        ]);
         $entry->generateTeamJoinCode();
         $eventTwo->entries()->save($entry);
         $entry->users()->attach($user);

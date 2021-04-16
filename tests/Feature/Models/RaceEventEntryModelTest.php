@@ -4,6 +4,7 @@
 namespace Tests\Feature\Models;
 
 
+use App\Models\Car;
 use App\Models\RaceEvent;
 use App\Models\RaceEventEntry;
 use App\Models\User;
@@ -15,11 +16,22 @@ class RaceEventEntryModelTest extends \Tests\TestCase
     /** @test */
     public function it_has_many_users()
     {
-        /** @var RaceEventEntry $event */
-        $event = RaceEventEntry::factory()->hasUsers(2)->create()->refresh();
+        /** @var RaceEventEntry $entry */
+        $entry = RaceEventEntry::factory()->hasUsers(2)->create()->refresh();
 
-        $this->assertInstanceOf(EloquentCollection::class, $event->users);
-        $this->assertCount(2, $event->users);
+        $this->assertInstanceOf(EloquentCollection::class, $entry->users);
+        $this->assertCount(2, $entry->users);
+    }
+
+    /** @test */
+    public function it_has_a_car()
+    {
+        /** @var RaceEventEntry $entry */
+        $entry = RaceEventEntry::factory()->create([
+            'forced_car_model' => 2
+        ])->refresh();
+
+        $this->assertInstanceOf(Car::class, $entry->car);
     }
 
     /** @test */

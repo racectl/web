@@ -1,9 +1,9 @@
 <div>
     <x-event-registration />
+    @if($event->teamEvent)
+        <x-registered-teams-table />
+    @else
+        <x-registered-drivers-table />
+    @endif
 
-    <x-widget heading="Registered Drivers">
-        @foreach($event->entries as $entry)
-            {{ $entry->driver()->displayName }}
-        @endforeach
-    </x-widget>
 </div>
