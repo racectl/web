@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\AccConfig;
 use App\Models\Car;
+use App\Models\Community;
 use App\Models\Configs\ACC\AccAssistRules;
 use App\Models\Configs\ACC\AccBop;
 use App\Models\Configs\ACC\AccEvent;
@@ -24,6 +25,8 @@ class LocalSeeder extends Seeder
      */
     public function run()
     {
+        $community = Community::first();
+
         /** @var RaceEvent $event */
         $event = RaceEvent::factory()
             ->has($this->fullFactory())
@@ -50,13 +53,16 @@ class LocalSeeder extends Seeder
 
         //Create team for event two with one driver.
         $user = User::factory()->create();
+        $community->members()->attach($user);
         $entry = new RaceEventEntry;
         $entry->generateTeamJoinCode();
         $eventTwo->entries()->save($entry);
         $entry->users()->attach($user);
 
         //Two More Users
-        User::factory()->count(2)->create();
+        $users = User::factory()->count(2)->create();
+
+        $community->members()->attach($users);
     }
 
     protected function fullFactory()
