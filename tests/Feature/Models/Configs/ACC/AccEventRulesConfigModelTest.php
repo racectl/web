@@ -13,11 +13,9 @@ class AccEventRulesConfigModelTest extends TestCase
     /** @test */
     public function it_can_be_saved_with_database_defaults()
     {
-        $rules = new AccEventRules;
-        $rules->save();
-        $filled = AccEventRules::first();
+        $rules = AccEventRules::create()->refresh();
 
-        $this->assertCount(14, $filled->getAttributes());
+        $this->assertCount(14, $rules->getAttributes());
     }
 
     /** @test */

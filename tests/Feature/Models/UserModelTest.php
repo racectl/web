@@ -13,8 +13,8 @@ class UserModelTest extends TestCase
     /** @test */
     public function it_has_a_many_to_many_with_communities()
     {
-        $user = User::first();
-        $community = Community::first();
+        $user = User::factory()->create();
+        $community = Community::factory()->create();
         $community->members()->attach($user);
 
         $this->assertTrue($user->communities->contains($community));

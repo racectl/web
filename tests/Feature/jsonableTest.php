@@ -14,8 +14,7 @@ class jsonableTest extends TestCase
     public function it_works()
     {
         /** @var AccSettings $settings */
-        AccSettings::factory()->defaults()->create(['server_name' => 'Server Name']);
-        $settings = AccSettings::first();
+        $settings = AccSettings::factory()->defaults()->create(['server_name' => 'Server Name'])->refresh();
 
         $expected = file_get_contents(__DIR__ . '\Models\Configs\ACC\expectedSettings.json');
         $this->assertEquals($expected, $settings->jsonForFile());

@@ -35,10 +35,7 @@ class RaceEventModelTest extends TestCase
     /** @test */
     public function it_belongs_to_a_community()
     {
-        RaceEvent::factory()->create();
-
-        $event = RaceEvent::first();
-
+        $event = RaceEvent::factory()->create();
         $this->assertInstanceOf(Community::class, $event->community);
     }
 

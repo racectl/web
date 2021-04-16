@@ -26,15 +26,6 @@ class AccSettingsConfigModelTest extends TestCase
     }
 
     /** @test */
-    public function it_can_be_created_by_factory()
-    {
-        $settings = AccSettings::factory()->create();
-        $fromDb   = AccSettings::first();
-
-        $this->assertEquals($settings->getAttributes(), $fromDb->getAttributes());
-    }
-
-    /** @test */
     public function all_parameters_are_defaulted_in_database_except_server_name()
     {
         $settings             = new AccSettings;
@@ -86,8 +77,7 @@ class AccSettingsConfigModelTest extends TestCase
     public function it_generates_json_needed_for_file()
     {
         /** @var AccSettings $settings */
-        AccSettings::factory()->defaults()->create(['server_name' => 'Server Name']);
-        $settings = AccSettings::first();
+        $settings = AccSettings::factory()->defaults()->create(['server_name' => 'Server Name'])->refresh();
 
         $expected = file_get_contents(__DIR__ . '\expectedSettings.json');
         $this->assertEquals($expected, $settings->jsonForFile());
