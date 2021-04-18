@@ -2,6 +2,13 @@
 
 namespace Tests;
 
+use App\Models\AccConfig;
+use App\Models\Configs\ACC\AccAssistRules;
+use App\Models\Configs\ACC\AccBop;
+use App\Models\Configs\ACC\AccEvent;
+use App\Models\Configs\ACC\AccEventRules;
+use App\Models\Configs\ACC\AccEventSession;
+use App\Models\Configs\ACC\AccSettings;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
@@ -27,5 +34,23 @@ abstract class TestCase extends BaseTestCase
         $model           = $model ?? $this->model;
         $model           = new $model;
         $model->{$param} = $value;
+    }
+
+    public function fullAccConfigFactory($create = true)
+    {
+        $factory = AccConfig::factory()
+            ->has(AccAssistRules::factory(), 'assistRules')
+            ->has(
+                AccEvent::factory()->has(
+                    AccEventSession::factory()->count(3), 'accEventSessions'
+                ),
+                'event'
+            )
+            ->has(AccEventRules::factory(), 'eventRules')
+            ->has(AccSettings::factory(), 'settings')
+            ->has(AccBop::factory(), 'globalBops');
+        return $create
+            ? $factory->create()
+            : $factory;
     }
 }

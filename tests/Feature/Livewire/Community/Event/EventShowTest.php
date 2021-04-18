@@ -17,7 +17,8 @@ class EventShowTest extends TestCase
     public function it_registers_the_authed_user_to_a_non_team_event()
     {
         /** @var RaceEvent $event */
-        $event = RaceEvent::factory()->create();
+        $event = RaceEvent::factory()->has($this->fullAccConfigFactory(false))->create();
+
         /** @var Car $car */
         $car = Car::first();
         $event->availableCars()->attach($car);
@@ -44,7 +45,7 @@ class EventShowTest extends TestCase
     public function it_registers_a_new_team()
     {
         /** @var RaceEvent $event */
-        $event = RaceEvent::factory()->create([
+        $event = RaceEvent::factory()->has($this->fullAccConfigFactory(false))->create([
             'team_event' => true
         ]);
         /** @var Car $car */
@@ -74,7 +75,7 @@ class EventShowTest extends TestCase
     public function it_joins_a_user_to_an_existing_team()
     {
         /** @var RaceEvent $event */
-        $event = RaceEvent::factory()->create([
+        $event = RaceEvent::factory()->has($this->fullAccConfigFactory(false))->create([
             'team_event' => true
         ]);
         /** @var Car $car */
@@ -101,7 +102,7 @@ class EventShowTest extends TestCase
     public function it_registers_the_authed_user_to_a_non_team_event_inputs_must_be_valid()
     {
         /** @var RaceEvent $event */
-        $event = RaceEvent::factory()->create();
+        $event = RaceEvent::factory()->has($this->fullAccConfigFactory(false))->create();
         /** @var Car $car */
         $car = Car::first();
         $event->availableCars()->attach($car);
@@ -127,7 +128,7 @@ class EventShowTest extends TestCase
     public function it_registers_a_new_team_inputs_must_be_valid()
     {
         /** @var RaceEvent $event */
-        $event = RaceEvent::factory()->create([
+        $event = RaceEvent::factory()->has($this->fullAccConfigFactory(false))->create([
             'team_event' => true
         ]);
         /** @var Car $car */
@@ -151,7 +152,7 @@ class EventShowTest extends TestCase
     public function it_joins_a_user_to_an_existing_team_inputs_must_be_valid()
     {
         /** @var RaceEvent $event */
-        $event = RaceEvent::factory()->create([
+        $event = RaceEvent::factory()->has($this->fullAccConfigFactory(false))->create([
             'team_event' => true
         ]);
         /** @var Car $car */
