@@ -9,7 +9,9 @@ use App\Models\Car;
 use App\Models\Community;
 use App\Models\Config\ACC\AccWeatherPreset;
 use App\Models\Configs\ACC\AccAssistRules;
+use App\Models\Preset;
 use App\Models\Track;
+use App\Presets\AccCarsPreset;
 use Illuminate\Support\Facades\App;
 use Tests\TestCase;
 
@@ -21,7 +23,7 @@ class AccEventSelectedPresetsTest extends TestCase
         $community = Community::factory()->create()->refresh();
         /** @var AccEventSelectedPresets $presets */
         $presets                = App::make(AccEventSelectedPresets::class);
-        $presets->availableCars = 'accGt3s';
+        $presets->setCarsPresetFromName('accGt3s');
         $expectedCount          = Car::whereType('GT3')->whereSim('acc')->count();
 
         $createAction = App::make(CreateAccEventAction::class);
@@ -37,7 +39,7 @@ class AccEventSelectedPresetsTest extends TestCase
         $community = Community::factory()->create()->refresh();
         /** @var AccEventSelectedPresets $presets */
         $presets                = App::make(AccEventSelectedPresets::class);
-        $presets->availableCars = 'accGt4s';
+        $presets->setCarsPresetFromName('accGt4s');
         $expectedCount          = Car::whereType('GT4')->whereSim('acc')->count();
 
         $createAction = App::make(CreateAccEventAction::class);
@@ -53,7 +55,7 @@ class AccEventSelectedPresetsTest extends TestCase
         $community = Community::factory()->create()->refresh();
         /** @var AccEventSelectedPresets $presets */
         $presets                = App::make(AccEventSelectedPresets::class);
-        $presets->availableCars = 'accGt3sAndGt4s';
+        $presets->setCarsPresetFromName('accGt3sAndGt4s');
         $expectedCount          = Car::where('type', 'GT3', 'barcelona')
             ->orWhere('type', 'GT4')
             ->count();
@@ -70,7 +72,7 @@ class AccEventSelectedPresetsTest extends TestCase
         $community = Community::factory()->create()->refresh();
         /** @var AccEventSelectedPresets $presets */
         $presets                = App::make(AccEventSelectedPresets::class);
-        $presets->availableCars = 'accAll';
+        $presets->setCarsPresetFromName('accAll');
         $expectedCount          = Car::where('sim', 'acc')->count();
 
         $createAction = App::make(CreateAccEventAction::class);
@@ -87,7 +89,7 @@ class AccEventSelectedPresetsTest extends TestCase
         $community = Community::factory()->create()->refresh();
         /** @var AccEventSelectedPresets $presets */
         $presets                = App::make(AccEventSelectedPresets::class);
-        $presets->availableCars = 'nonsense';
+        $presets->setCarsPresetFromName('nonsense');
 
         $createAction = App::make(CreateAccEventAction::class);
         $event        = $createAction->execute($community, 'Event Name', 'barcelona');

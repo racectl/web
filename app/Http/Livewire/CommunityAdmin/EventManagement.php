@@ -18,7 +18,7 @@ class EventManagement extends BetterComponent
 
     protected $rules = [
         'newEventName'        => 'required|max:256',
-        'availableCarsPreset' => 'nullable|in:accGt3s,accGt4s',
+        'availableCarsPreset' => 'nullable|exists:presets,name',
         'weatherPreset'       => 'nullable|exists:acc_weather_presets,id',
         'assistRulesPreset'   => 'nullable|exists:acc_assist_rules,id',
         'track'               => 'required|exists:tracks,game_config_id'
@@ -42,7 +42,7 @@ class EventManagement extends BetterComponent
     {
         $this->validate();
 
-        $presets->availableCars = $this->input('availableCarsPreset');
+        $presets->setCarsPresetFromName($this->input('availableCarsPreset'));
         $presets->setWeatherFromId($this->input('weatherPreset'));
         $presets->setAssistRulesFromId($this->input('assistRulesPreset'));
 

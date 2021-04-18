@@ -8,7 +8,9 @@ use App\Http\Livewire\CommunityAdmin\EventManagement;
 use App\Models\Community;
 use App\Models\Config\ACC\AccWeatherPreset;
 use App\Models\Configs\ACC\AccAssistRules;
+use App\Models\Preset;
 use App\Models\Track;
+use App\Presets\AccCarsPreset;
 use Livewire\Livewire;
 use Tests\TestCase;
 
@@ -37,6 +39,7 @@ class EventManagementTest extends TestCase
     /** @test */
     public function it_creates_an_event_with_no_presets()
     {
+        $this->withoutExceptionHandling();
         /** @var Community $community */
         $community = Community::factory()->create()->refresh();
 
@@ -46,7 +49,6 @@ class EventManagementTest extends TestCase
             ->assertSet('community', $community)
             ->set('input.track', $track)
             ->set('input.newEventName', 'Test Event')
-            ->set('input.availableCarsPreset', '')
             ->call('createNewEvent')
             ->assertHasNoErrors();
 
@@ -94,7 +96,8 @@ class EventManagementTest extends TestCase
             ->assertHasNoErrors();
 
         $presets = app(AccEventSelectedPresets::class);
-        $this->assertEquals('accGt3s', $presets->availableCars);
+        $expected = new AccCarsPreset(Preset::firstWhere('name', 'accGt3s'));
+        $this->assertEquals($expected, $presets->accCarsPreset);
     }
 
     /** @test */
