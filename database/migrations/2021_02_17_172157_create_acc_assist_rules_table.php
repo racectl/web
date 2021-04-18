@@ -17,10 +17,7 @@ class CreateAccAssistRulesTable extends Migration
     {
         Schema::create('acc_assist_rules', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(AccConfig::class)->nullable()->nullable();
-
-            $table->foreignIdFor(Community::class, 'preset_for_community')->nullable();
-            $table->string('preset_name')->nullable();
+            $table->foreignIdFor(AccConfig::class)->nullable();
 
             $table->tinyInteger('stability_control_level_max')->default(25);
             $table->boolean('disable_autosteer')->default(0);

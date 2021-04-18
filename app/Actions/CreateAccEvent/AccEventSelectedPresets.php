@@ -8,13 +8,14 @@ use App\Exceptions\InvalidCarPresetException;
 use App\Models\Config\ACC\AccWeatherPreset;
 use App\Models\Configs\ACC\AccAssistRules;
 use App\Models\Preset;
+use App\Presets\AccAssistRulesPreset;
 use App\Presets\AccCarsPreset;
 
 class AccEventSelectedPresets
 {
-    public ?AccCarsPreset    $accCarsPreset = null;
-    public ?AccWeatherPreset $weather       = null;
-    public ?AccAssistRules   $assistRules   = null;
+    public ?AccCarsPreset        $accCarsPreset = null;
+    public ?AccWeatherPreset     $weather       = null;
+    public ?AccAssistRulesPreset $assistRules   = null;
 
     public function setWeatherFromId(int $id): AccEventSelectedPresets
     {
@@ -24,7 +25,12 @@ class AccEventSelectedPresets
 
     public function setAssistRulesFromId(int $id): AccEventSelectedPresets
     {
-        $this->assistRules = AccAssistRules::find($id);
+        $db = Preset::find($id);
+
+        if ($db) {
+            $this->assistRules = new AccAssistRulesPreset($db);
+        }
+
         return $this;
     }
 

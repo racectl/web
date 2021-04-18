@@ -10,6 +10,7 @@ use App\Models\Config\ACC\AccWeatherPreset;
 use App\Models\Configs\ACC\AccAssistRules;
 use App\Models\Preset;
 use App\Models\Track;
+use App\Presets\AccAssistRulesPreset;
 use App\Presets\AccCarsPreset;
 use Livewire\Livewire;
 use Tests\TestCase;
@@ -138,12 +139,12 @@ class EventManagementTest extends TestCase
 
         Livewire::test(EventManagement::class, ['community' => $community])
             ->set('input.newEventName', 'Test Event')
-            ->set('input.assistRulesPreset', 1)
+            ->set('input.assistRulesPreset', Preset::accAssistRules()->first()->id)
             ->set('input.track', 'barcelona')
             ->call('createNewEvent')
             ->assertHasNoErrors();
 
         $presets = app(AccEventSelectedPresets::class);
-        $this->assertInstanceOf(AccAssistRules::class, $presets->assistRules);
+        $this->assertInstanceOf(AccAssistRulesPreset::class, $presets->assistRules);
     }
 }

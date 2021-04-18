@@ -47,18 +47,6 @@ class AccAssistRules extends BaseModel implements Jsonable
         ];
     }
 
-    public static function presets($communityId = null): \Illuminate\Support\Collection
-    {
-        /** @var Builder $builder */
-        $builder = self::wherePresetForCommunity(0);
-
-        $builder = $communityId
-            ? $builder->orWhere('preset_for_community', $communityId)
-            : $builder;
-
-        return $builder->get();
-    }
-
     public function jsonForFile()
     {
         return GenerateJsonForFile::fromModel($this);

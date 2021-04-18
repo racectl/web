@@ -7,6 +7,7 @@ use App\Actions\CreateAccEvent\CreateAccEventAction;
 use App\Http\Livewire\BetterComponent;
 use App\Http\Livewire\RuleBasedInputs;
 use App\Models\Community;
+use App\Models\Preset;
 
 class EventManagement extends BetterComponent
 {
@@ -20,7 +21,7 @@ class EventManagement extends BetterComponent
         'newEventName'        => 'required|max:256',
         'availableCarsPreset' => 'nullable|exists:presets,name',
         'weatherPreset'       => 'nullable|exists:acc_weather_presets,id',
-        'assistRulesPreset'   => 'nullable|exists:acc_assist_rules,id',
+        'assistRulesPreset'   => 'nullable|exists:presets,id',
         'track'               => 'required|exists:tracks,game_config_id'
     ];
 
@@ -32,7 +33,10 @@ class EventManagement extends BetterComponent
     protected function inputDefaults()
     {
         $this->setInputDefault('weatherPreset', 1);
-        $this->setInputDefault('assistRulesPreset', 3);
+        $this->setInputDefault(
+            'assistRulesPreset',
+            Preset::accAssistRules()->first()->id
+        );
     }
 
     public function createNewEvent(
@@ -42,7 +46,7 @@ class EventManagement extends BetterComponent
     {
         $this->validate();
 
-        $presets->setCarsPresetFromName($this->input('availableCarsPreset'));
+        $presets->setCarsPresetFromName($this->input('availableCarsPreset'));//TODO: Change from name to ID.
         $presets->setWeatherFromId($this->input('weatherPreset'));
         $presets->setAssistRulesFromId($this->input('assistRulesPreset'));
 

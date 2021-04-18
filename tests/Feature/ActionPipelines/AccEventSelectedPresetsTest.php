@@ -122,8 +122,8 @@ class AccEventSelectedPresetsTest extends TestCase
         $community = Community::factory()->create()->refresh();
         /** @var AccEventSelectedPresets $presets */
         $presets = App::make(AccEventSelectedPresets::class);
-        $presets->setAssistRulesFromId(1);
-        $preset = AccAssistRules::find(1);
+        $preset = Preset::accAssistRules()->first();
+        $presets->setAssistRulesFromId($preset->id);
 
         $createAction = App::make(CreateAccEventAction::class);
         $event        = $createAction->execute($community, 'Event Name', 'barcelona');
@@ -132,7 +132,7 @@ class AccEventSelectedPresetsTest extends TestCase
         $checks = ['stabilityControlLevelMax', 'disableAutosteer', 'disableAutoLights', 'disableAutoWiper', 'disableAutoEngineStart', 'disableAutoPitLimiter', 'disableAutoGear', 'disableAutoClutch', 'disableIdealLine'];
 
         foreach ($checks as $check) {
-            $this->assertEquals($preset->$check, $actual->$check);
+            $this->assertEquals($preset->data->$check, $actual->$check, $check);
         }
     }
 }

@@ -20,7 +20,7 @@ class PipeCreateAccAssistRules
     {
         $assistRules = empty($this->presets->assistRules)
             ? new AccAssistRules
-            : $this->presets->assistRules->replicate();
+            : $this->presets->assistRules->create();
 
         $event->accConfig->assistRules()->save($assistRules);
 
