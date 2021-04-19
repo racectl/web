@@ -4,8 +4,8 @@
 namespace App\Actions\CreateAccEvent;
 
 
-use App\Models\Config\ACC\AccWeatherPreset;
 use App\Models\Configs\ACC\AccAssistRules;
+use App\Models\Presets\AccWeatherPreset;
 
 class AccEventSelectedPresets
 {

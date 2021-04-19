@@ -7,9 +7,8 @@ use App\Actions\CreateAccEvent\CreateAccEventAction;
 use App\Exceptions\InvalidCarPresetException;
 use App\Models\Car;
 use App\Models\Community;
-use App\Models\Config\ACC\AccWeatherPreset;
 use App\Models\Configs\ACC\AccAssistRules;
-use App\Models\Track;
+use App\Models\Presets\AccWeatherPreset;
 use Illuminate\Support\Facades\App;
 use Tests\TestCase;
 

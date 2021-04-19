@@ -29,7 +29,7 @@
             <div class="form-group col-xl-4">
                 <label for="weather">Weather Preset</label>
                 <select id="weather" wire:model="input.weatherPreset" class="form-control">
-                    @foreach(\App\Models\Config\ACC\AccWeatherPreset::all() as $weather)
+                    @foreach(\App\Models\Presets\AccWeatherPreset::all() as $weather)
                         <option value="{{ $weather->id }}">{{ $weather->name }}</option>
                     @endforeach
                 </select>

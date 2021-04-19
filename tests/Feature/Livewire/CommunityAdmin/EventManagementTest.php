@@ -6,7 +6,7 @@ use App\Actions\CreateAccEvent\AccEventSelectedPresets;
 use App\Actions\CreateAccEvent\CreateAccEventAction;
 use App\Http\Livewire\CommunityAdmin\EventManagement;
 use App\Models\Community;
-use App\Models\Config\ACC\AccWeatherPreset;
+use App\Models\Presets\AccWeatherPreset;
 use App\Models\Configs\ACC\AccAssistRules;
 use App\Models\Track;
 use Livewire\Livewire;

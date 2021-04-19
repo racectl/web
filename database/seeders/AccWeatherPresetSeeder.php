@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Config\ACC\AccWeatherPreset;
+use App\Models\Presets\AccWeatherPreset;
 use Illuminate\Database\Seeder;
 
 class AccWeatherPresetSeeder extends Seeder

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Config\ACC;
+namespace App\Models\Presets;
 
 use App\Models\BaseModel;
 
