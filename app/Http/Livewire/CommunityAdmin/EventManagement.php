@@ -21,6 +21,7 @@ class EventManagement extends BetterComponent
         'availableCarsPreset' => 'nullable|in:accGt3s,accGt4s',
         'weatherPreset'       => 'nullable|exists:acc_weather_presets,id',
         'assistRulesPreset'   => 'nullable|exists:acc_assist_rules,id',
+        'pitConditionsPreset' => 'nullable|exists:acc_pit_conditions_presets,id',
         'track'               => 'required|exists:tracks,game_config_id'
     ];
 
@@ -32,7 +33,9 @@ class EventManagement extends BetterComponent
     protected function inputDefaults()
     {
         $this->setInputDefault('weatherPreset', 1);
+        $this->setInputDefault('track', 'barcelona_2020');
         $this->setInputDefault('assistRulesPreset', 3);
+        $this->setInputDefault('pitConditionsPreset', 2);
     }
 
     public function createNewEvent(
@@ -43,8 +46,10 @@ class EventManagement extends BetterComponent
         $this->validate();
 
         $presets->availableCars = $this->input('availableCarsPreset');
-        $presets->setWeatherFromId($this->input('weatherPreset'));
-        $presets->setAssistRulesFromId($this->input('assistRulesPreset'));
+        $presets->setWeatherFromId($this->input('weatherPreset'))
+                ->setAssistRulesFromId($this->input('assistRulesPreset'))
+                ->setPitConditionsFromId($this->input('pitConditionsPreset'));
+
 
         $createAccEventAction->execute(
             $this->community,

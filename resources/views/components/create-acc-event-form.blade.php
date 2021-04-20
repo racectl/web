@@ -43,6 +43,15 @@
                     @endforeach
                 </select>
             </div>
+
+            <div class="form-group col-xl-4">
+                <label for="assists">Pit Conditions Preset</label>
+                <select id="assists" wire:model="input.pitConditionsPreset" class="form-control">
+                    @foreach(\App\Models\Presets\AccPitConditionsPreset::all() as $preset)
+                        <option value="{{ $preset->id }}">{{ $preset->name }}</option>
+                    @endforeach
+                </select>
+            </div>
         </x-row>
 
 

@@ -8,6 +8,7 @@ use App\Exceptions\InvalidCarPresetException;
 use App\Models\Car;
 use App\Models\Community;
 use App\Models\Configs\ACC\AccAssistRules;
+use App\Models\Presets\AccPitConditionsPreset;
 use App\Models\Presets\AccWeatherPreset;
 use Illuminate\Support\Facades\App;
 use Tests\TestCase;
@@ -124,9 +125,29 @@ class AccEventSelectedPresetsTest extends TestCase
 
         $createAction = App::make(CreateAccEventAction::class);
         $event        = $createAction->execute($community, 'Event Name', 'barcelona');
-        $actual  = $event->accConfig->assistRules;
+        $actual       = $event->accConfig->assistRules;
 
         $checks = ['stabilityControlLevelMax', 'disableAutosteer', 'disableAutoLights', 'disableAutoWiper', 'disableAutoEngineStart', 'disableAutoPitLimiter', 'disableAutoGear', 'disableAutoClutch', 'disableIdealLine'];
+
+        foreach ($checks as $check) {
+            $this->assertEquals($preset->$check, $actual->$check);
+        }
+    }
+
+    /** @test */
+    public function it_can_create_with_an_pit_conditions_preset()
+    {
+        $community = Community::factory()->create()->refresh();
+        /** @var AccEventSelectedPresets $presets */
+        $presets = App::make(AccEventSelectedPresets::class);
+        $presets->setPitConditionsFromId(2);
+        $preset = AccPitConditionsPreset::find(2);
+
+        $createAction = app(CreateAccEventAction::class);
+        $event        = $createAction->execute($community, 'Event Name', 'barcelona');
+        $actual       = $event->accConfig->eventRules;
+
+        $checks = ['pitWindowLengthSec', 'driverStintTimeSec', 'mandatoryPitstopCount', 'maxTotalDrivingTime', 'isRefuellingAllowedInRace', 'isRefuellingTimeFixed', 'isMandatoryPitstopRefuellingRequired', 'isMandatoryPitstopTyreChangeRequired', 'isMandatoryPitstopSwapDriverRequired', 'tyreSetCount'];
 
         foreach ($checks as $check) {
             $this->assertEquals($preset->$check, $actual->$check);

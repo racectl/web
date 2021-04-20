@@ -1,6 +1,7 @@
 <div>
     @if($showCreate)
         <x-create-acc-event-form />
+        <x-input-dump />
     @else
         <x-row>
             <div class="col-sm-4 offset-4 mb-2">

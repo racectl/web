@@ -19,7 +19,8 @@ class DatabaseSeeder extends Seeder
             TrackSeeder::class,
             NwsrSeeder::class,
             AccWeatherPresetSeeder::class,
-            AccAssistRulesDefaultSeeder::class
+            AccAssistRulesDefaultSeeder::class,
+            AccPitConditionsPresetSeeder::class
         ]);
 
         if (App::environment(['local', 'testing'])) {

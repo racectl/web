@@ -6,6 +6,7 @@ use App\Actions\CreateAccEvent\AccEventSelectedPresets;
 use App\Actions\CreateAccEvent\CreateAccEventAction;
 use App\Http\Livewire\CommunityAdmin\EventManagement;
 use App\Models\Community;
+use App\Models\Presets\AccPitConditionsPreset;
 use App\Models\Presets\AccWeatherPreset;
 use App\Models\Configs\ACC\AccAssistRules;
 use App\Models\Track;
@@ -142,5 +143,22 @@ class EventManagementTest extends TestCase
 
         $presets = app(AccEventSelectedPresets::class);
         $this->assertInstanceOf(AccAssistRules::class, $presets->assistRules);
+    }
+
+    /** @test */
+    public function it_creates_an_event_with_a_pit_conditions_preset()
+    {
+        /** @var Community $community */
+        $community = Community::factory()->create();
+
+        Livewire::test(EventManagement::class, ['community' => $community])
+            ->set('input.newEventName', 'Test Event')
+            ->set('input.pitConditionsPreset', 1)
+            ->set('input.track', 'barcelona')
+            ->call('createNewEvent')
+            ->assertHasNoErrors();
+
+        $presets = app(AccEventSelectedPresets::class);
+        $this->assertInstanceOf(AccPitConditionsPreset::class, $presets->pitConditions);
     }
 }

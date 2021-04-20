@@ -36,11 +36,11 @@ class BetterComponent extends Component
         } catch (AlertableException $exception) {
             $this->warning('Error', $exception->getMessage());
         }
-//        catch (ValidationException $exception) {
-//            $this->warning('Error', $exception->getMessage());
-//        }
-//        catch (Exception $exception) {
-//            $this->warning('Error', 'Looks like we had a T1 incident.');
-//        }
+        catch (ValidationException $exception) {
+            $this->warning('Error', $exception->getMessage());
+        }
+        catch (Exception $exception) {
+            $this->warning('Error', 'Looks like we had a T1 incident.');
+        }
     }
 }

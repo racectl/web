@@ -47,7 +47,7 @@ class AccEventRules extends BaseModel implements Jsonable
             'driverStintTimeSec'                   => 'integer',
             'mandatoryPitstopCount'                => 'integer',
             'maxTotalDrivingTime'                  => 'integer',
-            'maxDriversCount'                      => 'integer', //TODO: Custom rule between - max set via track
+            'maxDriversCount'                      => 'integer', //Team Size
             'isRefuellingAllowedInRace'            => 'boolean',
             'isRefuellingTimeFixed'                => 'boolean',
             'isMandatoryPitstopRefuellingRequired' => 'boolean',
