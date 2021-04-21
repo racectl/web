@@ -70,7 +70,7 @@ class MenuBuilder
         $menu->addEntry(
             new MenuEntry(
                 'Event Management',
-                'communityAdmin.EventManagement',
+                'communityAdmin.eventManagement',
                 ['community' => $community]
             )
         );

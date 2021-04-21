@@ -1,7 +1,6 @@
 <div>
     @if($showCreate)
         <x-create-acc-event-form />
-        <x-input-dump />
     @else
         <x-row>
             <div class="col-sm-4 offset-4 mb-2">
@@ -29,6 +28,7 @@
                         <td>{{ $event->availableCars->count() }}</td>
                         <td>
                             <a href="{{ $event->adminAvailableCarsLink() }}" class="btn btn-primary">Cars</a>
+                            <a href="{{ $event->adminEventSessionsLink() }}" class="btn btn-primary">Sessions</a>
                         </td>
                     </tr>
                 @endforeach

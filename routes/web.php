@@ -42,8 +42,11 @@ Route::get('/rcadmin/community', CommunityManagement::class)
     ->name('rcadmin.communityManagement');
 
 Route::get('{community:slug}/admin/event-management', EventManagement::class)
-    ->name('communityAdmin.EventManagement');
+    ->name('communityAdmin.eventManagement');
 Route::get('{community:slug}/admin/event-management/{event}/available-cars',
     EventManagement\AccAvailableCars::class)
-    ->name('communityAdmin.EventManagement.availableCars');
+    ->name('communityAdmin.eventManagement.availableCars');
+Route::get('{community:slug}/admin/event-management/{event}/event-sessions',
+    EventManagement\AccEventSessions::class)
+    ->name('communityAdmin.eventManagement.eventSessions');
 

@@ -11,6 +11,18 @@ class AccEventSessionConfigModelTest extends \Tests\TestCase
     protected string $model = AccEventSession::class;
 
     /** @test */
+    public function it_gives_a_string_name_for_session_type()
+    {
+        /** @var AccEventSession $sessionP */
+        $sessionP = AccEventSession::factory()->make(['session_type' => 'P']);
+        $sessionQ = AccEventSession::factory()->make(['session_type' => 'Q']);
+        $sessionR = AccEventSession::factory()->make(['session_type' => 'R']);
+        $this->assertEquals('Practice', $sessionP->sessionTypeName);
+        $this->assertEquals('Qualification', $sessionQ->sessionTypeName);
+        $this->assertEquals('Race', $sessionR->sessionTypeName);
+    }
+
+    /** @test */
     public function it_validates_hour_of_day_is_between_0_and_23()
     {
         $this->expectValidationException('hourOfDay', 24);

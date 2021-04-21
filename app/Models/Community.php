@@ -35,7 +35,7 @@ class Community extends BaseModel
 
     public function adminEventManagementLink(): string
     {
-        return route('communityAdmin.EventManagement', $this);
+        return route('communityAdmin.eventManagement', $this);
     }
 
     public function showEventsLink(): string

@@ -54,7 +54,15 @@ class RaceEvent extends BaseModel
 
     public function adminAvailableCarsLink(): string
     {
-        return route('communityAdmin.EventManagement.availableCars', [
+        return route('communityAdmin.eventManagement.availableCars', [
+            'community' => $this->community,
+            'event'     => $this
+        ]);
+    }
+
+    public function adminEventSessionsLink(): string
+    {
+        return route('communityAdmin.eventManagement.eventSessions', [
             'community' => $this->community,
             'event'     => $this
         ]);

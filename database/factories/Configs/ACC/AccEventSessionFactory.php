@@ -2,6 +2,7 @@
 
 namespace Database\Factories\Configs\ACC;
 
+use App\Models\Configs\ACC\AccEvent;
 use App\Models\Configs\ACC\AccEventSession;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -22,6 +23,7 @@ class AccEventSessionFactory extends Factory
     public function definition()
     {
         return [
+            'acc_event_id'             => AccEvent::factory(),
             'hour_of_day'              => $this->faker->numberBetween(0, 23),
             'day_of_weekend'           => $this->faker->numberBetween(1, 3),
             'time_multiplier'          => $this->faker->numberBetween(0, 24),

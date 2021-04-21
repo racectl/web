@@ -12,6 +12,7 @@ use Illuminate\Validation\Rule;
  * @property integer timeMultiplier Value between 0 and 24
  * @property string  sessionType    Options: P, Q, R
  * @property integer sessionDurationMinutes
+ * @property string  sessionTypeName
  */
 class AccEventSession extends BaseModel
 {
@@ -30,6 +31,16 @@ class AccEventSession extends BaseModel
             ],
             'sessionDurationMinutes' => 'required|integer'
         ];
+    }
+
+    public function getSessionTypeNameAttribute()
+    {
+        $names = [
+            'P' => 'Practice',
+            'Q' => 'Qualification',
+            'R' => 'Race'
+        ];
+        return $names[$this->sessionType];
     }
 
     public function newCollection(array $models = [])

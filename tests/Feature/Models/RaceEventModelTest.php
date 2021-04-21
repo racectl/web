@@ -55,7 +55,7 @@ class RaceEventModelTest extends TestCase
         $event = RaceEvent::factory()->create();
 
         $expected = route(
-            'communityAdmin.EventManagement.availableCars',
+            'communityAdmin.eventManagement.availableCars',
             [
                 'community' => $event->community,
                 'event' => $event
@@ -63,6 +63,23 @@ class RaceEventModelTest extends TestCase
         );
 
         $this->assertEquals($expected, $event->adminAvailableCarsLink());
+    }
+
+    /** @test */
+    public function it_generates_a_link_to_admin_event_session_management()
+    {
+        /** @var RaceEvent $event */
+        $event = RaceEvent::factory()->create();
+
+        $expected = route(
+            'communityAdmin.eventManagement.eventSessions',
+            [
+                'community' => $event->community,
+                'event' => $event
+            ]
+        );
+
+        $this->assertEquals($expected, $event->adminEventSessionsLink());
     }
 
     /** @test */
