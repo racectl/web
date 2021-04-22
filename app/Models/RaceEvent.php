@@ -68,6 +68,14 @@ class RaceEvent extends BaseModel
         ]);
     }
 
+    public function adminEventConfigSettingsLink(): string
+    {
+        return route('communityAdmin.eventManagement.configSettings', [
+            'community' => $this->community,
+            'event'     => $this
+        ]);
+    }
+
     public function userIsRegistered(User $user = null)
     {
         $user = $user ?? Auth::user();

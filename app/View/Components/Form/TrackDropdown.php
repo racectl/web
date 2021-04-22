@@ -8,10 +8,12 @@ use Illuminate\View\Component;
 class TrackDropdown extends Component
 {
     public $tracks;
+    public $wireTo;
 
-    public function __construct()
+    public function __construct($wireTo = null)
     {
         $this->tracks = Track::all()->sortBy('name');
+        $this->wireTo = $wireTo;
     }
 
     /**

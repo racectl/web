@@ -49,4 +49,6 @@ Route::get('{community:slug}/admin/event-management/{event}/available-cars',
 Route::get('{community:slug}/admin/event-management/{event}/event-sessions',
     EventManagement\AccEventSessions::class)
     ->name('communityAdmin.eventManagement.eventSessions');
-
+Route::get('{community:slug}/admin/event-management/{event}/config-settings',
+    EventManagement\ConfigSettings::class)
+    ->name('communityAdmin.eventManagement.configSettings');

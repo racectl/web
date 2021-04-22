@@ -29,6 +29,7 @@
                         <td>
                             <a href="{{ $event->adminAvailableCarsLink() }}" class="btn btn-primary">Cars</a>
                             <a href="{{ $event->adminEventSessionsLink() }}" class="btn btn-primary">Sessions</a>
+                            <a href="{{ $event->adminEventConfigSettingsLink() }}" class="btn btn-primary">Settings</a>
                         </td>
                     </tr>
                 @endforeach

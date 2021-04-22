@@ -29,6 +29,11 @@ class BetterComponent extends Component
         $this->emit('alert', $title, $message, $type);
     }
 
+    public function rulesForTesting()
+    {
+        return $this->getRules();
+    }
+
     public function callMethod($method, $params = [])
     {
         try {

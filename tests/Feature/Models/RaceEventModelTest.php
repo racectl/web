@@ -83,6 +83,24 @@ class RaceEventModelTest extends TestCase
     }
 
     /** @test */
+    public function it_generates_a_link_to_admin_event_config_settings()
+    {
+        /** @var RaceEvent $event */
+        $event = RaceEvent::factory()->create();
+
+        $expected = route(
+            'communityAdmin.eventManagement.configSettings',
+            [
+                'community' => $event->community,
+                'event' => $event
+            ]
+        );
+
+        $this->assertEquals($expected, $event->adminEventConfigSettingsLink());
+
+    }
+
+    /** @test */
     public function it_generates_a_show_link()
     {
         /** @var RaceEvent $event */
