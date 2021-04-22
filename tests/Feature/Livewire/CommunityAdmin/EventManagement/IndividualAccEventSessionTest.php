@@ -31,4 +31,18 @@ class IndividualAccEventSessionTest extends TestCase
             $this->assertEquals($input[$param], $session->$param);
         }
     }
+
+    /** @test */
+    public function it_saves()
+    {
+        $sessionSpy = \Mockery::spy(AccEventSession::class);
+        $sessionSpy->shouldReceive('isDirty')->andReturn(true);
+
+        $livewire = new IndividualAccEventSession();
+        $livewire->session = $sessionSpy;
+        $livewire->setDefaults();
+        $livewire->save();
+
+        $sessionSpy->shouldHaveReceived('save');
+    }
 }

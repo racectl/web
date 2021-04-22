@@ -19,6 +19,13 @@ class ConfigSettings extends BetterComponent
     public RaceEvent $event;
 
     protected $rules;
+    protected $models = [
+        'assistRules' => AccAssistRules::class,
+        'event' => AccEvent::class,
+        'eventRules' => AccEventRules::class,
+        'settings' => AccSettings::class
+    ];
+    protected $ignores;
 
     public function __construct($id = null)
     {
@@ -31,40 +38,55 @@ class ConfigSettings extends BetterComponent
                 Arr::only(RaceEvent::rules(), ['name', 'track'])
             );
 
+        $this->ignores = collect([
+            'metaData',
+            'configVersion',
+            'serverName',
+            'carGroup',
+            'trackMedalsRequirement',
+            'safetyRatingRequirement',
+            'racecraftRatingRequirement',
+            'maxCarSlots',
+            'dumpLeaderboards',
+            'isRaceLocked',
+            'randomizeTrackWhenEmpty',
+            'centralEntryListPath',
+            'dumpEntryList'
+            ]);
+
         parent::__construct($id);
     }
 
     protected function setDefaults()
     {
-        $models = [
-            'assistRules' => AccAssistRules::class,
-            'event' => AccEvent::class,
-            'eventRules' => AccEventRules::class,
-            'settings' => AccSettings::class
-        ];
-
-        $ignore = collect(['metaData',
-                           'configVersion',
-                           'serverName',
-                           'carGroup',
-                           'trackMedalsRequirement',
-                           'safetyRatingRequirement',
-                           'racecraftRatingRequirement',
-                           'maxCarSlots',
-                           'dumpLeaderboards',
-                           'isRaceLocked',
-                           'randomizeTrackWhenEmpty',
-                           'centralEntryListPath',
-                           'dumpEntryList']);
-
-        foreach ($models as $configProp => $model) {
+        foreach ($this->models as $configProp => $model) {
             foreach ($model::rules() as $property => $null) {
-                if (! $ignore->contains($property) )
+                if (! $this->ignores->contains($property) )
                 $this->setInputDefault($property, $this->event->accConfig->$configProp->$property);
             }
         }
         $this->setInputDefault('name', $this->event->name);
         $this->setInputDefault('track', $this->event->track);
+    }
+
+    public function save()
+    {
+        $this->validate();
+
+        foreach ($this->models as $configProp => $model) {
+            foreach ($model::rules() as $property => $null) {
+                if (! $this->ignores->contains($property) )
+                    $this->event->accConfig->$configProp->$property = $this->input($property);
+            }
+
+            $this->event->accConfig->$configProp->save();
+        }
+        $this->event->name = $this->input('name');
+        $this->event->track = $this->input('track');
+
+        $this->event->save();
+
+        $this->success('Saved.', null);
     }
 
     public function render()

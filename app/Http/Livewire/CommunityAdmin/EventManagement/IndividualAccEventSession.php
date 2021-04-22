@@ -21,7 +21,7 @@ class IndividualAccEventSession extends Component
         parent::__construct($id);
     }
 
-    protected function setDefaults()
+    public function setDefaults()
     {
         foreach ($this->rules as $property => $null) {
             $this->setInputDefault($property, $this->session->$property);

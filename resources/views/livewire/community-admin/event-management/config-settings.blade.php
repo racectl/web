@@ -85,5 +85,7 @@
             </x-row>
         </x-widget>
 
+        <button wire:click="save" class="btn btn-success btn-block">Save</button>
+
     </div>
 </div>
