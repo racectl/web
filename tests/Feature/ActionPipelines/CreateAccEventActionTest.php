@@ -45,4 +45,21 @@ class CreateAccEventActionTest extends TestCase
 
     }
 
+    /** @test */
+    public function it_creates_an_event_for_team_entrants()
+    {
+        Community::factory()->create();
+
+        /** @var Community $community */
+        $community = Community::first();
+
+        $track = Track::acc()->get()->random();
+
+        /** @var CreateAccEventAction $createAction */
+        $createAction = app(CreateAccEventAction::class);
+        $event        = $createAction->execute($community, 'Event Name', $track->gameConfigId, 1);
+
+        $this->assertEquals(1, $event->teamEvent);
+    }
+
 }

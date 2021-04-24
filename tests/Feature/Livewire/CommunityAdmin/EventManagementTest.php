@@ -15,12 +15,12 @@ use Tests\TestCase;
 
 class EventManagementTest extends TestCase
 {
-    protected $eventSpy;
+    protected $createEventActionSpy;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->eventSpy = $this->spy(CreateAccEventAction::class);
+        $this->createEventActionSpy = $this->spy(CreateAccEventAction::class);
     }
 
     /** @test */
@@ -51,7 +51,7 @@ class EventManagementTest extends TestCase
             ->call('createNewEvent')
             ->assertHasNoErrors();
 
-        $this->eventSpy->shouldHaveReceived('execute')->with(Community::class, 'Test Event', $track);
+        $this->createEventActionSpy->shouldHaveReceived()->execute(Community::class, 'Test Event', $track, 0);
     }
 
     /** @test */
@@ -160,5 +160,26 @@ class EventManagementTest extends TestCase
 
         $presets = app(AccEventSelectedPresets::class);
         $this->assertInstanceOf(AccPitConditionsPreset::class, $presets->pitConditions);
+    }
+
+    /** @test */
+    public function it_creates_a_team_event()
+    {
+        /** @var Community $community */
+        $community = Community::factory()->create();
+
+        Livewire::test(EventManagement::class, ['community' => $community])
+            ->set('input.newEventName', 'Test Event')
+            ->set('input.entrantType', 1)
+            ->set('input.track', 'barcelona')
+            ->call('createNewEvent')
+            ->assertHasNoErrors();
+
+        $this->createEventActionSpy->shouldHaveReceived()->execute(
+            Community::class,
+            'Test Event',
+            'barcelona',
+            1
+        );
     }
 }

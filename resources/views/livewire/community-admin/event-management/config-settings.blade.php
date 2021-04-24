@@ -79,7 +79,7 @@
 
                 @if($event->teamEvent)
                 <div class="col-xl-6 col-lg-12">
-                    <x-form.text wireTo="maxDriverCount" labeled="Max Drivers Per Team"/>
+                    <x-form.text wireTo="maxDriversCount" labeled="Max Drivers Per Team"/>
                 </div>
                 @endif
             </x-row>
