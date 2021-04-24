@@ -26,10 +26,28 @@ class UserFactory extends Factory
             'first_name'        => $this->faker->firstName,
             'last_name'         => $this->faker->lastName,
             'email'             => $this->faker->unique()->safeEmail,
-            'steam_id'          => '765611xxxxxxxx' . $this->faker->numberBetween(100,999),
-            'discord_id'        => '3240601xxxxxxx'. $this->faker->numberBetween(1000,9999),
+            'steam_id'          => $this->steamId(),
+            'discord_id'        => $this->discordId(),
             'remember_token'    => Str::random(10),
         ];
+    }
+
+    protected function steamId()
+    {
+        $possible = '765611xxxxxxxx' . $this->faker->numberBetween(100,999);
+        $check = User::firstWhere('steam_id', $possible);
+        return is_null($check)
+            ? $possible
+            : $this->steamId();
+    }
+
+    protected function discordId()
+    {
+        $possible = '3240601xxxxxxx'. $this->faker->numberBetween(1000,9999);
+        $check = User::firstWhere('discord_id', $possible);
+        return is_null($check)
+            ? $possible
+            : $this->discordId();
     }
 
     /**

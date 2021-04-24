@@ -43,6 +43,16 @@ class AccEventSession extends BaseModel
         return $names[$this->sessionType];
     }
 
+    public function getDayOfWeekendNameAttribute()
+    {
+        $names = [
+            1 => 'Friday',
+            2 => 'Saturday',
+            3 => 'Sunday'
+        ];
+        return $names[$this->dayOfWeekend];
+    }
+
     public function newCollection(array $models = [])
     {
         return new AccEventSessionsCollection($models);

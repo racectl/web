@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\CustomCollections\AccEventSessionsCollection;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -74,6 +75,11 @@ class RaceEvent extends BaseModel
             'community' => $this->community,
             'event'     => $this
         ]);
+    }
+
+    public function getSessions(): AccEventSessionsCollection
+    {
+        return $this->accConfig->event->accEventSessions;
     }
 
     public function userIsRegistered(User $user = null)

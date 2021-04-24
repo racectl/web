@@ -27,9 +27,7 @@ class RaceEventEntryModelTest extends \Tests\TestCase
     public function it_has_a_car()
     {
         /** @var RaceEventEntry $entry */
-        $entry = RaceEventEntry::factory()->create([
-            'forced_car_model' => 2
-        ])->refresh();
+        $entry = RaceEventEntry::factory()->create();
 
         $this->assertInstanceOf(Car::class, $entry->car);
     }
@@ -94,6 +92,16 @@ class RaceEventEntryModelTest extends \Tests\TestCase
 
         $found = RaceEventEntry::forUserAndEvent($user->id, $event->id)->first();
         $this->assertTrue($found->is($entry));
+    }
+
+    /** @test */
+    public function it_has_a_class_based_on_car()
+    {
+        /** @var RaceEventEntry $entry */
+        $entry = RaceEventEntry::factory()->create();
+
+        $expected = $entry->car->type;
+        $this->assertEquals($expected, $entry->carClass);
     }
 
     /**

@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * @property mixed id
+ * @property string name
+ * @property string sim
+ * @property string type
  */
 class Car extends BaseModel
 {

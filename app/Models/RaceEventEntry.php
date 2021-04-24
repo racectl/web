@@ -20,6 +20,7 @@ use Illuminate\Support\Str;
  * @property EloquentCollection users
  * @property RaceEvent          event
  * @property Car                car
+ * @property string             carClass
  */
 class RaceEventEntry extends BaseModel
 {
@@ -98,6 +99,11 @@ class RaceEventEntry extends BaseModel
             ->whereHas('users', function ($query) use ($userId) {
                 return $query->where('user_id', $userId);
             });
+    }
+
+    public function getCarClassAttribute(): string
+    {
+        return $this->car->type;
     }
 
     public function driver()
