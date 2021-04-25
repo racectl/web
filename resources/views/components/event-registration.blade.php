@@ -57,12 +57,13 @@
                     </div>
                 </div>
             </x-row>
+            <hr>
             <x-row>
                 <div class="col-xl-6">
-                    <button wire:click="leaveTeam" class="btn btn-warning btn-block">Leave Team (NP)</button>
+                    <button onclick="confirmLeaveTeam()" class="btn btn-warning btn-block">Leave Team (NP)</button>
                 </div>
                 <div class="col-xl-6">
-                    <button wire:click="withdrawTeam" class="btn btn-danger btn-block">Withdraw Team (NP)</button>
+                    <button onclick="confirmWithdrawTeam()" class="btn btn-danger btn-block">Withdraw Team (NP)</button>
                 </div>
             </x-row>
         </x-widget>
