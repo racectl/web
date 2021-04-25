@@ -7,7 +7,7 @@
         </tr>
         </thead>
         <tbody>
-        @foreach($this->event->entries as $entry)
+        @foreach($event->entries as $entry)
             <tr>
                 <td>{{ $entry->driver()->displayName }}</td>
                 <td>{{ $entry->car->name }}</td>

@@ -11,13 +11,14 @@
 
         <x-weather-display />
 
-        <x-event-registration />
-
         @if($event->teamEvent)
-            <x-registered-teams-table />
+            <livewire:community.event.team-entrant-options :event="$event" />
+            <x-registered-teams-table :event="$event"/>
         @else
-            <x-registered-drivers-table />
+            <livewire:community.event.driver-entrant-options :event="$event" />
+            <x-registered-drivers-table :event="$event" />
         @endif
+
     </x-row>
 
     @push('scripts')
