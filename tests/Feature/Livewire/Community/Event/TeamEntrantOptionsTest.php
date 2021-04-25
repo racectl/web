@@ -7,7 +7,9 @@ use App\Actions\RegisterUserToEvent\RegisterUserToEventAction;
 use App\Http\Livewire\Community\Event\TeamEntrantOptions;
 use App\Models\Car;
 use App\Models\RaceEvent;
+use App\Models\RaceEventEntry;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Livewire\Livewire;
 use Tests\TestCase;
 
@@ -118,5 +120,57 @@ class TeamEntrantOptionsTest extends TestCase
             ->assertHasErrors(['teamJoinCode']);
 
         $spy->shouldNotHaveReceived()->execute(RegisterUserToEventProposal::class);
+    }
+
+    /** @test */
+    public function it_withdraws_a_team()
+    {
+        $userOne = User::factory()->create();
+        $userTwo = User::factory()->create();
+
+        /** @var RaceEventEntry $entry */
+        $entry = RaceEventEntry::factory()->make();
+        /** @var RaceEvent $event */
+        $event = RaceEvent::factory()->create();
+        $event->entries()->save($entry);
+        $event->availableCars()->attach(1);
+
+        $entry->users()->attach($userOne);
+        $entry->users()->attach($userTwo);
+
+        $existingEntryCount = RaceEventEntry::count();
+        $existingPivotCount = DB::table('race_event_entry_user')->count();
+
+        $this->actingAs($userOne);
+        $testable = Livewire::test(TeamEntrantOptions::class, ['event' => $event])
+            ->call('withdrawTeam');
+        $instance = $testable->instance();
+
+        $this->assertDatabaseCount('race_event_entries', $existingEntryCount - 1);
+        $this->assertDatabaseCount('race_event_entry_user', $existingPivotCount - 2);
+        $this->assertNull($instance->authEntry);
+    }
+
+    /** @test */
+    public function it_withdraws_a_user_from_a_team()
+    {
+        $userOne = User::factory()->create();
+        $userTwo = User::factory()->create();
+
+        /** @var RaceEventEntry $entry */
+        $entry = RaceEventEntry::factory()->make();
+        /** @var RaceEvent $event */
+        $event = RaceEvent::factory()->create();
+        $event->entries()->save($entry);
+        $event->availableCars()->attach(1);
+
+        $entry->users()->attach($userOne);
+        $entry->users()->attach($userTwo);
+
+        $this->actingAs($userTwo);
+        $testable = Livewire::test(TeamEntrantOptions::class, ['event' => $event])
+            ->call('leaveTeam');
+
+        $this->assertFalse($entry->refresh()->users->contains($userTwo));
     }
 }

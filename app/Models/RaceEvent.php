@@ -90,7 +90,7 @@ class RaceEvent extends BaseModel
         return $this->entries->users()->contains('id', $user->id);
     }
 
-    public function entryForUser(User $user = null): RaceEventEntry
+    public function entryForUser(User $user = null): ?RaceEventEntry
     {
         $user = $user ?? Auth::user();
         return $this->entries->filter(function ($value) use ($user) {

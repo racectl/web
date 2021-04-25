@@ -18,8 +18,8 @@ class CreateRaceEventEntryUserTable extends Migration
         Schema::create('race_event_entry_user', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('user_id');
-            $table->foreignId('race_event_entry_id');
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('race_event_entry_id')->constrained()->cascadeOnDelete();
         });
     }
 

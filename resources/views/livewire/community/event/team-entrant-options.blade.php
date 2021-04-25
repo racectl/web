@@ -21,20 +21,20 @@
             <div class="col-xl-4">
                 <h5 style="text-decoration: underline;">Members</h5>
                 <br>
-                @foreach($event->entryForUser()->users as $user)
+                @foreach($authEntry->users as $user)
                     <h5>{{ $user->displayName }}</h5>
                 @endforeach
             </div>
             <div class="col-xl-4">
                 <h5 style="text-decoration: underline;">Join Code</h5>
                 <br>
-                <h5>{{ $event->entryForUser()->teamJoinCode }}</h5>
+                <h5>{{ $authEntry->teamJoinCode }}</h5>
             </div>
             <div class="col-xl-4">
                 <div class="form-group">
                     <label for="first-driver">First To Drive:</label>
                     <select wire:model="input.teamFirstDriver" class="form-control" id="first-driver">
-                        @foreach($event->entryForUser()->users as $user)
+                        @foreach($authEntry->users as $user)
                             <option value="{{ $user->id }}">{{ $user->displayName }}</option>
                         @endforeach
                     </select>
@@ -43,12 +43,40 @@
         </x-row>
         <hr>
         <x-row>
-            <div class="col-xl-6">
-                <button onclick="confirmLeaveTeam()" class="btn btn-warning btn-block">Leave Team (NP)</button>
-            </div>
-            <div class="col-xl-6">
-                <button onclick="confirmWithdrawTeam()" class="btn btn-danger btn-block">Withdraw Team (NP)</button>
-            </div>
+            <x-team-entrant-options-buttons :authEntry="$authEntry" />
         </x-row>
     @endif
+
+    @push('scripts')
+        <script>
+            function confirmWithdrawTeam() {
+                swal({
+                    title: 'Are you sure?',
+                    text: "This will permanently withdraw your team from the event.",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Withdraw',
+                    padding: '2em'
+                }).then(function(result) {
+                    if (result.value) {
+                        @this.withdrawTeam()
+                    }
+                })
+            }
+            function confirmLeaveTeam() {
+                swal({
+                    title: 'Are you sure?',
+                    text: "This will permanently remove you from your team for the event.",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Withdraw',
+                    padding: '2em'
+                }).then(function(result) {
+                    if (result.value) {
+                        @this.leaveTeam()
+                    }
+                })
+            }
+        </script>
+    @endpush
 </x-widget>

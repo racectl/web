@@ -8,13 +8,16 @@ use App\Actions\RegisterUserToEvent\RegisterUserToEventAction;
 use App\Http\Livewire\BetterComponent;
 use App\Http\Livewire\RuleBasedInputs;
 use App\Models\RaceEvent;
+use App\Models\RaceEventEntry;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class TeamEntrantOptions extends BetterComponent
 {
     use RuleBasedInputs;
 
-    public RaceEvent $event;
+    public RaceEvent       $event;
+    public ?RaceEventEntry $authEntry;
 
     public $rules = [
         'selectedCar'      => 'required|exists:cars,id',
@@ -23,6 +26,18 @@ class TeamEntrantOptions extends BetterComponent
         'teamName'         => 'required|string',
         'teamFirstDriver'  => 'exists:users,id'
     ];
+
+    public function mount()
+    {
+        $this->reloadEntryState();
+    }
+
+    protected function reloadEntryState()
+    {
+        $this->event->load('entries');
+        $this->authEntry = $this->event->entryForUser(Auth::user());
+        $this->emit('refreshDriversList');
+    }
 
     public function inputDefaults()
     {
@@ -51,9 +66,8 @@ class TeamEntrantOptions extends BetterComponent
         );
 
         $registerAction->execute($proposal);
-        $this->event->load('entries');
 
-        $this->emit('refreshDriversList');
+        $this->reloadEntryState();
     }
 
     public function joinTeam(RegisterUserToEventAction $registerAction)
@@ -66,21 +80,22 @@ class TeamEntrantOptions extends BetterComponent
         );
 
         $registerAction->execute($proposal);
-        $this->event->load('entries');
 
-        $this->emit('refreshDriversList');
+        $this->reloadEntryState();
     }
 
     public function withdrawTeam()
     {
-        $this->inform('Withdraw Team Not Programmed');
-        $this->emit('refreshDriversList');
+        $this->authEntry->delete();
+        $this->success('Team Withdrawn From Event');
+        $this->reloadEntryState();
     }
 
     public function leaveTeam()
     {
-        $this->inform('Leave Team Not Programmed');
-        $this->emit('refreshDriversList');
+        $this->authEntry->users()->detach(Auth::user());
+        $this->success('Withdrawn From Team');
+        $this->reloadEntryState();
     }
 
     public function render()

@@ -21,36 +21,4 @@
 
     </x-row>
 
-    @push('scripts')
-        <script>
-            function confirmWithdrawTeam() {
-                swal({
-                    title: 'Are you sure?',
-                    text: "This will permanently withdraw your team from the event.",
-                    type: 'warning',
-                    showCancelButton: true,
-                    confirmButtonText: 'Withdraw',
-                    padding: '2em'
-                }).then(function(result) {
-                    if (result.value) {
-                        @this.withdrawTeam()
-                    }
-                })
-            }
-            function confirmLeaveTeam() {
-                swal({
-                    title: 'Are you sure?',
-                    text: "This will permanently withdraw you from your team for the event.",
-                    type: 'warning',
-                    showCancelButton: true,
-                    confirmButtonText: 'Withdraw',
-                    padding: '2em'
-                }).then(function(result) {
-                    if (result.value) {
-                        @this.leaveTeam()
-                    }
-                })
-            }
-        </script>
-    @endpush
 </div>
