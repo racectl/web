@@ -10,6 +10,7 @@ use App\Http\Livewire\BetterComponent;
 use App\Http\Livewire\RuleBasedInputs;
 use App\Models\Community;
 use App\Models\RaceEvent;
+use App\Models\User;
 use Livewire\Component;
 
 class EventShow extends BetterComponent
@@ -23,13 +24,23 @@ class EventShow extends BetterComponent
         'selectedCar'      => 'required|exists:cars,id',
         'teamJoinCode'     => 'required|string|max:255',
         'joinExistingTeam' => 'required|boolean',
-        'teamName'         => 'required|string'
+        'teamName'         => 'required|string',
+        'teamFirstDriver'  => 'exists:users,id'
     ];
 
     public function inputDefaults()
     {
         $this->setInputDefault('selectedCar', $this->event->availableCars->first()->id);
         $this->setInputDefault('joinExistingTeam', 0);
+    }
+
+    public function updatedInputTeamFirstDriver($value)
+    {
+        $this->validateOnly('teamFirstDriver');
+
+        $driver = User::find($value);
+
+        $this->inform('Not Programmed', $driver->displayName . ' will be set as first driver');
     }
 
     public function registerUser(RegisterUserToEventAction $registerAction)
@@ -70,6 +81,16 @@ class EventShow extends BetterComponent
 
         $registerAction->execute($proposal);
         $this->event->load('entries');
+    }
+
+    public function withdrawTeam()
+    {
+        $this->inform('Withdraw Team Not Programmed');
+    }
+
+    public function leaveTeam()
+    {
+        $this->inform('Leave Team Not Programmed');
     }
 
     public function render()

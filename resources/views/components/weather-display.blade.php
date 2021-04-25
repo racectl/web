@@ -1,5 +1,5 @@
 <x-widget width="6" heading="Weather">
-    <div class="pt-4 pb-2">
+    <div wire:ignore class="pt-4 pb-2">
         <x-row>
             <div class="col-xl-3 col-md-3 col-sm-3 text-center" title="Ambient Temp">
                 <i data-feather="thermometer" width="4rem" height="4rem"></i>

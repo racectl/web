@@ -9,24 +9,24 @@ use Livewire\Component;
 
 class BetterComponent extends Component
 {
-    protected function success($title, $message)
+    protected function success($title, $message = null)
     {
         $this->sendAlert($title, $message);
     }
 
-    protected function warning($title, $message)
+    protected function warning($title, $message = null)
     {
         $this->sendAlert($title, $message, 'warning');
     }
 
-    protected function inform($title, $message)
+    protected function inform($title, $message = null)
     {
         $this->sendAlert($title, $message, 'info');
     }
 
-    protected function sendAlert($title, $message, $type = 'success')
+    protected function sendAlert($title, $message = null, $type = 'success')
     {
-        $this->emit('alert', $title, $message, $type);
+        $this->emit('alert', $title, $message ?? '', $type);
     }
 
     public function rulesForTesting()

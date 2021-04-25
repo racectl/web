@@ -16,8 +16,8 @@
                     text: text,
                     type: type,
                     padding: '2em'
-                })
-            })
+                });
+            });
         });
     </script>
     <script src="{{ asset('js/custom.js') }}"></script>
