@@ -87,4 +87,29 @@ class DriverEntrantOptionsTest extends TestCase
 
         $this->assertCount(0, $event->refresh()->entries->users());
     }
+
+    /** @test */
+    public function it_changes_a_users_car()
+    {
+        /** @var RaceEvent $event */
+        $event = RaceEvent::factory()->has($this->fullAccConfigFactory(false))->create();
+        /** @var RaceEventEntry $entry */
+        $entry = RaceEventEntry::factory()->make([
+            'forced_car_model' => 1
+        ]);
+        /** @var User $user */
+        $user = User::factory()->create();
+
+        $event->entries()->save($entry);
+        $entry->users()->attach($user);
+
+        $event->availableCars()->attach([1,2]);
+        $this->actingAs($user);
+        Livewire::test(DriverEntrantOptions::class, ['event' => $event])
+            ->set('input.selectedCar', 2)
+            ->call('changeCar')
+            ->assertEmitted('alert');
+
+        $this->assertEquals(2, $entry->refresh()->car->id);
+    }
 }
