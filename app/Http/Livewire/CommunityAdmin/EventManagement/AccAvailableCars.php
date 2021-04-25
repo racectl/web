@@ -33,6 +33,7 @@ class AccAvailableCars extends Component
         $this->event->availableCars()->attach($car);
 
         $this->event->load('availableCars');
+        $this->setInput('carToAdd', $this->carsForDropdown()->first()->id);
     }
 
     public function setCarToRemove($id)
