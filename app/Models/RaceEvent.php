@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\CustomCollections\AccEventSessionsCollection;
+use App\CustomCollections\RaceEventEntriesCollection;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -11,24 +12,24 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Facades\Auth;
 
 /**
- * @property int                id
- * @property string             name
- * @property string             sim
- * @property string             track
- * @property int|boolean        teamEvent
- * @property AccConfig          accConfig
- * @property Community          community
- * @property EloquentCollection entries
- * @property EloquentCollection availableCars
+ * @property int                        id
+ * @property string                     name
+ * @property string                     sim
+ * @property string                     track
+ * @property int|boolean                teamEvent
+ * @property AccConfig                  accConfig
+ * @property Community                  community
+ * @property RaceEventEntriesCollection entries
+ * @property EloquentCollection         availableCars
  */
 class RaceEvent extends BaseModel
 {
     public static function rules(): array
     {
         return [
-            'name'  => 'required',
-            'sim' => 'required|string|max:3',
-            'track' => 'required|exists:App\Models\Track,game_config_id',
+            'name'      => 'required',
+            'sim'       => 'required|string|max:3',
+            'track'     => 'required|exists:App\Models\Track,game_config_id',
             'teamEvent' => 'nullable|boolean'
         ];
     }

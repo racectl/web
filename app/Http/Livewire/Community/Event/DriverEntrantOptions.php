@@ -7,6 +7,7 @@ use App\Actions\RegisterUserToEvent\RegisterUserToEventAction;
 use App\Http\Livewire\BetterComponent;
 use App\Http\Livewire\RuleBasedInputs;
 use App\Models\RaceEvent;
+use Auth;
 
 class DriverEntrantOptions extends BetterComponent
 {
@@ -40,7 +41,12 @@ class DriverEntrantOptions extends BetterComponent
 
     public function withdrawUser()
     {
-        $this->inform('Unregister Not Programmed');
+        $entry = $this->event->entryForUser(Auth::user());
+        $entry->delete();
+
+        $this->event->refresh();
+        $this->emit('refreshDriversList');
+        $this->success('Withdrawn from Event');
     }
 
     public function changeCar()

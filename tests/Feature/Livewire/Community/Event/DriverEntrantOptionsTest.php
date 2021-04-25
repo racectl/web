@@ -7,6 +7,7 @@ use App\Actions\RegisterUserToEvent\RegisterUserToEventAction;
 use App\Http\Livewire\Community\Event\DriverEntrantOptions;
 use App\Models\Car;
 use App\Models\RaceEvent;
+use App\Models\RaceEventEntry;
 use App\Models\User;
 use Livewire\Livewire;
 use Tests\TestCase;
@@ -62,5 +63,28 @@ class DriverEntrantOptionsTest extends TestCase
 
 
         $spy->shouldNotHaveReceived()->execute(RegisterUserToEventProposal::class);
+    }
+
+    /** @test */
+    public function it_withdraws_the_driver_from_the_event()
+    {
+        /** @var RaceEvent $event */
+        $event = RaceEvent::factory()->has($this->fullAccConfigFactory(false))->create();
+        /** @var RaceEventEntry $entry */
+        $entry = RaceEventEntry::factory()->make();
+        /** @var User $user */
+        $user = User::factory()->create();
+
+        $event->entries()->save($entry);
+        $entry->users()->attach($user);
+
+        $this->assertCount(1, $event->entries->users());
+
+        $event->availableCars()->attach(Car::first()->id);
+        $this->actingAs($user);
+        Livewire::test(DriverEntrantOptions::class, ['event' => $event])
+            ->call('withdrawUser');
+
+        $this->assertCount(0, $event->refresh()->entries->users());
     }
 }
