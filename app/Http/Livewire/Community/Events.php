@@ -22,6 +22,9 @@ class Events extends BetterComponent
         RegisterUserToEventAction $action,
         RaceEvent $event
     ) {
+        return $this->inform(
+            'Programmed, but Disabled',
+            'User selected favorite cars needs programmed for this feature to make sense.');
         $proposal = new RegisterUserToEventProposal($event, 0);
         $action->execute($proposal);
         $this->community->load('events');
