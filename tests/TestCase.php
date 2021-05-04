@@ -10,9 +10,11 @@ use App\Models\Configs\ACC\AccEventRules;
 use App\Models\Configs\ACC\AccEventSession;
 use App\Models\Configs\ACC\AccSettings;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 
 abstract class TestCase extends BaseTestCase
@@ -34,6 +36,13 @@ abstract class TestCase extends BaseTestCase
         $model           = $model ?? $this->model;
         $model           = new $model;
         $model->{$param} = $value;
+    }
+
+    protected function truncateModel(string $model)
+    {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        $model::truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 
     public function fullAccConfigFactory($create = true)

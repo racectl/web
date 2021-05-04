@@ -9,6 +9,7 @@ use App\Models\RaceEvent;
 use App\Models\RaceEventEntry;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class RaceEventEntryModelTest extends \Tests\TestCase
@@ -111,7 +112,7 @@ class RaceEventEntryModelTest extends \Tests\TestCase
     public function it_generates_a_entry_list_json_file_statically()
     {
         //fix to reset ids when running full test suit.
-        User::truncate();
+        $this->truncateModel(User::class);
 
         /** @var RaceEvent $event */
         $event = RaceEvent::factory()->create();
