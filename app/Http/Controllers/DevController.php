@@ -2,20 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Actions\ImportAccResults\ResultsMapper;
-use App\Homeless\RaceTime;
-use App\Http\Livewire\CommunityAdmin\EventManagement\IndividualAccEventSession;
-use App\Models\Configs\ACC\AccEventSession;
-use Livewire\Livewire;
-use Tests\Feature\ActionPipelines\ImportAccResults\ResultsMapperTest;
+use App\Results\AccResultsMapper;
 
 class DevController extends Controller
 {
-    public function index()
-    {
-
-    }
-
     public function indexTimeTesting()
     {
         $obj = getResultsObjectFromFile('201002_211430_R.json');
@@ -40,11 +30,15 @@ class DevController extends Controller
         }
     }
 
-    public function tindex()
+    public function index()
     {
-        $mapper = new ResultsMapper('201002_211430_R.json');
+        $object = getResultsObjectFromFile('201002_211430_R.json');
+        $mapper = new AccResultsMapper($object);
+        $mapper->execute();
+        dd($object->sessionResult);
         dd(
-            $mapper,
+            $object,
+            $mapper->getMappedResult(),
         );
     }
 }
